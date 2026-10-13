@@ -1,0 +1,30 @@
+/* TEAM */
+  Nodo operativo : GUSTAVOEURO
+  Ruolo          : Selezione banconote, verifica qualità, instradamento PayPal
+  Contatto       : https://t.me/gustavoeuro
+  Canale         : https://t.me/+gBf54xWnFapjMmRh
+  Luogo          : Italia
+
+/* SITO */
+  Progetto       : GUSTAVOEURO · portale single-page
+  Dal            : 2022
+  Motto          : Cifrato · Tracciato · Verificato
+  Firma PGP      : 7B3F 9A21 C4E8 5D06 1F77  8AC2 30B9 4E11
+  Mirror Onion   : gustavoeuro7x2k.onion
+
+/* STACK */
+  React 18 (CDN) · Babel standalone · Tailwind CDN
+  Hash router scritto a mano · nessun build step
+  Space Grotesk + JetBrains Mono
+
+/* SERVIZI */
+  Banconote Euro Grade AAA+ — tagli 20 / 50 (10 su richiesta)
+  Trasferimenti PayPal P2P anonimi via exchange terzo
+  Verifica qualità pubblica · ricevute PGP · merkle root indirizzi
+
+/* CORRIERI */
+  POSTE ITALIANE · BRT · GLS · DHL · LOCKER INPOST
+
+/* GRAZIE A */
+  Chi ha creduto al progetto dal primo giorno.
+  Le macchine. La crittografia. Il cotone delle banconote.
