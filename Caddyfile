@@ -1,0 +1,78 @@
+# ============================================================
+#  GUSTAVOEURO · Caddyfile (v2) · TLS automatico
+# ============================================================
+
+(gustavoeuro_headers) {
+	header {
+		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+		X-Frame-Options "SAMEORIGIN"
+		X-Content-Type-Options "nosniff"
+		X-XSS-Protection "1; mode=block"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=()"
+		Cross-Origin-Opener-Policy "same-origin"
+		X-Permitted-Cross-Domain-Policies "none"
+		Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://i.ibb.co https://api.qrserver.com; connect-src 'self' https://api.qrserver.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+		-Server
+	}
+}
+
+gustavoeuro.com {
+	import gustavoeuro_headers
+	encode zstd gzip
+
+	root * /var/www/gustavoeuro
+	file_server {
+		hide .git .env
+	}
+
+	# SPA fallback (hash router)
+	try_files {path} {path}/ /index.html
+
+	# cache asset
+	@assets path *.png *.jpg *.jpeg *.gif *.webp *.svg *.ico *.woff *.woff2 *.ttf
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+
+	@code path *.css *.js
+	header @code Cache-Control "public, max-age=2592000"
+
+	@html path / /index.html
+	header @html Cache-Control "public, max-age=0, must-revalidate"
+
+	@sw path /sw.js
+	header @sw Cache-Control "public, max-age=0, must-revalidate"
+	header @sw Service-Worker-Allowed "/"
+
+	@seco path /.well-known/security.txt
+	header @seco Content-Type "text/plain; charset=utf-8"
+	header @seco Cache-Control "public, max-age=86400"
+
+	# dotfile bloccati (tranne .well-known)
+	@dot path /.*
+	@wellknown path /.well-known/*
+	handle @dot {
+		not path /.well-known/*
+		respond 403
+	}
+
+	handle_errors {
+		rewrite * /404.html
+		file_server
+	}
+
+	log {
+		output file /var/log/caddy/gustavoeuro.log {
+			roll_size 10mb
+			roll_keep 5
+		}
+		format json
+	}
+}
+
+www.gustavoeuro.com {
+	redir https://gustavoeuro.com{uri} permanent
+}
+
+http://gustavoeuro.com {
+	redir https://gustavoeuro.com{uri} permanent
+}
