@@ -1,0 +1,61 @@
+{
+  "name": "GUSTAVOEURO — Dal dark web al tuo portafoglio",
+  "short_name": "GUSTAVOEURO",
+  "description": "Banconote Euro Grade AAA+ e trasferimenti PayPal P2P anonimi. Consegna tracciata, verifica pubblica, ricevute firmate PGP.",
+  "start_url": "/#/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#05060d",
+  "background_color": "#05060d",
+  "lang": "it",
+  "dir": "ltr",
+  "categories": ["shopping", "finance", "business"],
+  "id": "gustavoeuro-portal",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Catalogo banconote",
+      "short_name": "Catalogo",
+      "url": "/#/cash",
+      "description": "Tagli 20 e 50 EUR disponibili"
+    },
+    {
+      "name": "Trasferimenti PayPal",
+      "short_name": "PayPal",
+      "url": "/#/paypal",
+      "description": "Saldo girato via exchange terzo"
+    },
+    {
+      "name": "Traccia ordine",
+      "short_name": "Traccia",
+      "url": "/#/track",
+      "description": "Recupera la ricevuta con il codice GST"
+    },
+    {
+      "name": "Centro fiducia",
+      "short_name": "Trust",
+      "url": "/#/trust",
+      "description": "PGP, merkle root, garanzie"
+    }
+  ]
+}
