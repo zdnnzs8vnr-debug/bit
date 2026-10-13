@@ -1,0 +1,12 @@
+# Netlify / Cloudflare Pages redirects
+# forza HTTPS
+http://*  https://:splat 301!
+
+# www -> non-www
+https://www.*  https://:splat 301!
+
+# SPA fallback (hash router: tutto serve index.html)
+/*  /index.html  200
+
+# security.txt
+/.well-known/security.txt  /.well-known/security.txt  200
