@@ -1,0 +1,3 @@
+# Disabilita Jekyll su GitHub Pages.
+# Le cartelle che iniziano con "_" (_headers, _redirects) e i dotfile
+# vengono serviti così come sono, senza preprocessing.
