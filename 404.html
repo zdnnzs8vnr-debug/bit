@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 · GUSTAVOEURO</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05060d;--fg:#eef0f8;--line:#1d2130;--au:#ffb020;--bl:#3d7bff;--tl:#14e0b0;--mg:#ff3d9a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--fg);
+  font-family:'Space Grotesk',system-ui,sans-serif;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative}
+.bg{position:fixed;inset:-20%;background:
+  radial-gradient(40% 34% at 15% 20%,rgba(61,123,255,.22),transparent 62%),
+  radial-gradient(36% 30% at 85% 15%,rgba(255,61,154,.18),transparent 62%),
+  radial-gradient(44% 38% at 70% 85%,rgba(20,224,176,.16),transparent 62%);
+  animation:drift 26s ease-in-out infinite alternate;pointer-events:none}
+@keyframes drift{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-3%,3%,0) scale(1.08)}}
+.grid{position:fixed;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(61,123,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(20,224,176,.05) 1px,transparent 1px);
+  background-size:54px 54px;mask-image:radial-gradient(circle at 50% 40%,#000 25%,transparent 85%)}
+.scan{position:fixed;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px);animation:s 7s linear infinite}
+@keyframes s{to{background-position:0 6px}}
+.vig{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 40%,rgba(0,0,0,.75) 100%)}
+.box{position:relative;z-index:2;text-align:center;padding:26px;max-width:620px;
+  border:1px solid var(--line);border-radius:18px;background:rgba(11,13,23,.72)}
+.e{font-family:'JetBrains Mono',monospace;font-size:clamp(70px,20vw,150px);font-weight:700;line-height:1;
+  background:linear-gradient(100deg,var(--au),var(--mg) 45%,var(--bl) 75%,var(--tl));
+  -webkit-background-clip:text;background-clip:text;color:transparent;margin:0;
+  animation:gl 4s infinite steps(2)}
+@keyframes gl{0%,92%,100%{transform:translate(0,0)}95%{transform:translate(-3px,2px)}97%{transform:translate(3px,-2px)}}
+h1{font-size:clamp(18px,4vw,26px);margin:6px 0 4px}
+p{color:#98a4c4;font-size:14.5px;margin:0 0 20px}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#7d8bab}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;border-radius:12px;
+  border:1px solid var(--line);background:#12141f;color:inherit;text-decoration:none;
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  transition:transform .15s,border-color .15s}
+a:hover{transform:translateY(-2px);border-color:var(--au)}
+a.p{background:linear-gradient(135deg,var(--au),#ff8a00);color:#0a0a0a;border-color:transparent;font-weight:700}
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="grid"></div><div class="scan"></div><div class="vig"></div>
+
+<div class="box">
+  <div class="mono" style="margin-bottom:8px">▚ ROTTA NON TROVATA · ERR 404</div>
+  <p class="e">404</p>
+  <h1>Il pacchetto è stato perso dal nodo</h1>
+  <p>La rotta richiesta non esiste o è stata spostata. Torna alla base e riparti.</p>
+  <div class="mono">node: GE-01 · status: ROUTE_MISS</div>
+  <div class="row">
+    <a class="p" href="/">← HOME</a>
+    <a href="/#/cash">CATALOGO</a>
+    <a href="https://t.me/gustavoeuro" target="_blank" rel="noopener noreferrer">TELEGRAM ↗</a>
+  </div>
+</div>
+</body>
+</html>
