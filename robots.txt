@@ -1,0 +1,22 @@
+# GUSTAVOEURO · robots.txt
+User-agent: *
+Allow: /
+Disallow: /404.html
+Disallow: /README.md
+
+Sitemap: https://zdnnzs8vnr-debug.github.io/sitemap.xml
+
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
+
+User-agent: DotBot
+Crawl-delay: 10
+
+User-agent: Bytespider
+Crawl-delay: 5
