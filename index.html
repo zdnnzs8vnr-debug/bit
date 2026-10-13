@@ -1,0 +1,2868 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GUSTAVOEURO — DAL DARK WEB AL TUO PORTAFOGLIO</title>
+<meta name="description" content="GUSTAVOEURO · Banconote Euro Grade AAA+ e trasferimenti PayPal P2P anonimi. Consegna tracciata, verifica pubblica, zero intermediari.">
+<meta name="author" content="GUSTAVOEURO">
+<meta name="theme-color" content="#05060d">
+<meta name="color-scheme" content="dark">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305060d'/%3E%3Ctext x='50%25' y='58%25' font-family='monospace' font-size='30' font-weight='bold' fill='%23ffb020' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script>
+/* ---------- BOOT ERROR NET (mai pagina nera) ---------- */
+window.__GE_MOUNTED=false;
+window.__GE_ERR=function(msg){
+  try{
+    var el=document.getElementById('booterr');
+    if(!el) return;
+    var m=document.getElementById('be-msg');
+    if(m&&msg) m.textContent=String(msg).slice(0,300);
+    el.classList.add('on');
+  }catch(e){}
+};
+window.addEventListener('error',function(e){ if(!window.__GE_MOUNTED) window.__GE_ERR(e.message||'Errore script'); });
+window.addEventListener('unhandledrejection',function(e){ if(!window.__GE_MOUNTED) window.__GE_ERR((e.reason&&e.reason.message)||'Promise rejetta'); });
+setTimeout(function(){ if(!window.__GE_MOUNTED) window.__GE_ERR('React non ha montato entro 8s · controlla la connessione (CDN)'); },8000);
+</script>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>window.tailwind && (tailwind.config={corePlugins:{preflight:false}});</script>
+
+<style>
+:root{
+  --bg:#05060d; --fg:#eef0f8; --surface:#0b0d17; --panel:#12141f; --line:#1d2130;
+  --au:#ffb020; --bl:#3d7bff; --tl:#14e0b0; --mg:#ff3d9a; --rs:#ff5c5c;
+  --sol:#14e0b0; --btc:#ffb020; --ltc:#3d7bff;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+  --sans:'Space Grotesk',system-ui,-apple-system,sans-serif;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);
+  line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--au);color:#05060d}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#070911}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--bl),var(--mg));border-radius:8px}
+:focus-visible{outline:2px solid var(--tl);outline-offset:2px}
+
+/* ---------- SFONDO ---------- */
+.bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--bg)}
+.bgfx .blobs{position:absolute;inset:-25%;background:
+  radial-gradient(38% 32% at 14% 18%,rgba(61,123,255,.22),transparent 62%),
+  radial-gradient(34% 30% at 86% 12%,rgba(255,61,154,.17),transparent 62%),
+  radial-gradient(44% 38% at 72% 86%,rgba(20,224,176,.15),transparent 62%),
+  radial-gradient(30% 30% at 22% 82%,rgba(255,176,32,.13),transparent 62%);
+  animation:drift 30s ease-in-out infinite alternate}
+@keyframes drift{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(2%,-2%,0) scale(1.06)}
+  100%{transform:translate3d(-2%,2%,0) scale(1.02)}
+}
+.bgfx .gridx{position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(61,123,255,.075) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(20,224,176,.055) 1px,transparent 1px);
+  background-size:54px 54px;
+  -webkit-mask-image:radial-gradient(circle at 50% 38%,#000 26%,transparent 86%);
+  mask-image:radial-gradient(circle at 50% 38%,#000 26%,transparent 86%)}
+.scan{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px);
+  animation:scanm 7s linear infinite}
+@keyframes scanm{to{background-position:0 6px}}
+.vig{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 42%,transparent 40%,rgba(0,0,0,.74) 100%)}
+
+/* ---------- LAYOUT ---------- */
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 16px}
+.sec{padding:46px 0}
+.mono{font-family:var(--mono)}
+.mut{color:#8b98ba}
+.tiny{font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.h1{font-size:clamp(30px,7vw,60px);line-height:1.03;font-weight:700;letter-spacing:-.02em;margin:0}
+.h2{font-size:clamp(21px,3.4vw,34px);line-height:1.15;font-weight:700;margin:0 0 6px;letter-spacing:-.01em}
+.h3{font-size:17px;font-weight:600;margin:0 0 4px}
+.sub{color:#98a4c4;margin:6px 0 22px;max-width:70ch;font-size:15px}
+.grad{background:linear-gradient(100deg,var(--au),var(--mg) 40%,var(--bl) 72%,var(--tl));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(165px,1fr))}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.between{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+
+/* ---------- SUPERFICI ---------- */
+.panel{background:linear-gradient(180deg,rgba(18,20,31,.96),rgba(11,13,23,.96));
+  border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.card{background:linear-gradient(180deg,#12141f,#0c0e18);border:1px solid var(--line);
+  border-radius:16px;padding:14px;position:relative;overflow:hidden;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.card:hover{transform:translateY(-3px);border-color:rgba(255,176,32,.45);box-shadow:0 14px 40px rgba(0,0,0,.55)}
+.brk{position:relative;padding:14px}
+.brk>.c{position:absolute;width:14px;height:14px;border:2px solid var(--au);pointer-events:none;opacity:.85}
+.brk>.c.tl{top:0;left:0;border-right:0;border-bottom:0;border-radius:4px 0 0 0}
+.brk>.c.tr{top:0;right:0;border-left:0;border-bottom:0;border-radius:0 4px 0 0}
+.brk>.c.bl{bottom:0;left:0;border-right:0;border-top:0;border-radius:0 0 0 4px}
+.brk>.c.br{bottom:0;right:0;border-left:0;border-top:0;border-radius:0 0 4px 0}
+.brk>.c.tl,.brk>.c.tr{border-color:var(--tl)}
+.brk>.c.bl,.brk>.c.br{border-color:var(--mg)}
+
+/* ---------- PILL / BADGE ---------- */
+.pill{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(11,13,23,.85);font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#9fb0d4}
+.pill.au{border-color:rgba(255,176,32,.5);color:var(--au);background:rgba(255,176,32,.08)}
+.pill.bl{border-color:rgba(61,123,255,.5);color:#9dbcff;background:rgba(61,123,255,.08)}
+.pill.tl{border-color:rgba(20,224,176,.5);color:var(--tl);background:rgba(20,224,176,.08)}
+.pill.mg{border-color:rgba(255,61,154,.5);color:#ff9ccb;background:rgba(255,61,154,.08)}
+.pill.rs{border-color:rgba(255,92,92,.5);color:#ffa8a8;background:rgba(255,92,92,.08)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--tl);box-shadow:0 0 10px var(--tl);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.78)}}
+
+/* ---------- BOTTONI ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;
+  padding:10px 18px;border-radius:12px;border:1px solid var(--line);background:var(--panel);
+  cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  transition:transform .15s,border-color .15s,box-shadow .15s,background .15s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);border-color:var(--au);box-shadow:0 10px 28px rgba(255,176,32,.16)}
+.btn:active{transform:translateY(0)}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+.btn.pri{background:linear-gradient(135deg,var(--au),#ff8a00);color:#0a0a0a;border-color:transparent;font-weight:700}
+.btn.bl{border-color:rgba(61,123,255,.5);color:#cfe0ff;background:rgba(61,123,255,.1)}
+.btn.tl{border-color:rgba(20,224,176,.5);color:#c6fff0;background:rgba(20,224,176,.09)}
+.btn.mg{border-color:rgba(255,61,154,.5);color:#ffc9e4;background:rgba(255,61,154,.09)}
+.btn.gh{background:rgba(11,13,23,.7)}
+.btn.wide{width:100%}
+.btn.sm{min-height:36px;padding:7px 12px;font-size:11px}
+
+/* ---------- HEADER ---------- */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:40;
+  background:rgba(5,6,13,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hdr-in{max-width:1180px;margin:0 auto;padding:9px 16px;display:flex;align-items:center;gap:12px}
+.logo{font-weight:700;letter-spacing:.06em;font-size:15px;display:flex;align-items:center;gap:9px;cursor:pointer}
+.logo b{font-family:var(--mono);color:var(--au)}
+.nav{display:flex;gap:2px;margin-left:auto;align-items:center}
+.nav a{font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:8px 10px;border-radius:9px;
+  text-transform:uppercase;color:#9fb0d4;transition:background .15s,color .15s}
+.nav a:hover{background:rgba(255,176,32,.1);color:var(--au)}
+.nav a.on{color:var(--au);background:rgba(255,176,32,.09)}
+.sysbar{border-bottom:1px solid var(--line);background:rgba(8,10,18,.9)}
+.sysbar-in{max-width:1180px;margin:0 auto;padding:5px 16px;display:flex;gap:14px;align-items:center;
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:#7d8bab;overflow-x:auto;white-space:nowrap}
+.sysbar-in b{color:var(--tl);font-weight:500}
+.sysbar-in .warn{color:var(--au)}
+.spacer{height:104px}
+
+/* ---------- IMMAGINI ---------- */
+.imwrap{position:relative;width:100%;overflow:hidden;border-radius:12px;
+  background:radial-gradient(circle at 50% 50%,rgba(61,123,255,.09),rgba(5,6,13,.9));
+  border:1px solid var(--line)}
+.imwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:6px}
+
+/* ---------- TERMINALE ---------- */
+.term{background:#070911;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-family:var(--mono)}
+.term-h{display:flex;align-items:center;gap:8px;padding:7px 11px;border-bottom:1px solid var(--line);
+  background:rgba(18,20,31,.85);font-size:10.5px;letter-spacing:.12em;color:#8b98ba}
+.term-h .d{width:9px;height:9px;border-radius:50%}
+.term-b{padding:11px;font-size:11.5px;line-height:1.75;color:#8ff5cf;max-height:260px;overflow:auto}
+.term-b .k{color:var(--au)} .term-b .b{color:#9dbcff} .term-b .m{color:#ff9ccb}
+.term-b .g{color:#6d7b99}
+.hexline{font-family:var(--mono);font-size:10.5px;color:#5f6d8c;letter-spacing:.06em;word-break:break-all}
+.hash{font-family:var(--mono);font-size:11px;color:var(--tl);word-break:break-all}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px dashed rgba(29,33,48,.9);font-family:var(--mono);font-size:11.5px}
+.kv:last-child{border-bottom:0}
+.kv span:first-child{color:#7d8bab;letter-spacing:.08em;text-transform:uppercase}
+.kv span:last-child{text-align:right;color:#d8e0f5}
+
+/* ---------- MARQUEE ---------- */
+.marq{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(8,10,18,.7)}
+.marq>div{display:inline-block;white-space:nowrap;padding:9px 0;animation:mq 34s linear infinite;
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:#8ea0c8}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---------- OVERLAY ---------- */
+.scrim{position:fixed;inset:0;z-index:60;background:rgba(3,4,9,.78);opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,92vw);z-index:61;
+  background:#0a0c15;border-left:1px solid var(--line);transform:translateX(102%);
+  transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.modal{position:fixed;inset:0;z-index:71;display:flex;align-items:center;justify-content:center;padding:16px;
+  opacity:0;pointer-events:none;transition:opacity .22s}
+.modal.on{opacity:1;pointer-events:auto}
+.modal-b{background:#0b0d17;border:1px solid var(--line);border-radius:16px;padding:18px;
+  max-width:760px;width:100%;max-height:88vh;overflow:auto;transform:translateY(12px);transition:transform .22s}
+.modal.on .modal-b{transform:none}
+.light{position:fixed;inset:0;z-index:75;background:rgba(2,3,8,.96);display:none;align-items:center;justify-content:center;padding:16px}
+.light.on{display:flex}
+.light img{max-width:96vw;max-height:84vh;object-fit:contain;border-radius:12px}
+.menu{position:fixed;inset:0;z-index:90;background:rgba(4,5,11,.97);
+  display:flex;flex-direction:column;gap:6px;padding:70px 22px 30px;transform:translateY(-102%);
+  transition:transform .32s cubic-bezier(.4,0,.2,1);overflow:auto}
+.menu.on{transform:none}
+.menu a{font-family:var(--mono);font-size:19px;letter-spacing:.08em;padding:13px 4px;
+  border-bottom:1px solid var(--line);color:#c3cde6}
+.menu a:hover{color:var(--au)}
+
+/* ---------- FORM ---------- */
+.inp{width:100%;min-height:44px;padding:11px 13px;border-radius:11px;border:1px solid var(--line);
+  background:#0a0c15;font-family:var(--mono);font-size:13px;transition:border-color .15s,box-shadow .15s}
+.inp:focus{outline:0;border-color:var(--tl);box-shadow:0 0 0 3px rgba(20,224,176,.12)}
+.inp.bad{border-color:var(--rs);box-shadow:0 0 0 3px rgba(255,92,92,.12)}
+.lbl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:#8b98ba;margin:0 0 6px}
+.err{color:#ffa8a8;font-size:11.5px;font-family:var(--mono);margin-top:5px}
+
+/* ---------- STEP ---------- */
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.step{flex:1;min-width:130px;padding:10px;border-radius:11px;border:1px solid var(--line);
+  background:rgba(11,13,23,.6);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:#6f7d9c}
+.step.on{border-color:var(--au);color:var(--au);background:rgba(255,176,32,.08)}
+.step.done{border-color:rgba(20,224,176,.5);color:var(--tl)}
+
+/* ---------- FAB / BADGE LIVE ---------- */
+.fab{position:fixed;right:14px;bottom:16px;z-index:45;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.fab a{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--bl),var(--mg));border:1px solid rgba(255,255,255,.12);
+  font-family:var(--mono);font-size:11px;font-weight:700;color:#fff;transition:transform .18s}
+.fab a:hover{transform:scale(1.09)}
+.live{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.16em;color:var(--tl)}
+
+/* ---------- GLITCH ---------- */
+.gl{position:relative;display:inline-block}
+.gl::before,.gl::after{content:attr(data-t);position:absolute;inset:0;pointer-events:none}
+.gl::before{color:var(--mg);animation:g1 3.4s infinite steps(2)}
+.gl::after{color:var(--tl);animation:g2 2.7s infinite steps(2)}
+@keyframes g1{0%,92%,100%{transform:translate(0,0)}94%{transform:translate(-2px,1px)}96%{transform:translate(2px,-1px)}}
+@keyframes g2{0%,90%,100%{transform:translate(0,0)}93%{transform:translate(2px,-1px)}97%{transform:translate(-2px,1px)}}
+
+/* ---------- ROUTE FLASH ---------- */
+.rflash{position:fixed;inset:0;z-index:35;pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,rgba(20,224,176,.16),transparent 40%)}
+.rflash.on{animation:rf .42s ease-out}
+@keyframes rf{0%{opacity:1}100%{opacity:0}}
+
+/* ---------- SIGNAL BARS ---------- */
+.bars{display:inline-flex;gap:2px;align-items:flex-end;height:12px}
+.bars i{width:3px;background:var(--tl);border-radius:1px;animation:bar 1.1s ease-in-out infinite}
+.bars i:nth-child(1){height:4px;animation-delay:0s}
+.bars i:nth-child(2){height:7px;animation-delay:.12s}
+.bars i:nth-child(3){height:10px;animation-delay:.24s}
+.bars i:nth-child(4){height:12px;animation-delay:.36s}
+@keyframes bar{0%,100%{opacity:.35}50%{opacity:1}}
+
+/* ---------- BOOT / GATE ---------- */
+.full{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;padding:20px}
+#mcanvas{position:fixed;inset:0;z-index:0;opacity:.5;pointer-events:none}
+.log{font-family:var(--mono);font-size:12px;line-height:1.85;color:#8ff5cf;min-height:210px}
+.log .g{color:#5d6a88}
+.gatebox{width:min(460px,94vw);text-align:center}
+.keypad{display:flex;gap:6px;justify-content:center;margin:14px 0}
+.keypad i{width:11px;height:11px;border-radius:3px;border:1px solid var(--line);background:#0a0c15}
+.keypad i.on{background:var(--au);border-color:var(--au);box-shadow:0 0 12px rgba(255,176,32,.5)}
+.shake{animation:sh .4s}
+@keyframes sh{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+/* ---------- SCANNER QR ---------- */
+.qrbox{position:relative;background:#fff;border-radius:14px;padding:10px;width:min(260px,72vw);margin:0 auto}
+.qrbox img{width:100%;height:auto;border-radius:8px}
+.qrline{position:absolute;left:8px;right:8px;height:2px;background:linear-gradient(90deg,transparent,var(--mg),transparent);
+  box-shadow:0 0 14px var(--mg);animation:qrs 2.6s ease-in-out infinite}
+@keyframes qrs{0%,100%{top:8px}50%{top:calc(100% - 10px)}}
+
+/* ---------- PROGRESS ---------- */
+.prog{height:7px;border-radius:99px;background:#0a0c15;border:1px solid var(--line);overflow:hidden}
+.prog>i{display:block;height:100%;background:linear-gradient(90deg,var(--tl),var(--bl));transition:width .5s linear}
+.prog.low>i{background:linear-gradient(90deg,var(--rs),var(--au))}
+
+/* ---------- BOOTERR ---------- */
+.booterr{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
+  background:rgba(3,4,9,.94);padding:20px}
+.booterr.on{display:flex}
+.be-box{max-width:520px;width:100%;border:1px solid var(--rs);border-radius:16px;padding:20px;
+  background:#0a0c15;font-family:var(--mono)}
+.be-t{color:var(--rs);font-size:13px;letter-spacing:.2em;margin-bottom:10px}
+.be-m{font-size:12.5px;color:#c3cde6;margin-bottom:16px;word-break:break-word}
+.be-b{display:flex;gap:8px;flex-wrap:wrap}
+.be-b button{min-height:42px;padding:9px 15px;border-radius:10px;border:1px solid var(--line);
+  background:var(--panel);cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+
+/* ---------- TAB ---------- */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{padding:10px 14px;border-radius:11px;border:1px solid var(--line);background:rgba(11,13,23,.7);
+  cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9fb0d4}
+.tab.on{border-color:var(--au);color:var(--au);background:rgba(255,176,32,.1)}
+.tab.tl.on{border-color:var(--tl);color:var(--tl);background:rgba(20,224,176,.1)}
+.tab.mg.on{border-color:var(--mg);color:#ff9ccb;background:rgba(255,61,154,.1)}
+
+/* ---------- ACCORDION ---------- */
+.acc{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:9px;background:rgba(11,13,23,.6)}
+.acc-h{width:100%;text-align:left;padding:14px;background:none;border:0;cursor:pointer;
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;display:flex;justify-content:space-between;gap:12px;color:#d8e0f5}
+.acc-b{padding:0 14px 14px;color:#98a4c4;font-size:14px}
+.acc.on .acc-h{color:var(--au)}
+
+/* ---------- LISTE ---------- */
+.ul{margin:8px 0 0;padding-left:18px;color:#98a4c4;font-size:14px}
+.ul li{margin:5px 0}
+.ul li::marker{color:var(--au)}
+.pros{color:#8ff5cf;font-size:13.5px}
+.cons{color:#ffb3b3;font-size:13.5px}
+
+/* ---------- TABLE ---------- */
+.tbl{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px}
+.tbl th,.tbl td{padding:8px 9px;border-bottom:1px solid var(--line);text-align:left}
+.tbl th{color:#7d8bab;font-weight:500;letter-spacing:.1em;text-transform:uppercase;font-size:10.5px}
+.tbl td:last-child,.tbl th:last-child{text-align:right}
+
+/* ---------- SPINNER ---------- */
+.spin{width:44px;height:44px;border-radius:50%;border:3px solid rgba(255,176,32,.2);
+  border-top-color:var(--au);animation:sp .8s linear infinite;margin:0 auto}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ---------- FOOTER ---------- */
+.ftr{position:relative;z-index:1;border-top:1px solid var(--line);background:rgba(6,8,14,.85);margin-top:30px}
+.ftr a:hover{color:var(--au)}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .bgfx .blobs{animation:none}
+}
+@media (max-width:900px){
+  .nav{display:none}
+  .spacer{height:96px}
+  .sec{padding:34px 0}
+}
+@media (max-width:520px){
+  .h1{font-size:30px}
+  .btn{font-size:11px;padding:10px 13px}
+}
+</style>
+</head>
+<body>
+
+<div class="bgfx" aria-hidden="true"><div class="blobs"></div><div class="gridx"></div></div>
+<div class="scan" aria-hidden="true"></div>
+<div class="vig" aria-hidden="true"></div>
+<canvas id="mcanvas" aria-hidden="true"></canvas>
+
+<div id="root"></div>
+
+<div id="booterr" class="booterr" role="alert">
+  <div class="be-box">
+    <div class="be-t">▚ BOOT ERROR · NODO NON MONTATO</div>
+    <div class="be-m" id="be-msg">Errore sconosciuto. Verifica la connessione e ricarica.</div>
+    <div class="be-b">
+      <button onclick="location.reload()">RICARICA NODO</button>
+      <button onclick="document.getElementById('booterr').classList.remove('on')">IGNORA</button>
+    </div>
+  </div>
+</div>
+
+<noscript>
+  <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-family:monospace;color:#ffb020">
+    GUSTAVOEURO · abilita JavaScript per entrare nel nodo.
+  </div>
+</noscript>
+
+<!-- ============ CDN CORE (React / ReactDOM / Babel) con fallback ============ -->
+<script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script>window.React||document.write('<scr'+'ipt crossorigin src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"><\/scr'+'ipt>');</script>
+
+<script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script>window.ReactDOM||document.write('<scr'+'ipt crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"><\/scr'+'ipt>');</script>
+
+<script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+<script>window.Babel||document.write('<scr'+'ipt src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.25.6/babel.min.js"><\/scr'+'ipt>');</script>
+
+<!-- ============ SERVICE WORKER ============ -->
+<script>
+if('serviceWorker' in navigator && location.protocol==='https:'){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+</script>
+
+<!-- ============ APP ============ -->
+<script type="text/babel" data-presets="react">
+
+/* =========================================================================
+   GUSTAVOEURO · v5 · single-page · dark-web / hacker edition
+   ========================================================================= */
+const {useState,useEffect,useRef,useMemo,useCallback,useContext,createContext,Fragment} = React;
+
+/* ------------------------------------------------------------------ *
+ *  ██  BLOCCO PHOTO  ██  ← MODIFICA QUI IN 10 SECONDI
+ * ------------------------------------------------------------------ */
+const PHOTO = {
+  eur10:{ main:'note10.png', gallery:['note10.png'],
+          fallbacks:['https://i.ibb.co/9mwGD10w/IMG-4949.jpg'] },
+  eur20:{
+    main:'https://i.ibb.co/9mwGD10w/IMG-4949.jpg',
+    gallery:[
+      'https://i.ibb.co/9mwGD10w/IMG-4949.jpg',
+      'https://i.ibb.co/rKysvGxB/IMG-4954.gif',
+      'https://i.ibb.co/35LCKPHm/IMG-4951.jpg',
+      'https://i.ibb.co/6J066JyY/IMG-4953.gif'
+    ]
+  },
+  eur50:{
+    main:'https://i.ibb.co/dwBt6Q78/IMG-4956.jpg',
+    gallery:[
+      'https://i.ibb.co/dwBt6Q78/IMG-4956.jpg',
+      'https://i.ibb.co/vxQQwt6Y/IMG-4958.gif',
+      'https://i.ibb.co/xqvq97nX/IMG-4957.jpg',
+      'https://i.ibb.co/67ZKnsjB/IMG-4960.gif',
+      'https://i.ibb.co/Y74wt404/IMG-4959.gif'
+    ]
+  },
+  qr:{ SOL:'qr-sol.png', BTC:'qr-btc.png', LTC:'qr-ltc.png' },
+  fallbacks:['https://i.ibb.co/9mwGD10w/IMG-4949.jpg',
+             'https://i.ibb.co/dwBt6Q78/IMG-4956.jpg']
+};
+/* NB: NON usare https://i.ibb.co/XxLWxv6X/IMG-4952.gif (rotta). */
+
+/* ------------------------------------------------------------------ *
+ *  DATI
+ * ------------------------------------------------------------------ */
+const COINS = {
+  SOL:{sym:'SOL',name:'Solana',addr:'ERCWJYLgWsta7REn2yraMwPM6ou615xSmb1HHd5hyFX',memo:true,
+       exp:'https://solscan.io/account/',conf:2,avg:'~15 sec',var:'--sol'},
+  BTC:{sym:'BTC',name:'Bitcoin',addr:'bc1qqhwa4u3kusd3tnr8q3mej83n66eftwglfg477d',memo:false,
+       exp:'https://mempool.space/address/',conf:2,avg:'~10 min',var:'--btc'},
+  LTC:{sym:'LTC',name:'Litecoin',addr:'ltc1qea82qy0kn8v977a7x8ek49dzpanenhm6la9dpe',memo:false,
+       exp:'https://blockchair.com/litecoin/address/',conf:2,avg:'~2 min',var:'--ltc'}
+};
+
+const PRODUCTS = [
+  {id:'e20a',tag:'eur20',label:'20 EUR',code:'ENTRY LEVEL',pcs:25,price:250,badge:'ENTRY',badgeC:'bl'},
+  {id:'e20b',tag:'eur20',label:'20 EUR',code:'SCORTA OPERATIVA',pcs:75,price:700,badge:'BEST SELLER',badgeC:'au'},
+  {id:'e20c',tag:'eur20',label:'20 EUR',code:'VOLUME INDUSTRIALE',pcs:200,price:1750,badge:'VOLUME',badgeC:'tl'},
+  {id:'e50a',tag:'eur50',label:'50 EUR',code:'PACK STARTER 50',pcs:15,price:450,badge:'STARTER',badgeC:'bl'},
+  {id:'e50b',tag:'eur50',label:'50 EUR',code:'BANK RESERVE',pcs:50,price:1500,badge:'BANK RESERVE',badgeC:'au'},
+  {id:'e50c',tag:'eur50',label:'50 EUR',code:'POTERE DI SMERCIO ASSOLUTO',pcs:150,price:4300,badge:'MAX',badgeC:'mg'}
+];
+
+const PAYPAL = [
+  {id:'p1',code:'ASE',pay:120,get:250},
+  {id:'p2',code:'ADVANCED',pay:200,get:450},
+  {id:'p3',code:'VIP',pay:300,get:700},
+  {id:'p4',code:'PREMIUM',pay:450,get:1100},
+  {id:'p5',code:'ELITE',pay:700,get:1800},
+  {id:'p6',code:'MASTER',pay:1000,get:2800}
+];
+
+const IDENT = {
+  tg:'https://t.me/gustavoeuro',
+  ch:'https://t.me/+gBf54xWnFapjMmRh',
+  pgp:'7B3F 9A21 C4E8 5D06 1F77  8AC2 30B9 4E11',
+  onion:'gustavoeuro7x2k.onion',
+  carriers:['POSTE ITALIANE','BRT','GLS','DHL','LOCKER INPOST'],
+  iban:'IT60X0542811101000000123456'
+};
+
+/* ------------------------------------------------------------------ *
+ *  UTILITY
+ * ------------------------------------------------------------------ */
+const S = {
+  get(k,d){ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} },
+  sget(k,d){ try{ const v=sessionStorage.getItem(k); return v==null?d:v; }catch(e){ return d; } },
+  sset(k,v){ try{ sessionStorage.setItem(k,v); }catch(e){} }
+};
+
+function h32(s){ let h=0x811c9dc5; for(let i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,0x01000193); } return (h>>>0); }
+function hashHex(s,len){ let out='',n=0; while(out.length<len){ out+=h32(s+'#'+n).toString(16).padStart(8,'0'); n++; } return out.slice(0,len).toUpperCase(); }
+function randHex(n){ const a=[]; for(let i=0;i<n;i++) a.push(hashHex(String(Math.random())+Date.now()+i,8)); return a; }
+const AL='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+function rand4(){ let s=''; for(let i=0;i<4;i++) s+=AL[Math.floor(Math.random()*AL.length)]; return s; }
+function pad(n){ return String(n).padStart(2,'0'); }
+function nowStamp(){ const d=new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds()); }
+
+function copy(txt){
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt); return true; }
+    const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); return true;
+  }catch(e){ return false; }
+}
+function dl(name,text){
+  try{
+    const b=new Blob([text],{type:'text/plain;charset=utf-8'});
+    const u=URL.createObjectURL(b); const a=document.createElement('a');
+    a.href=u; a.download=name; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(u),2500);
+  }catch(e){}
+}
+const money = n => '€ '+Number(n||0).toLocaleString('it-IT');
+
+/* ------------------------------------------------------------------ *
+ *  DIZIONARIO 5 LINGUE (complete)
+ * ------------------------------------------------------------------ */
+const DICT = {
+it:{
+ 'nav.home':'HOME','nav.cash':'CATALOGO','nav.paypal':'PAYPAL','nav.quality':'VERIFICA QUALITÀ','nav.trust':'CENTRO FIDUCIA',
+ 'nav.faq':'FAQ','nav.track':'TRACCIA','nav.feedback':'FEEDBACK','nav.checkout':'CHECKOUT','nav.cart':'CARRELLO','nav.menu':'MENU','nav.contact':'CONTATTI',
+ 'brand.tag':'DAL DARK WEB AL TUO PORTAFOGLIO','brand.est':'EST. 2022','brand.motto':'Cifrato · Tracciato · Verificato',
+ 'sys.cpu':'CPU','sys.mem':'MEM','sys.ping':'PING','sys.blk':'BLOCK','sys.tor':'TOR 3 HOPS','sys.enc':'AES-256','sys.node':'NODO','sys.live':'LIVE',
+ 'common.add':'AGGIUNGI','common.added':'AGGIUNTO','common.remove':'RIMUOVI','common.total':'TOTALE','common.back':'INDIETRO','common.next':'AVANTI',
+ 'common.copy':'COPIA','common.copied':'COPIA OK','common.close':'CHIUDI','common.loading':'CARICAMENTO...','common.all':'TUTTI','common.open':'APRI',
+ 'common.pcs':'PEZZI','common.priceInCart':'PREZZO VISIBILE NEL CARRELLO','common.send':'INVIA','common.download':'SCARICA RICEVUTA',
+ 'common.step':'STEP','common.search':'CERCA','common.continue':'CONTINUA','common.retry':'RIPROVA','common.empty':'VUOTO','common.optional':'opzionale',
+ 'common.required':'obbligatorio','common.qty':'Q.TÀ','common.verified':'VERIFICATO','common.clear':'PULISCI','common.yes':'SÌ','common.no':'NO',
+ 'common.items':'ARTICOLI','common.here':'QUI','common.open_tg':'APRI TELEGRAM',
+ 'boot.l1':'[ OK ] gustavoeuro-kernel v5.0.0 avviato','boot.l2':'[ OK ] /dev/secure montato · AES-256 attivo','boot.l3':'[ OK ] handshake TLS 1.3 · 4096 bit',
+ 'boot.l4':'[ OK ] circuito TOR instradato · 3 hop','boot.l5':'[ OK ] firma PGP verificata · 7B3F 9A21 C4E8 5D06','boot.l6':'[ OK ] merkle root indirizzi coerente',
+ 'boot.l7':'[ OK ] anti-scanner · nikto / sqlmap / nmap respinti','boot.l8':'[WARN] rete pubblica rilevata · modalità anonima attiva',
+ 'boot.ready':'NODO PRONTO','boot.enter':'ENTRA NEL NODO','boot.skip':'SALTA','boot.hint':'premi INVIO',
+ 'gate.title':'ACCESSO RISERVATO','gate.sub':'Inserisci la chiave di accesso per entrare nel nodo GUSTAVOEURO.',
+ 'gate.ph':'CHIAVE DI ACCESSO','gate.btn':'SBLOCCA NODO','gate.err':'CHIAVE NON VALIDA · riprova','gate.ok':'ACCESSO CONCESSO',
+ 'gate.hint':'Suggerimento: il nome del progetto, tutto maiuscolo.',
+ 'home.badge':'NODO ATTIVO · CRITTOGRAFIA ATTIVA','home.t1':'DAL DARK WEB','home.t2':'AL TUO PORTAFOGLIO',
+ 'home.sub':'Banconote Euro Grade AAA+ e trasferimenti PayPal P2P anonimi. Consegna tracciata, verifica pubblica, zero intermediari inutili.',
+ 'home.cta1':'SFOGLIA IL CATALOGO','home.cta2':'TRASFERIMENTI PAYPAL','home.cta3':'VERIFICA QUALITÀ',
+ 'home.stTitle':'TELEMETRIA NODO','home.st1':'OPERATIVO DAL','home.st1v':'2022','home.st2':'TAGLI IN CATALOGO','home.st2v':'20 / 50',
+ 'home.st3':'GRADO BANCONOTE','home.st3v':'AAA+','home.st4':'CONFERME ON-CHAIN','home.st4v':'2 / 2',
+ 'home.denTitle':'TAGLI DISPONIBILI','home.denSub':'Ogni taglio ha la sua scheda. Prezzo visibile nel carrello.',
+ 'home.whyTitle':'PERCHÉ FIDARSI','home.whySub':'Nessuna promessa magica. Solo procedure verificabili.',
+ 'home.w1t':'GRADO AAA+','home.w1b':'Banconote selezionate e controllate una per una, a mano.',
+ 'home.w2t':'UV 100%','home.w2b':'Controllo lampada UV su ogni blocco prima della spedizione.',
+ 'home.w3t':'SCANNER PASS','home.w3b':'Passaggio su lettore ottico: nessun taglio fuori misura.',
+ 'home.w4t':'FIBRA COTONE','home.w4b':'Carta 100% cotone, spessore e rilievo corretti.',
+ 'home.w5t':'SPEDIZIONE TRACCIATA','home.w5b':'Corrieri reali, codice tracciamento sempre fornito.',
+ 'home.w6t':'PROVA PUBBLICA','home.w6b':'Hash, checksum e firma PGP verificabili da chiunque.',
+ 'home.idxTitle':'INDICE DEL NODO','home.idxSub':'Navigazione rapida tra i moduli.',
+ 'home.termTitle':'session.log','home.marq':'GUSTAVOEURO · EST. 2022 · GRADE AAA+ · UV 100% · SCANNER PASS · FIBRA COTONE · TRACCIATO · PGP SIGNED · TOR 3 HOPS · AES-256 · ',
+ 'cash.title':'CATALOGO BANCONOTE','cash.sub':'Tagli 20 e 50 EUR disponibili a blocchi. Il taglio 10 EUR è su richiesta.',
+ 'cash.note':'I prezzi non stanno sulle card: li vedi nel carrello e nel checkout, con breakdown completo.',
+ 'cash.reqTitle':'SU RICHIESTA · 10 EUR','cash.reqText':'Il taglio da 10 EUR ha poca disponibilità: non è a catalogo fisso. Scrivici su Telegram e ti diciamo quanti pezzi sono liberi in questo momento.',
+ 'cash.reqBtn':'CHIEDI DISPONIBILITÀ','cash.grade':'GRADE AAA+','cash.uv':'UV 100%','cash.scan':'SCANNER PASS','cash.fiber':'FIBRA COTONE',
+ 'cash.ship':'SPEDIZIONE','cash.shipV':'TRACCIATA','cash.avail':'DISPONIBILE',
+ 'paypal.title':'TRASFERIMENTI PAYPAL','paypal.sub':'Il saldo viene girato tramite exchange terzo: la catena mittente/destinatario si spezza e il saldo arriva pulito.',
+ 'paypal.note':'Paghi una cifra, ricevi una cifra più alta. Nessun vincolo sul tuo account.',
+ 'paypal.pay':'PAGHI','paypal.get':'RICEVI','paypal.mult':'MOLTIPLICA','paypal.how':'COME FUNZIONA',
+ 'paypal.s1':'Scegli il taglio e aggiungilo al carrello.','paypal.s2':'Ci passi la tua email PayPal nel checkout.',
+ 'paypal.s3':'Il saldo viene instradato tramite exchange terzo.','paypal.s4':'Ricevi il saldo pulito sul tuo account.',
+ 'paypal.warn':'I trasferimenti non richiedono spedizione fisica: nel checkout la sezione indirizzo sparisce automaticamente.',
+ 'quality.title':'VERIFICA QUALITÀ','quality.sub':'Foto e video reali dei blocchi. Filtra per taglio e apri a schermo intero.',
+ 'quality.f20':'20 EUR','quality.f50':'50 EUR','quality.open':'APRI','quality.empty':'Nessun media per questo taglio.','quality.hint':'Clicca su un elemento per aprirlo in fullscreen.',
+ 'trust.title':'CENTRO FIDUCIA','trust.sub':'Tutto quello che puoi verificare da solo, senza fidarti sulla parola.',
+ 'trust.how':'COME LAVORIAMO','trust.howB':'Selezioniamo i blocchi, li controlliamo a mano, li sigilliamo e li spediamo con corriere tracciato. Ogni ordine ha un codice univoco.',
+ 'trust.guar':'GARANZIA RIMBORSO','trust.guarB':'Se un blocco non supera il controllo dichiarato, lo sostituiamo o rimborsiamo. La procedura è scritta, non improvvisata.',
+ 'trust.merkle':'MERKLE ROOT INDIRIZZI','trust.merkleB':'Gli indirizzi crypto pubblicati sono concatenati in un albero di Merkle. La root qui sotto è ricalcolabile da chiunque.',
+ 'trust.rules':'REGOLE DEL SERVIZIO','trust.rulesB':'Nessun costo nascosto. Commissioni sempre esplicite. Tempi dichiarati prima di pagare.',
+ 'trust.pgp':'CHIAVE PGP','trust.pgpB':'Ogni ricevuta è accompagnata da un\'anteprima di firma. Il fingerprint è pubblico e confrontabile.',
+ 'trust.onion':'MIRROR ONION','trust.onionB':'Accesso alternativo via rete Tor per chi non vuole passare dalla rete pubblica.',
+ 'trust.carriers':'CORRIERI','trust.carriersB':'Lavoriamo solo con corrieri reali e tracciabili. Il codice ti arriva sempre.',
+ 'trust.time':'TIMELINE','trust.badges':'BADGE DI FIDUCIA',
+ 'trust.b1':'GRADE AAA+','trust.b2':'PGP SIGNED','trust.b3':'TRACCIATO','trust.b4':'PROVA PUBBLICA',
+ 'trust.verify':'RICALCOLA HASH',
+ 'faq.title':'DOMANDE FREQUENTI','faq.sub':'Le risposte secche, senza giri di parole.',
+ 'faq.q1':'Le banconote sono vere?','faq.a1':'Sì. Sono banconote Euro con grado di conservazione AAA+, selezionate e controllate una per una.',
+ 'faq.q2':'Perché i prezzi sono nel carrello?','faq.a2':'Perché il prezzo dipende dal taglio e dal volume del blocco. Nelle card trovi la descrizione, nel carrello il numero esatto.',
+ 'faq.q3':'Cosa significa trasferimento PayPal P2P?','faq.a3':'Il saldo viene girato tramite un exchange terzo, così la catena mittente/destinatario si spezza e sul tuo account arriva saldo pulito.',
+ 'faq.q4':'Quali crypto accettate?','faq.a4':'SOL, BTC e LTC. Sono le tre reti con commissioni basse e conferme rapide. Invia sempre sulla rete indicata.',
+ 'faq.q5':'Quanto costa il bonifico?','faq.a5':'Il bonifico istantaneo SEPA ha un +10% di gestione, dichiarato nel breakdown prima che tu paghi.',
+ 'faq.q6':'E i buoni Amazon?','faq.a6':'Conversione con +20%: acquisti il buono, ci passi il codice a 15 cifre e il totale viene ricalcolato.',
+ 'faq.q7':'Come traccio l\'ordine?','faq.a7':'Ogni ordine genera un codice GST-… salvato sul tuo dispositivo. Lo reinserisci nella pagina Traccia e rileggi tutto.',
+ 'faq.q8':'Cosa succede se qualcosa va storto?','faq.a8':'Scrivi su Telegram con il codice ordine. Sostituzione o rimborso secondo la garanzia pubblicata.',
+ 'track.title':'TRACCIA ORDINE','track.sub':'Inserisci il codice ordine GST-… per rileggere la tua ricevuta.',
+ 'track.ph':'GST-XXXX-XXXX','track.btn':'CERCA ORDINE','track.found':'ORDINE TROVATO','track.none':'Nessun ordine con questo codice su questo dispositivo.',
+ 'track.clear':'PULISCI STORICO','track.status':'STATO','track.items':'ARTICOLI','track.date':'DATA',
+ 'fb.title':'FEEDBACK','fb.sub':'Due righe e ci aiuti a migliorare. Nessun account richiesto.',
+ 'fb.name':'NOME O NICK','fb.contact':'CONTATTO (TELEGRAM/EMAIL)','fb.order':'CODICE ORDINE','fb.msg':'MESSAGGIO','fb.send':'INVIA FEEDBACK',
+ 'fb.ok':'FEEDBACK REGISTRATO','fb.rating':'VALUTAZIONE','fb.thanks':'Grazie: il feedback resta salvato sul tuo dispositivo.',
+ 'priv.title':'PRIVACY','terms.title':'TERMINI','cook.title':'COOKIE',
+ 'priv.p1':'Non usiamo analytics invasivi. I dati del carrello e degli ordini restano nel localStorage del tuo browser.',
+ 'priv.p2':'La lingua scelta resta in localStorage. La sessione di sblocco vive in sessionStorage e muore chiudendo la scheda.',
+ 'priv.p3':'I contatti che ci invii su Telegram sono usati solo per gestire l\'ordine.',
+ 'priv.p4':'Nessun dato viene rivenduto. Nessun profilo pubblicitario costruito alle tue spalle.',
+ 'terms.p1':'I prezzi sono espressi in Euro e mostrati nel carrello prima del pagamento.',
+ 'terms.p2':'I tempi di consegna sono indicati prima della conferma. Il codice di tracciamento è sempre fornito.',
+ 'terms.p3':'In caso di blocco non conforme alla descrizione: sostituzione o rimborso.',
+ 'terms.p4':'Le commissioni (crypto 0%, bonifico +10%, buoni Amazon +20%) sono sempre dichiarate nel breakdown.',
+ 'cook.p1':'Cookie tecnici: nessuno di profilazione. Il sito funziona interamente lato client.',
+ 'cook.p2':'Usiamo localStorage e sessionStorage per lingua, carrello, ordini e sblocco.',
+ 'cook.p3':'Puoi svuotare tutto dalle impostazioni del browser senza rompere nulla di permanente.',
+ 'co.title':'CHECKOUT','co.sub':'Quattro passaggi: dati, verifica, pagamento, conferma.',
+ 'co.s1':'DATI','co.s2':'VERIFICA','co.s3':'PAGAMENTO','co.s4':'CONFERMA',
+ 'co.dataT':'DATI ORDINE','co.shipT':'SPEDIZIONE','co.noShip':'Nessuna spedizione necessaria: nel carrello hai solo trasferimenti PayPal.',
+ 'co.email':'EMAIL PAYPAL','co.email2':'CONFERMA EMAIL PAYPAL','co.name':'NOME E COGNOME','co.addr':'INDIRIZZO','co.city':'CITTÀ','co.zip':'CAP',
+ 'co.country':'PAESE','co.phone':'TELEFONO','co.notes':'NOTE','co.mixedT':'ORDINE MISTO','co.payT':'METODO DI PAGAMENTO',
+ 'co.verifyT':'VERIFICA INTEGRITÀ','co.ledger':'LEDGER','co.total':'TOTALE','co.sig':'ANTEPRIMA FIRMA PGP','co.checksum':'CHECKSUM',
+ 'co.draft':'ID BOZZA','co.session':'ID SESSIONE','co.ts':'TIMESTAMP','co.empty':'Il carrello è vuoto.','co.go':'VAI AL CATALOGO',
+ 'co.proceed':'PROCEDI','co.method':'SCEGLI IL METODO','co.confirmT':'CONFERMA ORDINE','co.code':'CODICE ORDINE','co.receipt':'SCARICA RICEVUTA',
+ 'co.processing':'ELABORAZIONE IN CORSO','co.thanks':'ORDINE REGISTRATO','co.saved':'Salvato sul tuo dispositivo: recuperabile dalla pagina Traccia.',
+ 'co.errEmail':'Inserisci un\'email valida.','co.errMatch':'Le due email non coincidono.','co.errReq':'Campo obbligatorio.','co.cancel':'ANNULLA',
+ 'co.shipInfo':'Dove spedire il blocco.','co.payInfo':'Dove ricevere il saldo PayPal.',
+ 'pay.crypto':'CRYPTO','pay.sepa':'BONIFICO ISTANTANEO','pay.amazon':'BUONI AMAZON','pay.reco':'CONSIGLIATO',
+ 'pay.fees0':'0% COMMISSIONI','pay.pros':'PRO','pay.cons':'CONTRO','pay.warnNet':'Invia SOLO {s} sulla rete {n}. Un\'altra rete = fondi persi.',
+ 'pay.timeline':'TIMELINE','pay.countdown':'TEMPO RESIDUO','pay.conf':'CONFERME','pay.explorer':'APRI EXPLORER','pay.preview':'ANTEPRIMA TRANSAZIONE',
+ 'pay.amount':'IMPORTO ESATTO','pay.memo':'MEMO (OBBLIGATORIO)','pay.network':'RETE','pay.address':'INDIRIZZO','pay.verified':'INDIRIZZO VERIFICATO',
+ 'pay.scan':'INQUADRA IL QR','pay.copyAddr':'COPIA INDIRIZZO','pay.iban':'IBAN','pay.ibanNote':'IBAN comunicato su Telegram · copialo e incollalo nel bonifico istantaneo.',
+ 'pay.causale':'CAUSALE','pay.breakdown':'BREAKDOWN','pay.base':'IMPORTO BASE','pay.fee10':'GESTIONE +10%','pay.fee20':'CONVERSIONE +20%',
+ 'pay.region':'REGIONE BUONO','pay.voucher':'CODICE BUONO 15 CIFRE','pay.vcode':'CODICE','pay.ckOk':'CHECKSUM OK','pay.ckBad':'CHECKSUM DA CONTROLLARE',
+ 'pay.step1':'STEP 1','pay.step2':'STEP 2','pay.step3':'STEP 3','pay.step4':'STEP 4','pay.notice':'AVVISO','pay.avg':'TEMPO MEDIO','pay.trust':'GARANZIE',
+ 'footer.about':'Banconote Euro Grade AAA+ e trasferimenti PayPal P2P anonimi. Operativi dal 2022.',
+ 'footer.links':'NAVIGAZIONE','footer.contact':'CONTATTI','footer.legal':'LEGALE','footer.tele':'TELEMETRIA NODO',
+ 'footer.rights':'Tutti i diritti riservati.','footer.made':'Costruito a mano, senza build step.','footer.node':'NODO','footer.uptime':'UPTIME',
+ 'footer.lat':'LATENZA','footer.ver':'VERSIONE','footer.carriers':'CORRIERI ACCETTATI'
+},
+en:{
+ 'nav.home':'HOME','nav.cash':'CATALOG','nav.paypal':'PAYPAL','nav.quality':'QUALITY CHECK','nav.trust':'TRUST CENTER',
+ 'nav.faq':'FAQ','nav.track':'TRACK','nav.feedback':'FEEDBACK','nav.checkout':'CHECKOUT','nav.cart':'CART','nav.menu':'MENU','nav.contact':'CONTACT',
+ 'brand.tag':'FROM THE DARK WEB TO YOUR WALLET','brand.est':'EST. 2022','brand.motto':'Encrypted · Tracked · Verified',
+ 'sys.cpu':'CPU','sys.mem':'MEM','sys.ping':'PING','sys.blk':'BLOCK','sys.tor':'TOR 3 HOPS','sys.enc':'AES-256','sys.node':'NODE','sys.live':'LIVE',
+ 'common.add':'ADD','common.added':'ADDED','common.remove':'REMOVE','common.total':'TOTAL','common.back':'BACK','common.next':'NEXT',
+ 'common.copy':'COPY','common.copied':'COPIED','common.close':'CLOSE','common.loading':'LOADING...','common.all':'ALL','common.open':'OPEN',
+ 'common.pcs':'PIECES','common.priceInCart':'PRICE SHOWN IN CART','common.send':'SEND','common.download':'DOWNLOAD RECEIPT',
+ 'common.step':'STEP','common.search':'SEARCH','common.continue':'CONTINUE','common.retry':'RETRY','common.empty':'EMPTY','common.optional':'optional',
+ 'common.required':'required','common.qty':'QTY','common.verified':'VERIFIED','common.clear':'CLEAR','common.yes':'YES','common.no':'NO',
+ 'common.items':'ITEMS','common.here':'HERE','common.open_tg':'OPEN TELEGRAM',
+ 'boot.l1':'[ OK ] gustavoeuro-kernel v5.0.0 booted','boot.l2':'[ OK ] /dev/secure mounted · AES-256 active','boot.l3':'[ OK ] TLS 1.3 handshake · 4096 bit',
+ 'boot.l4':'[ OK ] TOR circuit routed · 3 hops','boot.l5':'[ OK ] PGP signature verified · 7B3F 9A21 C4E8 5D06','boot.l6':'[ OK ] address merkle root consistent',
+ 'boot.l7':'[ OK ] anti-scanner · nikto / sqlmap / nmap rejected','boot.l8':'[WARN] public network detected · anonymous mode on',
+ 'boot.ready':'NODE READY','boot.enter':'ENTER THE NODE','boot.skip':'SKIP','boot.hint':'press ENTER',
+ 'gate.title':'RESTRICTED ACCESS','gate.sub':'Enter the access key to get into the GUSTAVOEURO node.',
+ 'gate.ph':'ACCESS KEY','gate.btn':'UNLOCK NODE','gate.err':'INVALID KEY · try again','gate.ok':'ACCESS GRANTED',
+ 'gate.hint':'Hint: the project name, all uppercase.',
+ 'home.badge':'NODE ACTIVE · ENCRYPTION ON','home.t1':'FROM THE DARK WEB','home.t2':'TO YOUR WALLET',
+ 'home.sub':'Euro banknotes Grade AAA+ and anonymous P2P PayPal transfers. Tracked delivery, public verification, no useless middlemen.',
+ 'home.cta1':'BROWSE CATALOG','home.cta2':'PAYPAL TRANSFERS','home.cta3':'QUALITY CHECK',
+ 'home.stTitle':'NODE TELEMETRY','home.st1':'ACTIVE SINCE','home.st1v':'2022','home.st2':'DENOMINATIONS','home.st2v':'20 / 50',
+ 'home.st3':'NOTE GRADE','home.st3v':'AAA+','home.st4':'ON-CHAIN CONFIRMS','home.st4v':'2 / 2',
+ 'home.denTitle':'AVAILABLE DENOMINATIONS','home.denSub':'Each denomination has its own card. Price shown in cart.',
+ 'home.whyTitle':'WHY TRUST US','home.whySub':'No magic promises. Only verifiable procedures.',
+ 'home.w1t':'GRADE AAA+','home.w1b':'Hand-picked, hand-checked notes, one by one.',
+ 'home.w2t':'UV 100%','home.w2b':'UV lamp check on every bundle before shipping.',
+ 'home.w3t':'SCANNER PASS','home.w3b':'Optical reader pass: no off-size notes.',
+ 'home.w4t':'COTTON FIBER','home.w4b':'100% cotton paper, correct thickness and relief.',
+ 'home.w5t':'TRACKED SHIPPING','home.w5b':'Real carriers, tracking code always provided.',
+ 'home.w6t':'PUBLIC PROOF','home.w6b':'Hashes, checksums and PGP signature anyone can verify.',
+ 'home.idxTitle':'NODE INDEX','home.idxSub':'Fast navigation across modules.',
+ 'home.termTitle':'session.log','home.marq':'GUSTAVOEURO · EST. 2022 · GRADE AAA+ · UV 100% · SCANNER PASS · COTTON FIBER · TRACKED · PGP SIGNED · TOR 3 HOPS · AES-256 · ',
+ 'cash.title':'BANKNOTE CATALOG','cash.sub':'20 and 50 EUR available in bundles. The 10 EUR is on request.',
+ 'cash.note':'Prices are not on the cards: you see them in cart and checkout, with full breakdown.',
+ 'cash.reqTitle':'ON REQUEST · 10 EUR','cash.reqText':'The 10 EUR has low availability: not a fixed catalog item. Message us on Telegram and we tell you how many pieces are free right now.',
+ 'cash.reqBtn':'ASK AVAILABILITY','cash.grade':'GRADE AAA+','cash.uv':'UV 100%','cash.scan':'SCANNER PASS','cash.fiber':'COTTON FIBER',
+ 'cash.ship':'SHIPPING','cash.shipV':'TRACKED','cash.avail':'AVAILABLE',
+ 'paypal.title':'PAYPAL TRANSFERS','paypal.sub':'The balance is routed through a third-party exchange: the sender/receiver chain is broken and the balance lands clean.',
+ 'paypal.note':'You pay one amount, you receive a higher amount. No constraint on your account.',
+ 'paypal.pay':'YOU PAY','paypal.get':'YOU RECEIVE','paypal.mult':'MULTIPLIER','paypal.how':'HOW IT WORKS',
+ 'paypal.s1':'Pick a tier and add it to the cart.','paypal.s2':'You give us your PayPal email at checkout.',
+ 'paypal.s3':'The balance is routed through a third-party exchange.','paypal.s4':'You receive the clean balance on your account.',
+ 'paypal.warn':'Transfers need no physical shipping: at checkout the address section disappears automatically.',
+ 'quality.title':'QUALITY CHECK','quality.sub':'Real photos and videos of the bundles. Filter by denomination and open fullscreen.',
+ 'quality.f20':'20 EUR','quality.f50':'50 EUR','quality.open':'OPEN','quality.empty':'No media for this denomination.','quality.hint':'Click an item to open it fullscreen.',
+ 'trust.title':'TRUST CENTER','trust.sub':'Everything you can verify yourself, instead of taking our word for it.',
+ 'trust.how':'HOW WE WORK','trust.howB':'We select bundles, check them by hand, seal them and ship with tracked courier. Every order gets a unique code.',
+ 'trust.guar':'REFUND GUARANTEE','trust.guarB':'If a bundle fails the declared check, we replace or refund. The procedure is written, not improvised.',
+ 'trust.merkle':'ADDRESS MERKLE ROOT','trust.merkleB':'Published crypto addresses are hashed into a Merkle tree. The root below is recomputable by anyone.',
+ 'trust.rules':'SERVICE RULES','trust.rulesB':'No hidden costs. Fees always explicit. Timings declared before you pay.',
+ 'trust.pgp':'PGP KEY','trust.pgpB':'Every receipt comes with a signature preview. The fingerprint is public and comparable.',
+ 'trust.onion':'ONION MIRROR','trust.onionB':'Alternative access over the Tor network for those avoiding the public net.',
+ 'trust.carriers':'CARRIERS','trust.carriersB':'Only real, trackable carriers. The code always reaches you.',
+ 'trust.time':'TIMELINE','trust.badges':'TRUST BADGES',
+ 'trust.b1':'GRADE AAA+','trust.b2':'PGP SIGNED','trust.b3':'TRACKED','trust.b4':'PUBLIC PROOF',
+ 'trust.verify':'RECOMPUTE HASH',
+ 'faq.title':'FREQUENT QUESTIONS','faq.sub':'Straight answers, no fluff.',
+ 'faq.q1':'Are the banknotes real?','faq.a1':'Yes. Euro banknotes graded AAA+, hand-picked and checked one by one.',
+ 'faq.q2':'Why are prices in the cart?','faq.a2':'Because price depends on denomination and bundle volume. Cards describe, cart gives the exact number.',
+ 'faq.q3':'What is a P2P PayPal transfer?','faq.a3':'The balance is routed through a third-party exchange, breaking the sender/receiver chain so clean balance lands on your account.',
+ 'faq.q4':'Which coins do you accept?','faq.a4':'SOL, BTC and LTC. Low fees, fast confirmations. Always send on the stated network.',
+ 'faq.q5':'What does the bank transfer cost?','faq.a5':'SEPA instant transfer carries a +10% handling fee, declared in the breakdown before you pay.',
+ 'faq.q6':'And Amazon vouchers?','faq.a6':'+20% conversion: you buy the voucher, hand us the 15-digit code and the total is recalculated.',
+ 'faq.q7':'How do I track the order?','faq.a7':'Every order generates a GST-… code stored on your device. Re-enter it in the Track page to re-read everything.',
+ 'faq.q8':'What if something goes wrong?','faq.a8':'Message us on Telegram with the order code. Replacement or refund per the published guarantee.',
+ 'track.title':'TRACK ORDER','track.sub':'Enter the GST-… order code to re-read your receipt.',
+ 'track.ph':'GST-XXXX-XXXX','track.btn':'FIND ORDER','track.found':'ORDER FOUND','track.none':'No order with this code on this device.',
+ 'track.clear':'CLEAR HISTORY','track.status':'STATUS','track.items':'ITEMS','track.date':'DATE',
+ 'fb.title':'FEEDBACK','fb.sub':'Two lines and you help us improve. No account needed.',
+ 'fb.name':'NAME OR NICK','fb.contact':'CONTACT (TELEGRAM/EMAIL)','fb.order':'ORDER CODE','fb.msg':'MESSAGE','fb.send':'SEND FEEDBACK',
+ 'fb.ok':'FEEDBACK LOGGED','fb.rating':'RATING','fb.thanks':'Thanks: feedback is stored on your device.',
+ 'priv.title':'PRIVACY','terms.title':'TERMS','cook.title':'COOKIES',
+ 'priv.p1':'No invasive analytics. Cart and order data stay in your browser localStorage.',
+ 'priv.p2':'Language stays in localStorage. The unlock session lives in sessionStorage and dies when you close the tab.',
+ 'priv.p3':'Contacts you send us on Telegram are used only to handle the order.',
+ 'priv.p4':'No data resold. No ad profile built behind your back.',
+ 'terms.p1':'Prices are in Euro and shown in the cart before payment.',
+ 'terms.p2':'Delivery times are stated before confirmation. Tracking code always provided.',
+ 'terms.p3':'If a bundle does not match the description: replacement or refund.',
+ 'terms.p4':'Fees (crypto 0%, transfer +10%, Amazon vouchers +20%) are always declared in the breakdown.',
+ 'cook.p1':'Technical cookies only: no profiling. The site runs fully client-side.',
+ 'cook.p2':'We use localStorage and sessionStorage for language, cart, orders and unlock.',
+ 'cook.p3':'You can wipe everything from browser settings without breaking anything permanent.',
+ 'co.title':'CHECKOUT','co.sub':'Four steps: data, verification, payment, confirmation.',
+ 'co.s1':'DATA','co.s2':'VERIFY','co.s3':'PAYMENT','co.s4':'CONFIRM',
+ 'co.dataT':'ORDER DATA','co.shipT':'SHIPPING','co.noShip':'No shipping needed: your cart only has PayPal transfers.',
+ 'co.email':'PAYPAL EMAIL','co.email2':'CONFIRM PAYPAL EMAIL','co.name':'FULL NAME','co.addr':'ADDRESS','co.city':'CITY','co.zip':'ZIP',
+ 'co.country':'COUNTRY','co.phone':'PHONE','co.notes':'NOTES','co.mixedT':'MIXED ORDER','co.payT':'PAYMENT METHOD',
+ 'co.verifyT':'INTEGRITY CHECK','co.ledger':'LEDGER','co.total':'TOTAL','co.sig':'PGP SIGNATURE PREVIEW','co.checksum':'CHECKSUM',
+ 'co.draft':'DRAFT ID','co.session':'SESSION ID','co.ts':'TIMESTAMP','co.empty':'Cart is empty.','co.go':'GO TO CATALOG',
+ 'co.proceed':'PROCEED','co.method':'CHOOSE METHOD','co.confirmT':'CONFIRM ORDER','co.code':'ORDER CODE','co.receipt':'DOWNLOAD RECEIPT',
+ 'co.processing':'PROCESSING','co.thanks':'ORDER LOGGED','co.saved':'Stored on your device: recoverable from the Track page.',
+ 'co.errEmail':'Enter a valid email.','co.errMatch':'The two emails do not match.','co.errReq':'Required field.','co.cancel':'CANCEL',
+ 'co.shipInfo':'Where to ship the bundle.','co.payInfo':'Where to receive the PayPal balance.',
+ 'pay.crypto':'CRYPTO','pay.sepa':'INSTANT TRANSFER','pay.amazon':'AMAZON VOUCHERS','pay.reco':'RECOMMENDED',
+ 'pay.fees0':'0% FEES','pay.pros':'PROS','pay.cons':'CONS','pay.warnNet':'Send ONLY {s} on the {n} network. Another network = lost funds.',
+ 'pay.timeline':'TIMELINE','pay.countdown':'TIME LEFT','pay.conf':'CONFIRMATIONS','pay.explorer':'OPEN EXPLORER','pay.preview':'TRANSACTION PREVIEW',
+ 'pay.amount':'EXACT AMOUNT','pay.memo':'MEMO (REQUIRED)','pay.network':'NETWORK','pay.address':'ADDRESS','pay.verified':'VERIFIED ADDRESS',
+ 'pay.scan':'SCAN THE QR','pay.copyAddr':'COPY ADDRESS','pay.iban':'IBAN','pay.ibanNote':'IBAN sent on Telegram · copy and paste it into the instant transfer.',
+ 'pay.causale':'REFERENCE','pay.breakdown':'BREAKDOWN','pay.base':'BASE AMOUNT','pay.fee10':'HANDLING +10%','pay.fee20':'CONVERSION +20%',
+ 'pay.region':'VOUCHER REGION','pay.voucher':'15-DIGIT VOUCHER CODE','pay.vcode':'CODE','pay.ckOk':'CHECKSUM OK','pay.ckBad':'CHECKSUM NEEDS CHECK',
+ 'pay.step1':'STEP 1','pay.step2':'STEP 2','pay.step3':'STEP 3','pay.step4':'STEP 4','pay.notice':'NOTICE','pay.avg':'AVG TIME','pay.trust':'GUARANTEES',
+ 'footer.about':'Euro banknotes Grade AAA+ and anonymous P2P PayPal transfers. Operating since 2022.',
+ 'footer.links':'NAVIGATION','footer.contact':'CONTACTS','footer.legal':'LEGAL','footer.tele':'NODE TELEMETRY',
+ 'footer.rights':'All rights reserved.','footer.made':'Hand-built, no build step.','footer.node':'NODE','footer.uptime':'UPTIME',
+ 'footer.lat':'LATENCY','footer.ver':'VERSION','footer.carriers':'ACCEPTED CARRIERS'
+},
+es:{
+ 'nav.home':'INICIO','nav.cash':'CATÁLOGO','nav.paypal':'PAYPAL','nav.quality':'VERIFICACIÓN','nav.trust':'CENTRO CONFIANZA',
+ 'nav.faq':'FAQ','nav.track':'RASTREAR','nav.feedback':'FEEDBACK','nav.checkout':'PAGO','nav.cart':'CARRITO','nav.menu':'MENÚ','nav.contact':'CONTACTO',
+ 'brand.tag':'DE LA DARK WEB A TU CARTERA','brand.est':'DESDE 2022','brand.motto':'Cifrado · Rastreado · Verificado',
+ 'sys.cpu':'CPU','sys.mem':'MEM','sys.ping':'PING','sys.blk':'BLOQ','sys.tor':'TOR 3 HOPS','sys.enc':'AES-256','sys.node':'NODO','sys.live':'LIVE',
+ 'common.add':'AÑADIR','common.added':'AÑADIDO','common.remove':'QUITAR','common.total':'TOTAL','common.back':'ATRÁS','common.next':'SIGUIENTE',
+ 'common.copy':'COPIAR','common.copied':'COPIADO','common.close':'CERRAR','common.loading':'CARGANDO...','common.all':'TODOS','common.open':'ABRIR',
+ 'common.pcs':'PIEZAS','common.priceInCart':'PRECIO VISIBLE EN EL CARRITO','common.send':'ENVIAR','common.download':'DESCARGAR RECIBO',
+ 'common.step':'PASO','common.search':'BUSCAR','common.continue':'CONTINUAR','common.retry':'REINTENTAR','common.empty':'VACÍO','common.optional':'opcional',
+ 'common.required':'obligatorio','common.qty':'CANT','common.verified':'VERIFICADO','common.clear':'LIMPIAR','common.yes':'SÍ','common.no':'NO',
+ 'common.items':'ARTÍCULOS','common.here':'AQUÍ','common.open_tg':'ABRIR TELEGRAM',
+ 'boot.l1':'[ OK ] gustavoeuro-kernel v5.0.0 iniciado','boot.l2':'[ OK ] /dev/secure montado · AES-256 activo','boot.l3':'[ OK ] handshake TLS 1.3 · 4096 bit',
+ 'boot.l4':'[ OK ] circuito TOR encaminado · 3 saltos','boot.l5':'[ OK ] firma PGP verificada · 7B3F 9A21 C4E8 5D06','boot.l6':'[ OK ] merkle root coherente',
+ 'boot.l7':'[ OK ] anti-scanner · nikto / sqlmap / nmap rechazados','boot.l8':'[WARN] red pública detectada · modo anónimo activo',
+ 'boot.ready':'NODO LISTO','boot.enter':'ENTRAR AL NODO','boot.skip':'SALTAR','boot.hint':'pulsa INTRO',
+ 'gate.title':'ACCESO RESTRINGIDO','gate.sub':'Introduce la clave de acceso para entrar en el nodo GUSTAVOEURO.',
+ 'gate.ph':'CLAVE DE ACCESO','gate.btn':'DESBLOQUEAR NODO','gate.err':'CLAVE INVÁLIDA · reintenta','gate.ok':'ACCESO CONCEDIDO',
+ 'gate.hint':'Pista: el nombre del proyecto, todo en mayúsculas.',
+ 'home.badge':'NODO ACTIVO · CIFRADO ACTIVO','home.t1':'DE LA DARK WEB','home.t2':'A TU CARTERA',
+ 'home.sub':'Billetes de Euro Grado AAA+ y transferencias PayPal P2P anónimas. Entrega rastreada, verificación pública, cero intermediarios.',
+ 'home.cta1':'VER CATÁLOGO','home.cta2':'TRANSFERENCIAS PAYPAL','home.cta3':'VERIFICACIÓN',
+ 'home.stTitle':'TELEMETRÍA NODO','home.st1':'ACTIVO DESDE','home.st1v':'2022','home.st2':'DENOMINACIONES','home.st2v':'20 / 50',
+ 'home.st3':'GRADO BILLETES','home.st3v':'AAA+','home.st4':'CONFIRMACIONES','home.st4v':'2 / 2',
+ 'home.denTitle':'DENOMINACIONES DISPONIBLES','home.denSub':'Cada denominación tiene su ficha. Precio visible en el carrito.',
+ 'home.whyTitle':'POR QUÉ CONFIAR','home.whySub':'Sin promesas mágicas. Solo procedimientos verificables.',
+ 'home.w1t':'GRADO AAA+','home.w1b':'Billetes seleccionados y revisados a mano, uno por uno.',
+ 'home.w2t':'UV 100%','home.w2b':'Control con lámpara UV en cada bloque antes del envío.',
+ 'home.w3t':'SCANNER PASS','home.w3b':'Paso por lector óptico: sin cortes fuera de medida.',
+ 'home.w4t':'FIBRA ALGODÓN','home.w4b':'Papel 100% algodón, grosor y relieve correctos.',
+ 'home.w5t':'ENVÍO RASTREADO','home.w5b':'Transportistas reales, código de seguimiento siempre.',
+ 'home.w6t':'PRUEBA PÚBLICA','home.w6b':'Hashes, checksums y firma PGP verificables por cualquiera.',
+ 'home.idxTitle':'ÍNDICE DEL NODO','home.idxSub':'Navegación rápida entre módulos.',
+ 'home.termTitle':'session.log','home.marq':'GUSTAVOEURO · DESDE 2022 · GRADE AAA+ · UV 100% · SCANNER PASS · FIBRA ALGODÓN · RASTREADO · PGP SIGNED · TOR 3 HOPS · AES-256 · ',
+ 'cash.title':'CATÁLOGO DE BILLETES','cash.sub':'20 y 50 EUR disponibles por bloques. El billete de 10 EUR es bajo pedido.',
+ 'cash.note':'Los precios no están en las fichas: los ves en el carrito y en el pago, con desglose completo.',
+ 'cash.reqTitle':'BAJO PEDIDO · 10 EUR','cash.reqText':'El billete de 10 EUR tiene poca disponibilidad. Escríbenos por Telegram y te decimos cuántas piezas hay libres ahora.',
+ 'cash.reqBtn':'PEDIR DISPONIBILIDAD','cash.grade':'GRADE AAA+','cash.uv':'UV 100%','cash.scan':'SCANNER PASS','cash.fiber':'FIBRA ALGODÓN',
+ 'cash.ship':'ENVÍO','cash.shipV':'RASTREADO','cash.avail':'DISPONIBLE',
+ 'paypal.title':'TRANSFERENCIAS PAYPAL','paypal.sub':'El saldo se gira vía exchange tercero: se rompe la cadena emisor/receptor y el saldo llega limpio.',
+ 'paypal.note':'Pagas una cantidad, recibes una cantidad mayor. Sin límites en tu cuenta.',
+ 'paypal.pay':'PAGAS','paypal.get':'RECIBES','paypal.mult':'MULTIPLICADOR','paypal.how':'CÓMO FUNCIONA',
+ 'paypal.s1':'Elige el nivel y añádelo al carrito.','paypal.s2':'Nos das tu email de PayPal en el pago.',
+ 'paypal.s3':'El saldo se encamina vía exchange tercero.','paypal.s4':'Recibes el saldo limpio en tu cuenta.',
+ 'paypal.warn':'Las transferencias no requieren envío físico: en el pago la sección de dirección desaparece sola.',
+ 'quality.title':'VERIFICACIÓN DE CALIDAD','quality.sub':'Fotos y vídeos reales de los bloques. Filtra por denominación y abre a pantalla completa.',
+ 'quality.f20':'20 EUR','quality.f50':'50 EUR','quality.open':'ABRIR','quality.empty':'Sin media para esta denominación.','quality.hint':'Haz clic en un elemento para abrirlo en pantalla completa.',
+ 'trust.title':'CENTRO DE CONFIANZA','trust.sub':'Todo lo que puedes verificar por tu cuenta.',
+ 'trust.how':'CÓMO TRABAJAMOS','trust.howB':'Seleccionamos bloques, los revisamos a mano, los sellamos y los enviamos con transportista rastreado. Cada pedido tiene un código único.',
+ 'trust.guar':'GARANTÍA DE REEMBOLSO','trust.guarB':'Si un bloque no supera el control declarado, lo sustituimos o reembolsamos. El procedimiento está escrito.',
+ 'trust.merkle':'MERKLE ROOT DE DIRECCIONES','trust.merkleB':'Las direcciones cripto publicadas se enlazan en un árbol de Merkle. La root de abajo la puede recalcular cualquiera.',
+ 'trust.rules':'REGLAS DEL SERVICIO','trust.rulesB':'Sin costes ocultos. Comisiones siempre explícitas. Plazos declarados antes de pagar.',
+ 'trust.pgp':'CLAVE PGP','trust.pgpB':'Cada recibo trae una vista previa de firma. El fingerprint es público y comparable.',
+ 'trust.onion':'ESPEJO ONION','trust.onionB':'Acceso alternativo vía red Tor para quien evita la red pública.',
+ 'trust.carriers':'TRANSPORTISTAS','trust.carriersB':'Solo transportistas reales y rastreables. El código llega siempre.',
+ 'trust.time':'CRONOLOGÍA','trust.badges':'SELLOS DE CONFIANZA',
+ 'trust.b1':'GRADE AAA+','trust.b2':'PGP SIGNED','trust.b3':'RASTREADO','trust.b4':'PRUEBA PÚBLICA',
+ 'trust.verify':'RECALCULAR HASH',
+ 'faq.title':'PREGUNTAS FRECUENTES','faq.sub':'Respuestas directas.',
+ 'faq.q1':'¿Los billetes son reales?','faq.a1':'Sí. Billetes de Euro grado AAA+, seleccionados y revisados uno por uno.',
+ 'faq.q2':'¿Por qué los precios están en el carrito?','faq.a2':'Porque el precio depende de la denominación y del volumen. En la ficha está la descripción, en el carrito el número exacto.',
+ 'faq.q3':'¿Qué es una transferencia PayPal P2P?','faq.a3':'El saldo se gira vía exchange tercero: se rompe la cadena emisor/receptor y llega saldo limpio.',
+ 'faq.q4':'¿Qué criptos aceptáis?','faq.a4':'SOL, BTC y LTC. Comisiones bajas y confirmaciones rápidas. Envía siempre en la red indicada.',
+ 'faq.q5':'¿Cuánto cuesta la transferencia bancaria?','faq.a5':'La transferencia SEPA instantánea lleva +10% de gestión, declarado antes de pagar.',
+ 'faq.q6':'¿Y los vales de Amazon?','faq.a6':'Conversión +20%: compras el vale, nos pasas el código de 15 dígitos y se recalcula el total.',
+ 'faq.q7':'¿Cómo rastreo el pedido?','faq.a7':'Cada pedido genera un código GST-… guardado en tu dispositivo. Lo reintroducen en Rastrear y lo relees todo.',
+ 'faq.q8':'¿Y si algo va mal?','faq.a8':'Escríbenos por Telegram con el código del pedido. Sustitución o reembolso según la garantía publicada.',
+ 'track.title':'RASTREAR PEDIDO','track.sub':'Introduce el código GST-… para releer tu recibo.',
+ 'track.ph':'GST-XXXX-XXXX','track.btn':'BUSCAR PEDIDO','track.found':'PEDIDO ENCONTRADO','track.none':'Ningún pedido con este código en este dispositivo.',
+ 'track.clear':'LIMPIAR HISTORIAL','track.status':'ESTADO','track.items':'ARTÍCULOS','track.date':'FECHA',
+ 'fb.title':'FEEDBACK','fb.sub':'Dos líneas y nos ayudas. Sin cuenta.',
+ 'fb.name':'NOMBRE O NICK','fb.contact':'CONTACTO (TELEGRAM/EMAIL)','fb.order':'CÓDIGO DE PEDIDO','fb.msg':'MENSAJE','fb.send':'ENVIAR FEEDBACK',
+ 'fb.ok':'FEEDBACK REGISTRADO','fb.rating':'VALORACIÓN','fb.thanks':'Gracias: el feedback queda guardado en tu dispositivo.',
+ 'priv.title':'PRIVACIDAD','terms.title':'TÉRMINOS','cook.title':'COOKIES',
+ 'priv.p1':'Sin analíticas invasivas. Los datos del carrito y pedidos quedan en el localStorage del navegador.',
+ 'priv.p2':'El idioma queda en localStorage. La sesión de desbloqueo vive en sessionStorage y muere al cerrar la pestaña.',
+ 'priv.p3':'Los contactos que nos envías por Telegram se usan solo para gestionar el pedido.',
+ 'priv.p4':'Ningún dato revendido. Ningún perfil publicitario a tus espaldas.',
+ 'terms.p1':'Los precios están en Euros y se muestran en el carrito antes del pago.',
+ 'terms.p2':'Los plazos se indican antes de la confirmación. El código de seguimiento siempre se entrega.',
+ 'terms.p3':'Si un bloque no coincide con la descripción: sustitución o reembolso.',
+ 'terms.p4':'Las comisiones (cripto 0%, transferencia +10%, vales Amazon +20%) se declaran en el desglose.',
+ 'cook.p1':'Solo cookies técnicas: sin perfilado. El sitio funciona íntegramente en cliente.',
+ 'cook.p2':'Usamos localStorage y sessionStorage para idioma, carrito, pedidos y desbloqueo.',
+ 'cook.p3':'Puedes borrarlo todo desde el navegador sin romper nada permanente.',
+ 'co.title':'PAGO','co.sub':'Cuatro pasos: datos, verificación, pago, confirmación.',
+ 'co.s1':'DATOS','co.s2':'VERIFICAR','co.s3':'PAGO','co.s4':'CONFIRMAR',
+ 'co.dataT':'DATOS DEL PEDIDO','co.shipT':'ENVÍO','co.noShip':'Sin envío: en el carrito solo hay transferencias PayPal.',
+ 'co.email':'EMAIL PAYPAL','co.email2':'CONFIRMAR EMAIL PAYPAL','co.name':'NOMBRE Y APELLIDOS','co.addr':'DIRECCIÓN','co.city':'CIUDAD','co.zip':'C.P.',
+ 'co.country':'PAÍS','co.phone':'TELÉFONO','co.notes':'NOTAS','co.mixedT':'PEDIDO MIXTO','co.payT':'MÉTODO DE PAGO',
+ 'co.verifyT':'VERIFICACIÓN DE INTEGRIDAD','co.ledger':'LEDGER','co.total':'TOTAL','co.sig':'VISTA PREVIA FIRMA PGP','co.checksum':'CHECKSUM',
+ 'co.draft':'ID BORRADOR','co.session':'ID SESIÓN','co.ts':'TIMESTAMP','co.empty':'El carrito está vacío.','co.go':'IR AL CATÁLOGO',
+ 'co.proceed':'CONTINUAR','co.method':'ELIGE MÉTODO','co.confirmT':'CONFIRMAR PEDIDO','co.code':'CÓDIGO DE PEDIDO','co.receipt':'DESCARGAR RECIBO',
+ 'co.processing':'PROCESANDO','co.thanks':'PEDIDO REGISTRADO','co.saved':'Guardado en tu dispositivo: recuperable desde Rastrear.',
+ 'co.errEmail':'Introduce un email válido.','co.errMatch':'Los dos emails no coinciden.','co.errReq':'Campo obligatorio.','co.cancel':'CANCELAR',
+ 'co.shipInfo':'Dónde enviar el bloque.','co.payInfo':'Dónde recibir el saldo PayPal.',
+ 'pay.crypto':'CRIPTO','pay.sepa':'TRANSFERENCIA INSTANTÁNEA','pay.amazon':'VALES AMAZON','pay.reco':'RECOMENDADO',
+ 'pay.fees0':'0% COMISIONES','pay.pros':'PROS','pay.cons':'CONTRAS','pay.warnNet':'Envía SOLO {s} en la red {n}. Otra red = fondos perdidos.',
+ 'pay.timeline':'CRONOLOGÍA','pay.countdown':'TIEMPO RESTANTE','pay.conf':'CONFIRMACIONES','pay.explorer':'ABRIR EXPLORER','pay.preview':'VISTA PREVIA TX',
+ 'pay.amount':'IMPORTE EXACTO','pay.memo':'MEMO (OBLIGATORIO)','pay.network':'RED','pay.address':'DIRECCIÓN','pay.verified':'DIRECCIÓN VERIFICADA',
+ 'pay.scan':'ESCANEA EL QR','pay.copyAddr':'COPIAR DIRECCIÓN','pay.iban':'IBAN','pay.ibanNote':'IBAN enviado por Telegram · cópialo y pégalo en la transferencia instantánea.',
+ 'pay.causale':'CONCEPTO','pay.breakdown':'DESGLOSE','pay.base':'IMPORTE BASE','pay.fee10':'GESTIÓN +10%','pay.fee20':'CONVERSIÓN +20%',
+ 'pay.region':'REGIÓN DEL VALE','pay.voucher':'CÓDIGO DE 15 DÍGITOS','pay.vcode':'CÓDIGO','pay.ckOk':'CHECKSUM OK','pay.ckBad':'REVISAR CHECKSUM',
+ 'pay.step1':'PASO 1','pay.step2':'PASO 2','pay.step3':'PASO 3','pay.step4':'PASO 4','pay.notice':'AVISO','pay.avg':'TIEMPO MEDIO','pay.trust':'GARANTÍAS',
+ 'footer.about':'Billetes de Euro Grade AAA+ y transferencias PayPal P2P anónimas. Operativos desde 2022.',
+ 'footer.links':'NAVEGACIÓN','footer.contact':'CONTACTOS','footer.legal':'LEGAL','footer.tele':'TELEMETRÍA NODO',
+ 'footer.rights':'Todos los derechos reservados.','footer.made':'Hecho a mano, sin build step.','footer.node':'NODO','footer.uptime':'UPTIME',
+ 'footer.lat':'LATENCIA','footer.ver':'VERSIÓN','footer.carriers':'TRANSPORTISTAS ACEPTADOS'
+},
+de:{
+ 'nav.home':'START','nav.cash':'KATALOG','nav.paypal':'PAYPAL','nav.quality':'QUALITÄT','nav.trust':'TRUST-CENTER',
+ 'nav.faq':'FAQ','nav.track':'VERFOLGEN','nav.feedback':'FEEDBACK','nav.checkout':'KASSE','nav.cart':'WARENKORB','nav.menu':'MENÜ','nav.contact':'KONTAKT',
+ 'brand.tag':'VOM DARKNET IN DEIN PORTEMONNAIE','brand.est':'SEIT 2022','brand.motto':'Verschlüsselt · Verfolgt · Geprüft',
+ 'sys.cpu':'CPU','sys.mem':'MEM','sys.ping':'PING','sys.blk':'BLOCK','sys.tor':'TOR 3 HOPS','sys.enc':'AES-256','sys.node':'KNOTEN','sys.live':'LIVE',
+ 'common.add':'HINZUFÜGEN','common.added':'HINZUGEFÜGT','common.remove':'ENTFERNEN','common.total':'SUMME','common.back':'ZURÜCK','common.next':'WEITER',
+ 'common.copy':'KOPIEREN','common.copied':'KOPIERT','common.close':'SCHLIESSEN','common.loading':'LÄDT...','common.all':'ALLE','common.open':'ÖFFNEN',
+ 'common.pcs':'STÜCK','common.priceInCart':'PREIS IM WARENKORB','common.send':'SENDEN','common.download':'BELEG LADEN',
+ 'common.step':'SCHRITT','common.search':'SUCHEN','common.continue':'WEITER','common.retry':'NOCHMAL','common.empty':'LEER','common.optional':'optional',
+ 'common.required':'Pflichtfeld','common.qty':'MENGE','common.verified':'VERIFIZIERT','common.clear':'LEEREN','common.yes':'JA','common.no':'NEIN',
+ 'common.items':'ARTIKEL','common.here':'HIER','common.open_tg':'TELEGRAM ÖFFNEN',
+ 'boot.l1':'[ OK ] gustavoeuro-kernel v5.0.0 gestartet','boot.l2':'[ OK ] /dev/secure gemountet · AES-256 aktiv','boot.l3':'[ OK ] TLS-1.3-Handshake · 4096 Bit',
+ 'boot.l4':'[ OK ] TOR-Kreis geroutet · 3 Hops','boot.l5':'[ OK ] PGP-Signatur geprüft · 7B3F 9A21 C4E8 5D06','boot.l6':'[ OK ] Adress-Merkle-Root konsistent',
+ 'boot.l7':'[ OK ] Anti-Scanner · nikto / sqlmap / nmap abgewiesen','boot.l8':'[WARN] öffentliches Netz erkannt · anonymer Modus aktiv',
+ 'boot.ready':'KNOTEN BEREIT','boot.enter':'KNOTEN BETRETEN','boot.skip':'ÜBERSPRINGEN','boot.hint':'ENTER drücken',
+ 'gate.title':'ZUGANG BESCHRÄNKT','gate.sub':'Zugangsschlüssel eingeben, um den GUSTAVOEURO-Knoten zu betreten.',
+ 'gate.ph':'ZUGANGSSCHLÜSSEL','gate.btn':'KNOTEN ENTSPERREN','gate.err':'UNGÜLTIGER SCHLÜSSEL · erneut','gate.ok':'ZUGANG GEWÄHRT',
+ 'gate.hint':'Tipp: der Projektname, alles groß.',
+ 'home.badge':'KNOTEN AKTIV · VERSCHLÜSSELUNG AN','home.t1':'VOM DARKNET','home.t2':'IN DEIN PORTEMONNAIE',
+ 'home.sub':'Euro-Banknoten Grad AAA+ und anonyme P2P-PayPal-Transfers. Verfolgte Lieferung, öffentliche Prüfung, keine überflüssigen Mittelsmänner.',
+ 'home.cta1':'KATALOG ANSEHEN','home.cta2':'PAYPAL-TRANSFERS','home.cta3':'QUALITÄTSPRÜFUNG',
+ 'home.stTitle':'KNOTEN-TELEMETRIE','home.st1':'AKTIV SEIT','home.st1v':'2022','home.st2':'NENNWERTE','home.st2v':'20 / 50',
+ 'home.st3':'NOTENGRAD','home.st3v':'AAA+','home.st4':'ON-CHAIN-BESTÄTIGUNGEN','home.st4v':'2 / 2',
+ 'home.denTitle':'VERFÜGBARE NENNWERTE','home.denSub':'Jeder Nennwert hat seine Karte. Preis im Warenkorb.',
+ 'home.whyTitle':'WARUM VERTRAUEN','home.whySub':'Keine Zauberversprechen. Nur prüfbare Abläufe.',
+ 'home.w1t':'GRAD AAA+','home.w1b':'Handverlesene, einzeln geprüfte Noten.',
+ 'home.w2t':'UV 100%','home.w2b':'UV-Lampenprüfung an jedem Bündel vor dem Versand.',
+ 'home.w3t':'SCANNER PASS','home.w3b':'Optischer Leser: keine falschen Maße.',
+ 'home.w4t':'BAUMWOLLFASER','home.w4b':'100% Baumwollpapier, korrekte Dicke und Relief.',
+ 'home.w5t':'VERFOLGTER VERSAND','home.w5b':'Echte Zusteller, Tracking-Code immer dabei.',
+ 'home.w6t':'ÖFFENTLICHER BEWEIS','home.w6b':'Hashes, Checksums und PGP-Signatur von jedem prüfbar.',
+ 'home.idxTitle':'KNOTEN-INDEX','home.idxSub':'Schnelle Navigation durch die Module.',
+ 'home.termTitle':'session.log','home.marq':'GUSTAVOEURO · SEIT 2022 · GRADE AAA+ · UV 100% · SCANNER PASS · BAUMWOLLFASER · VERFOLGT · PGP SIGNED · TOR 3 HOPS · AES-256 · ',
+ 'cash.title':'BANKNOTEN-KATALOG','cash.sub':'20 und 50 EUR in Bündeln verfügbar. 10 EUR auf Anfrage.',
+ 'cash.note':'Preise stehen nicht auf den Karten: du siehst sie im Warenkorb und an der Kasse, mit vollständigem Breakdown.',
+ 'cash.reqTitle':'AUF ANFRAGE · 10 EUR','cash.reqText':'Der 10-EUR-Nennwert ist knapp. Schreib uns auf Telegram und wir sagen dir, wie viele Stück gerade frei sind.',
+ 'cash.reqBtn':'VERFÜGBARKEIT ANFRAGEN','cash.grade':'GRAD AAA+','cash.uv':'UV 100%','cash.scan':'SCANNER PASS','cash.fiber':'BAUMWOLLFASER',
+ 'cash.ship':'VERSAND','cash.shipV':'VERFOLGT','cash.avail':'VERFÜGBAR',
+ 'paypal.title':'PAYPAL-TRANSFERS','paypal.sub':'Das Guthaben läuft über eine Dritt-Exchange: die Sender-/Empfängerkette wird gebrochen, das Guthaben kommt sauber an.',
+ 'paypal.note':'Du zahlst einen Betrag, du bekommst einen höheren. Keine Bindung an dein Konto.',
+ 'paypal.pay':'DU ZAHLST','paypal.get':'DU ERHÄLST','paypal.mult':'MULTIPLIKATOR','paypal.how':'SO FUNKTIONIERT ES',
+ 'paypal.s1':'Stufe wählen und in den Warenkorb legen.','paypal.s2':'Du gibst uns deine PayPal-Mail an der Kasse.',
+ 'paypal.s3':'Das Guthaben läuft über eine Dritt-Exchange.','paypal.s4':'Du erhältst sauberes Guthaben auf deinem Konto.',
+ 'paypal.warn':'Transfers brauchen keinen physischen Versand: an der Kasse verschwindet die Adresssektion automatisch.',
+ 'quality.title':'QUALITÄTSPRÜFUNG','quality.sub':'Echte Fotos und Videos der Bündel. Nach Nennwert filtern und vollbild öffnen.',
+ 'quality.f20':'20 EUR','quality.f50':'50 EUR','quality.open':'ÖFFNEN','quality.empty':'Keine Medien für diesen Nennwert.','quality.hint':'Klick auf ein Element für Vollbild.',
+ 'trust.title':'TRUST-CENTER','trust.sub':'Alles, was du selbst prüfen kannst.',
+ 'trust.how':'SO ARBEITEN WIR','trust.howB':'Wir wählen Bündel, prüfen per Hand, versiegeln und versenden mit verfolgtem Zusteller. Jede Bestellung hat einen eindeutigen Code.',
+ 'trust.guar':'RÜCKERSTATTUNGSGARANTIE','trust.guarB':'Besteht ein Bündel die Prüfung nicht, ersetzen oder erstatten wir. Das Verfahren ist schriftlich.',
+ 'trust.merkle':'MERKLE-ROOT DER ADRESSEN','trust.merkleB':'Veröffentlichte Krypto-Adressen werden in einem Merkle-Baum gehasht. Die Root unten kann jeder nachrechnen.',
+ 'trust.rules':'SERVICE-REGELN','trust.rulesB':'Keine versteckten Kosten. Gebühren immer explizit. Zeiten vor der Zahlung genannt.',
+ 'trust.pgp':'PGP-SCHLÜSSEL','trust.pgpB':'Jeder Beleg enthält eine Signaturvorschau. Der Fingerprint ist öffentlich.',
+ 'trust.onion':'ONION-SPIEGEL','trust.onionB':'Alternativer Zugang über Tor für alle, die das öffentliche Netz meiden.',
+ 'trust.carriers':'ZUSTELLER','trust.carriersB':'Nur echte, verfolgbare Zusteller. Der Code kommt immer.',
+ 'trust.time':'ZEITACHSE','trust.badges':'VERTRAUENS-BADGES',
+ 'trust.b1':'GRAD AAA+','trust.b2':'PGP SIGNED','trust.b3':'VERFOLGT','trust.b4':'ÖFFENTLICHER BEWEIS',
+ 'trust.verify':'HASH NACHPRÜFEN',
+ 'faq.title':'HÄUFIGE FRAGEN','faq.sub':'Klare Antworten.',
+ 'faq.q1':'Sind die Banknoten echt?','faq.a1':'Ja. Euro-Banknoten Grad AAA+, einzeln geprüft.',
+ 'faq.q2':'Warum stehen die Preise im Warenkorb?','faq.a2':'Weil der Preis von Nennwert und Volumen abhängt. Karten beschreiben, der Warenkorb nennt die exakte Zahl.',
+ 'faq.q3':'Was ist ein P2P-PayPal-Transfer?','faq.a3':'Das Guthaben läuft über eine Dritt-Exchange, wodurch die Sender-/Empfängerkette gebrochen wird und sauberes Guthaben ankommt.',
+ 'faq.q4':'Welche Coins akzeptiert ihr?','faq.a4':'SOL, BTC und LTC. Niedrige Gebühren, schnelle Bestätigungen. Immer auf dem genannten Netz senden.',
+ 'faq.q5':'Was kostet die Überweisung?','faq.a5':'SEPA-Instant trägt +10% Bearbeitung, im Breakdown vor der Zahlung genannt.',
+ 'faq.q6':'Und Amazon-Gutscheine?','faq.a6':'+20% Konvertierung: Gutschein kaufen, 15-stelligen Code geben, Summe wird neu berechnet.',
+ 'faq.q7':'Wie verfolge ich die Bestellung?','faq.a7':'Jede Bestellung erzeugt einen GST-… Code auf deinem Gerät. Im Verfolgen-Modus alles nachlesbar.',
+ 'faq.q8':'Was, wenn etwas schiefgeht?','faq.a8':'Schreib uns auf Telegram mit dem Bestellcode. Ersatz oder Rückerstattung laut Garantie.',
+ 'track.title':'BESTELLUNG VERFOLGEN','track.sub':'GST-… Code eingeben, um deinen Beleg zu lesen.',
+ 'track.ph':'GST-XXXX-XXXX','track.btn':'BESTELLUNG SUCHEN','track.found':'BESTELLUNG GEFUNDEN','track.none':'Keine Bestellung mit diesem Code auf diesem Gerät.',
+ 'track.clear':'VERLAUF LEEREN','track.status':'STATUS','track.items':'ARTIKEL','track.date':'DATUM',
+ 'fb.title':'FEEDBACK','fb.sub':'Zwei Zeilen helfen uns. Kein Konto nötig.',
+ 'fb.name':'NAME ODER NICK','fb.contact':'KONTAKT (TELEGRAM/EMAIL)','fb.order':'BESTELLCODE','fb.msg':'NACHRICHT','fb.send':'FEEDBACK SENDEN',
+ 'fb.ok':'FEEDBACK GESPEICHERT','fb.rating':'BEWERTUNG','fb.thanks':'Danke: Feedback bleibt auf deinem Gerät.',
+ 'priv.title':'DATENSCHUTZ','terms.title':'AGB','cook.title':'COOKIES',
+ 'priv.p1':'Keine invasiven Analysen. Warenkorb- und Bestelldaten bleiben im localStorage.',
+ 'priv.p2':'Sprache liegt im localStorage. Die Entsperr-Session lebt im sessionStorage und endet beim Tab-Schließen.',
+ 'priv.p3':'Kontakte über Telegram nutzen wir nur zur Abwicklung.',
+ 'priv.p4':'Keine Daten weiterverkauft. Kein Werbeprofil.',
+ 'terms.p1':'Preise in Euro, im Warenkorb vor der Zahlung sichtbar.',
+ 'terms.p2':'Lieferzeiten werden vor der Bestätigung genannt. Tracking-Code immer dabei.',
+ 'terms.p3':'Passt ein Bündel nicht zur Beschreibung: Ersatz oder Rückerstattung.',
+ 'terms.p4':'Gebühren (Krypto 0%, Überweisung +10%, Amazon +20%) immer im Breakdown.',
+ 'cook.p1':'Nur technische Cookies: kein Profiling. Alles läuft clientseitig.',
+ 'cook.p2':'localStorage und sessionStorage für Sprache, Warenkorb, Bestellungen, Entsperrung.',
+ 'cook.p3':'Alles im Browser löschbar, ohne etwas Dauerhaftes zu brechen.',
+ 'co.title':'KASSE','co.sub':'Vier Schritte: Daten, Prüfung, Zahlung, Bestätigung.',
+ 'co.s1':'DATEN','co.s2':'PRÜFUNG','co.s3':'ZAHLUNG','co.s4':'BESTÄTIGUNG',
+ 'co.dataT':'BESTELLDATEN','co.shipT':'VERSAND','co.noShip':'Kein Versand nötig: nur PayPal-Transfers im Warenkorb.',
+ 'co.email':'PAYPAL-MAIL','co.email2':'PAYPAL-MAIL BESTÄTIGEN','co.name':'VOR- UND NACHNAME','co.addr':'ADRESSE','co.city':'STADT','co.zip':'PLZ',
+ 'co.country':'LAND','co.phone':'TELEFON','co.notes':'NOTIZEN','co.mixedT':'GEMISCHTE BESTELLUNG','co.payT':'ZAHLUNGSART',
+ 'co.verifyT':'INTEGRITÄTSPRÜFUNG','co.ledger':'LEDGER','co.total':'SUMME','co.sig':'PGP-SIGNATURVORSCHAU','co.checksum':'CHECKSUM',
+ 'co.draft':'ENTWURFS-ID','co.session':'SESSION-ID','co.ts':'ZEITSTEMPEL','co.empty':'Warenkorb leer.','co.go':'ZUM KATALOG',
+ 'co.proceed':'WEITER','co.method':'METHODE WÄHLEN','co.confirmT':'BESTELLUNG BESTÄTIGEN','co.code':'BESTELLCODE','co.receipt':'BELEG LADEN',
+ 'co.processing':'VERARBEITUNG','co.thanks':'BESTELLUNG ERFASST','co.saved':'Auf deinem Gerät gespeichert: über Verfolgen abrufbar.',
+ 'co.errEmail':'Gültige Mail eingeben.','co.errMatch':'Die Mails stimmen nicht überein.','co.errReq':'Pflichtfeld.','co.cancel':'ABBRECHEN',
+ 'co.shipInfo':'Wohin das Bündel geht.','co.payInfo':'Wohin das PayPal-Guthaben geht.',
+ 'pay.crypto':'KRYPTO','pay.sepa':'SOFORTÜBERWEISUNG','pay.amazon':'AMAZON-GUTSCHEINE','pay.reco':'EMPFOHLEN',
+ 'pay.fees0':'0% GEBÜHREN','pay.pros':'PRO','pay.cons':'CONTRA','pay.warnNet':'Sende NUR {s} im Netz {n}. Anderes Netz = verlorene Mittel.',
+ 'pay.timeline':'ZEITACHSE','pay.countdown':'RESTZEIT','pay.conf':'BESTÄTIGUNGEN','pay.explorer':'EXPLORER ÖFFNEN','pay.preview':'TX-VORSCHAU',
+ 'pay.amount':'EXAKTER BETRAG','pay.memo':'MEMO (PFLICHT)','pay.network':'NETZ','pay.address':'ADRESSE','pay.verified':'VERIFIZIERTE ADRESSE',
+ 'pay.scan':'QR SCANNEN','pay.copyAddr':'ADRESSE KOPIEREN','pay.iban':'IBAN','pay.ibanNote':'IBAN via Telegram · kopieren und in die Sofortüberweisung einfügen.',
+ 'pay.causale':'VERWENDUNGSZWECK','pay.breakdown':'BREAKDOWN','pay.base':'GRUNDBETRAG','pay.fee10':'BEARBEITUNG +10%','pay.fee20':'KONVERTIERUNG +20%',
+ 'pay.region':'GUTSCHEIN-REGION','pay.voucher':'15-STELLIGER CODE','pay.vcode':'CODE','pay.ckOk':'CHECKSUM OK','pay.ckBad':'CHECKSUM PRÜFEN',
+ 'pay.step1':'SCHRITT 1','pay.step2':'SCHRITT 2','pay.step3':'SCHRITT 3','pay.step4':'SCHRITT 4','pay.notice':'HINWEIS','pay.avg':'Ø ZEIT','pay.trust':'GARANTIEN',
+ 'footer.about':'Euro-Banknoten Grad AAA+ und anonyme P2P-PayPal-Transfers. Aktiv seit 2022.',
+ 'footer.links':'NAVIGATION','footer.contact':'KONTAKT','footer.legal':'RECHTLICHES','footer.tele':'KNOTEN-TELEMETRIE',
+ 'footer.rights':'Alle Rechte vorbehalten.','footer.made':'Handgebaut, ohne Build-Step.','footer.node':'KNOTEN','footer.uptime':'UPTIME',
+ 'footer.lat':'LATENZ','footer.ver':'VERSION','footer.carriers':'AKZEPTIERTE ZUSTELLER'
+},
+fr:{
+ 'nav.home':'ACCUEIL','nav.cash':'CATALOGUE','nav.paypal':'PAYPAL','nav.quality':'CONTRÔLE QUALITÉ','nav.trust':'CENTRE DE CONFIANCE',
+ 'nav.faq':'FAQ','nav.track':'SUIVI','nav.feedback':'AVIS','nav.checkout':'PAIEMENT','nav.cart':'PANIER','nav.menu':'MENU','nav.contact':'CONTACT',
+ 'brand.tag':'DU DARK WEB À TON PORTEFEUILLE','brand.est':'DEPUIS 2022','brand.motto':'Chiffré · Suivi · Vérifié',
+ 'sys.cpu':'CPU','sys.mem':'MEM','sys.ping':'PING','sys.blk':'BLOQ','sys.tor':'TOR 3 HOPS','sys.enc':'AES-256','sys.node':'NŒUD','sys.live':'LIVE',
+ 'common.add':'AJOUTER','common.added':'AJOUTÉ','common.remove':'RETIRER','common.total':'TOTAL','common.back':'RETOUR','common.next':'SUIVANT',
+ 'common.copy':'COPIER','common.copied':'COPIÉ','common.close':'FERMER','common.loading':'CHARGEMENT...','common.all':'TOUS','common.open':'OUVRIR',
+ 'common.pcs':'PIÈCES','common.priceInCart':'PRIX VISIBLE AU PANIER','common.send':'ENVOYER','common.download':'TÉLÉCHARGER LE REÇU',
+ 'common.step':'ÉTAPE','common.search':'CHERCHER','common.continue':'CONTINUER','common.retry':'RÉESSAYER','common.empty':'VIDE','common.optional':'optionnel',
+ 'common.required':'obligatoire','common.qty':'QTÉ','common.verified':'VÉRIFIÉ','common.clear':'VIDER','common.yes':'OUI','common.no':'NON',
+ 'common.items':'ARTICLES','common.here':'ICI','common.open_tg':'OUVRIR TELEGRAM',
+ 'boot.l1':'[ OK ] gustavoeuro-kernel v5.0.0 démarré','boot.l2':'[ OK ] /dev/secure monté · AES-256 actif','boot.l3':'[ OK ] handshake TLS 1.3 · 4096 bits',
+ 'boot.l4':'[ OK ] circuit TOR routé · 3 sauts','boot.l5':'[ OK ] signature PGP vérifiée · 7B3F 9A21 C4E8 5D06','boot.l6':'[ OK ] merkle root cohérente',
+ 'boot.l7':'[ OK ] anti-scanner · nikto / sqlmap / nmap rejetés','boot.l8':'[WARN] réseau public détecté · mode anonyme actif',
+ 'boot.ready':'NŒUD PRÊT','boot.enter':'ENTRER DANS LE NŒUD','boot.skip':'PASSER','boot.hint':'appuie sur ENTRÉE',
+ 'gate.title':'ACCÈS RESTREINT','gate.sub':'Saisis la clé d\'accès pour entrer dans le nœud GUSTAVOEURO.',
+ 'gate.ph':'CLÉ D\'ACCÈS','gate.btn':'DÉVERROUILLER','gate.err':'CLÉ INVALIDE · réessaie','gate.ok':'ACCÈS ACCORDÉ',
+ 'gate.hint':'Indice : le nom du projet, en majuscules.',
+ 'home.badge':'NŒUD ACTIF · CHIFFREMENT ACTIF','home.t1':'DU DARK WEB','home.t2':'À TON PORTEFEUILLE',
+ 'home.sub':'Billets Euro Grade AAA+ et virements PayPal P2P anonymes. Livraison suivie, vérification publique, zéro intermédiaire inutile.',
+ 'home.cta1':'VOIR LE CATALOGUE','home.cta2':'VIREMENTS PAYPAL','home.cta3':'CONTRÔLE QUALITÉ',
+ 'home.stTitle':'TÉLÉMÉTRIE DU NŒUD','home.st1':'ACTIF DEPUIS','home.st1v':'2022','home.st2':'COUPURES','home.st2v':'20 / 50',
+ 'home.st3':'GRADE DES BILLETS','home.st3v':'AAA+','home.st4':'CONFIRMATIONS','home.st4v':'2 / 2',
+ 'home.denTitle':'COUPURES DISPONIBLES','home.denSub':'Chaque coupure a sa fiche. Prix visible au panier.',
+ 'home.whyTitle':'POURQUOI NOUS FAIRE CONFIANCE','home.whySub':'Aucune promesse magique. Que des procédures vérifiables.',
+ 'home.w1t':'GRADE AAA+','home.w1b':'Billets sélectionnés et contrôlés à la main, un par un.',
+ 'home.w2t':'UV 100%','home.w2b':'Contrôle à la lampe UV sur chaque liasse avant envoi.',
+ 'home.w3t':'SCANNER PASS','home.w3b':'Passage au lecteur optique : aucun format hors norme.',
+ 'home.w4t':'FIBRE COTON','home.w4b':'Papier 100% coton, épaisseur et relief corrects.',
+ 'home.w5t':'ENVOI SUIVI','home.w5b':'Transporteurs réels, code de suivi toujours fourni.',
+ 'home.w6t':'PREUVE PUBLIQUE','home.w6b':'Hashs, checksums et signature PGP vérifiables par tous.',
+ 'home.idxTitle':'INDEX DU NŒUD','home.idxSub':'Navigation rapide entre les modules.',
+ 'home.termTitle':'session.log','home.marq':'GUSTAVOEURO · DEPUIS 2022 · GRADE AAA+ · UV 100% · SCANNER PASS · FIBRE COTON · SUIVI · PGP SIGNED · TOR 3 HOPS · AES-256 · ',
+ 'cash.title':'CATALOGUE DE BILLETS','cash.sub':'Coupures 20 et 50 EUR disponibles par liasses. La 10 EUR est sur demande.',
+ 'cash.note':'Les prix ne sont pas sur les fiches : tu les vois au panier et au paiement, avec détail complet.',
+ 'cash.reqTitle':'SUR DEMANDE · 10 EUR','cash.reqText':'La coupure 10 EUR est peu disponible. Écris-nous sur Telegram et on te dit combien de pièces sont libres maintenant.',
+ 'cash.reqBtn':'DEMANDER LA DISPO','cash.grade':'GRADE AAA+','cash.uv':'UV 100%','cash.scan':'SCANNER PASS','cash.fiber':'FIBRE COTON',
+ 'cash.ship':'ENVOI','cash.shipV':'SUIVI','cash.avail':'DISPONIBLE',
+ 'paypal.title':'VIREMENTS PAYPAL','paypal.sub':'Le solde passe par un exchange tiers : la chaîne émetteur/destinataire est cassée et le solde arrive propre.',
+ 'paypal.note':'Tu paies un montant, tu reçois un montant supérieur. Aucune contrainte sur ton compte.',
+ 'paypal.pay':'TU PAIES','paypal.get':'TU REÇOIS','paypal.mult':'MULTIPLICATEUR','paypal.how':'COMMENT ÇA MARCHE',
+ 'paypal.s1':'Choisis le palier et ajoute-le au panier.','paypal.s2':'Tu nous donnes ton email PayPal au paiement.',
+ 'paypal.s3':'Le solde passe par un exchange tiers.','paypal.s4':'Tu reçois le solde propre sur ton compte.',
+ 'paypal.warn':'Les virements n\'exigent aucun envoi physique : au paiement la section adresse disparaît automatiquement.',
+ 'quality.title':'CONTRÔLE QUALITÉ','quality.sub':'Photos et vidéos réelles des liasses. Filtre par coupure et ouvre en plein écran.',
+ 'quality.f20':'20 EUR','quality.f50':'50 EUR','quality.open':'OUVRIR','quality.empty':'Aucun média pour cette coupure.','quality.hint':'Clique un élément pour l\'ouvrir en plein écran.',
+ 'trust.title':'CENTRE DE CONFIANCE','trust.sub':'Tout ce que tu peux vérifier toi-même.',
+ 'trust.how':'NOTRE MÉTHODE','trust.howB':'On sélectionne, on contrôle à la main, on scelle et on expédie en suivi. Chaque commande a un code unique.',
+ 'trust.guar':'GARANTIE REMBOURSEMENT','trust.guarB':'Si une liasse échoue au contrôle annoncé, on remplace ou on rembourse. La procédure est écrite.',
+ 'trust.merkle':'MERKLE ROOT DES ADRESSES','trust.merkleB':'Les adresses crypto publiées sont chaînées en arbre de Merkle. La root ci-dessous est recalculable par tous.',
+ 'trust.rules':'RÈGLES DU SERVICE','trust.rulesB':'Aucun coût caché. Frais toujours explicites. Délais annoncés avant paiement.',
+ 'trust.pgp':'CLÉ PGP','trust.pgpB':'Chaque reçu inclut un aperçu de signature. L\'empreinte est publique.',
+ 'trust.onion':'MIROIR ONION','trust.onionB':'Accès alternatif via Tor pour ceux qui évitent le réseau public.',
+ 'trust.carriers':'TRANSPORTEURS','trust.carriersB':'Uniquement des transporteurs réels et suivis. Le code arrive toujours.',
+ 'trust.time':'CHRONOLOGIE','trust.badges':'BADGES DE CONFIANCE',
+ 'trust.b1':'GRADE AAA+','trust.b2':'PGP SIGNED','trust.b3':'SUIVI','trust.b4':'PREUVE PUBLIQUE',
+ 'trust.verify':'RECALCULER LE HASH',
+ 'faq.title':'QUESTIONS FRÉQUENTES','faq.sub':'Réponses directes.',
+ 'faq.q1':'Les billets sont-ils vrais ?','faq.a1':'Oui. Billets Euro grade AAA+, sélectionnés et contrôlés un par un.',
+ 'faq.q2':'Pourquoi les prix sont au panier ?','faq.a2':'Car le prix dépend de la coupure et du volume. Les fiches décrivent, le panier donne le chiffre exact.',
+ 'faq.q3':'Qu\'est-ce qu\'un virement PayPal P2P ?','faq.a3':'Le solde passe par un exchange tiers : la chaîne est cassée et le solde arrive propre sur ton compte.',
+ 'faq.q4':'Quelles cryptos acceptez-vous ?','faq.a4':'SOL, BTC et LTC. Frais bas, confirmations rapides. Envoie toujours sur le réseau indiqué.',
+ 'faq.q5':'Combien coûte le virement bancaire ?','faq.a5':'Le virement SEPA instantané porte +10% de gestion, annoncé dans le détail avant paiement.',
+ 'faq.q6':'Et les bons Amazon ?','faq.a6':'Conversion +20% : tu achètes le bon, tu nous passes le code à 15 chiffres, le total est recalculé.',
+ 'faq.q7':'Comment suivre la commande ?','faq.a7':'Chaque commande génère un code GST-… stocké sur ton appareil. Recharge-le dans Suivi pour tout relire.',
+ 'faq.q8':'Et si ça se passe mal ?','faq.a8':'Écris-nous sur Telegram avec le code commande. Remplacement ou remboursement selon la garantie.',
+ 'track.title':'SUIVI DE COMMANDE','track.sub':'Saisis le code GST-… pour relire ton reçu.',
+ 'track.ph':'GST-XXXX-XXXX','track.btn':'CHERCHER','track.found':'COMMANDE TROUVÉE','track.none':'Aucune commande avec ce code sur cet appareil.',
+ 'track.clear':'VIDER L\'HISTORIQUE','track.status':'STATUT','track.items':'ARTICLES','track.date':'DATE',
+ 'fb.title':'AVIS','fb.sub':'Deux lignes et tu nous aides. Sans compte.',
+ 'fb.name':'NOM OU PSEUDO','fb.contact':'CONTACT (TELEGRAM/EMAIL)','fb.order':'CODE COMMANDE','fb.msg':'MESSAGE','fb.send':'ENVOYER L\'AVIS',
+ 'fb.ok':'AVIS ENREGISTRÉ','fb.rating':'NOTE','fb.thanks':'Merci : l\'avis reste sur ton appareil.',
+ 'priv.title':'CONFIDENTIALITÉ','terms.title':'CONDITIONS','cook.title':'COOKIES',
+ 'priv.p1':'Pas d\'analytics invasifs. Les données panier et commandes restent dans le localStorage.',
+ 'priv.p2':'La langue reste en localStorage. La session de déverrouillage vit en sessionStorage et meurt à la fermeture.',
+ 'priv.p3':'Les contacts envoyés sur Telegram servent uniquement à la commande.',
+ 'priv.p4':'Aucune donnée revendue. Aucun profil publicitaire.',
+ 'terms.p1':'Les prix sont en Euros et affichés au panier avant paiement.',
+ 'terms.p2':'Les délais sont indiqués avant confirmation. Le code de suivi est toujours fourni.',
+ 'terms.p3':'Si une liasse ne correspond pas : remplacement ou remboursement.',
+ 'terms.p4':'Les frais (crypto 0%, virement +10%, bons Amazon +20%) sont toujours déclarés.',
+ 'cook.p1':'Cookies techniques uniquement : aucun profilage. Tout tourne côté client.',
+ 'cook.p2':'localStorage et sessionStorage pour langue, panier, commandes, déverrouillage.',
+ 'cook.p3':'Tout est effaçable depuis le navigateur sans rien casser de permanent.',
+ 'co.title':'PAIEMENT','co.sub':'Quatre étapes : données, vérification, paiement, confirmation.',
+ 'co.s1':'DONNÉES','co.s2':'VÉRIF','co.s3':'PAIEMENT','co.s4':'CONFIRM',
+ 'co.dataT':'DONNÉES COMMANDE','co.shipT':'EXPÉDITION','co.noShip':'Aucun envoi : le panier ne contient que des virements PayPal.',
+ 'co.email':'EMAIL PAYPAL','co.email2':'CONFIRMER L\'EMAIL','co.name':'NOM COMPLET','co.addr':'ADRESSE','co.city':'VILLE','co.zip':'CP',
+ 'co.country':'PAYS','co.phone':'TÉLÉPHONE','co.notes':'NOTES','co.mixedT':'COMMANDE MIXTE','co.payT':'MOYEN DE PAIEMENT',
+ 'co.verifyT':'VÉRIFICATION D\'INTÉGRITÉ','co.ledger':'LEDGER','co.total':'TOTAL','co.sig':'APERÇU SIGNATURE PGP','co.checksum':'CHECKSUM',
+ 'co.draft':'ID BROUILLON','co.session':'ID SESSION','co.ts':'HORODATAGE','co.empty':'Panier vide.','co.go':'VERS LE CATALOGUE',
+ 'co.proceed':'CONTINUER','co.method':'CHOISIR LA MÉTHODE','co.confirmT':'CONFIRMER LA COMMANDE','co.code':'CODE COMMANDE','co.receipt':'TÉLÉCHARGER LE REÇU',
+ 'co.processing':'TRAITEMENT','co.thanks':'COMMANDE ENREGISTRÉE','co.saved':'Stocké sur ton appareil : récupérable via Suivi.',
+ 'co.errEmail':'Saisis un email valide.','co.errMatch':'Les deux emails ne correspondent pas.','co.errReq':'Champ obligatoire.','co.cancel':'ANNULER',
+ 'co.shipInfo':'Où expédier la liasse.','co.payInfo':'Où recevoir le solde PayPal.',
+ 'pay.crypto':'CRYPTO','pay.sepa':'VIREMENT INSTANTANÉ','pay.amazon':'BONS AMAZON','pay.reco':'RECOMMANDÉ',
+ 'pay.fees0':'0% FRAIS','pay.pros':'PROS','pay.cons':'CONTRES','pay.warnNet':'Envoie UNIQUEMENT {s} sur le réseau {n}. Autre réseau = fonds perdus.',
+ 'pay.timeline':'CHRONOLOGIE','pay.countdown':'TEMPS RESTANT','pay.conf':'CONFIRMATIONS','pay.explorer':'OUVRIR L\'EXPLORER','pay.preview':'APERÇU TRANSACTION',
+ 'pay.amount':'MONTANT EXACT','pay.memo':'MEMO (OBLIGATOIRE)','pay.network':'RÉSEAU','pay.address':'ADRESSE','pay.verified':'ADRESSE VÉRIFIÉE',
+ 'pay.scan':'SCANNE LE QR','pay.copyAddr':'COPIER L\'ADRESSE','pay.iban':'IBAN','pay.ibanNote':'IBAN envoyé sur Telegram · copie-le et colle-le dans le virement instantané.',
+ 'pay.causale':'RÉFÉRENCE','pay.breakdown':'DÉTAIL','pay.base':'MONTANT DE BASE','pay.fee10':'GESTION +10%','pay.fee20':'CONVERSION +20%',
+ 'pay.region':'RÉGION DU BON','pay.voucher':'CODE 15 CHIFFRES','pay.vcode':'CODE','pay.ckOk':'CHECKSUM OK','pay.ckBad':'CHECKSUM À VÉRIFIER',
+ 'pay.step1':'ÉTAPE 1','pay.step2':'ÉTAPE 2','pay.step3':'ÉTAPE 3','pay.step4':'ÉTAPE 4','pay.notice':'AVIS','pay.avg':'TEMPS MOYEN','pay.trust':'GARANTIES',
+ 'footer.about':'Billets Euro Grade AAA+ et virements PayPal P2P anonymes. Actifs depuis 2022.',
+ 'footer.links':'NAVIGATION','footer.contact':'CONTACTS','footer.legal':'LÉGAL','footer.tele':'TÉLÉMÉTRIE DU NŒUD',
+ 'footer.rights':'Tous droits réservés.','footer.made':'Fait main, sans build step.','footer.node':'NŒUD','footer.uptime':'UPTIME',
+ 'footer.lat':'LATENCE','footer.ver':'VERSION','footer.carriers':'TRANSPORTEURS ACCEPTÉS'
+}
+};
+
+/* ------------------------------------------------------------------ *
+ *  LINGUA
+ * ------------------------------------------------------------------ */
+const LANGS=[['it','🇮🇹','IT'],['en','🇬🇧','EN'],['es','🇪🇸','ES'],['de','🇩🇪','DE'],['fr','🇫🇷','FR']];
+const LangCtx = createContext({lang:'it',setLang:()=>{},t:k=>k});
+
+function makeT(lang){
+  return (k,vars)=>{
+    const d=DICT[lang]||DICT.it;
+    let s = (d[k]!=null) ? d[k] : (DICT.it[k]!=null ? DICT.it[k] : k);
+    if(vars){ Object.keys(vars).forEach(x=>{ s=s.split('{'+x+'}').join(vars[x]); }); }
+    return s;
+  };
+}
+
+function LangProvider({children}){
+  const [lang,setLangState]=useState(()=>{ const l=S.get('ge-lang','it'); return DICT[l]?l:'it'; });
+  const setLang=useCallback(l=>{ if(!DICT[l])return; setLangState(l); S.set('ge-lang',l); },[]);
+  useEffect(()=>{ try{ document.documentElement.setAttribute('lang',lang); }catch(e){} },[lang]);
+  const t=useMemo(()=>makeT(lang),[lang]);
+  const v=useMemo(()=>({lang,setLang,t}),[lang,setLang,t]);
+  return <LangCtx.Provider value={v}>{children}</LangCtx.Provider>;
+}
+const useT=()=>useContext(LangCtx).t;
+const useLangV=()=>useContext(LangCtx);
+
+/* ------------------------------------------------------------------ *
+ *  ATOMI UI
+ * ------------------------------------------------------------------ */
+function Bracket({children,className='',style,...rest}){
+  return (
+    <div className={'brk '+(className||'')} style={style} {...rest}>
+      <span className="c tl" aria-hidden="true"/><span className="c tr" aria-hidden="true"/>
+      <span className="c bl" aria-hidden="true"/><span className="c br" aria-hidden="true"/>
+      {children}
+    </div>
+  );
+}
+
+function Scramble({text='',as='span',className='',style,delay=0}){
+  const [s,setS]=useState(text);
+  useEffect(()=>{
+    let iv=null, to=null;
+    const chars='!<>-_\\/[]{}=+*^?#01';
+    to=setTimeout(()=>{
+      let f=0; const tot=Math.max(6,text.length);
+      iv=setInterval(()=>{
+        f++;
+        setS(text.split('').map((ch,i)=>{
+          if(ch===' ') return ' ';
+          if(i < (f/tot)*text.length) return ch;
+          return chars[Math.floor(Math.random()*chars.length)];
+        }).join(''));
+        if(f>=tot){ clearInterval(iv); iv=null; setS(text); }
+      },34);
+    },delay);
+    return ()=>{ if(iv)clearInterval(iv); if(to)clearTimeout(to); };
+  },[text,delay]);
+  const Tag=as;
+  return <Tag className={className} style={style}>{s}</Tag>;
+}
+
+function Section({id,title,sub,children,className='',style,...rest}){
+  return (
+    <section id={id} className={'sec '+(className||'')} style={style} {...rest}>
+      {title ? <Scramble as="h2" className="h2 grad" text={title}/> : null}
+      {sub ? <p className="sub">{sub}</p> : null}
+      {children}
+    </section>
+  );
+}
+
+function Img({src,fallbacks,alt='',ratio='4/3',className='',style}){
+  const list=useMemo(()=>[src].concat(fallbacks||[]).filter(Boolean),[src,(fallbacks||[]).join('|')]);
+  const [i,setI]=useState(0);
+  useEffect(()=>{ setI(0); },[src]);
+  const cur=list[Math.min(i,list.length-1)];
+  return (
+    <div className={'imwrap '+(className||'')} style={Object.assign({aspectRatio:ratio},style||{})}>
+      <img src={cur} alt={alt} draggable={false} loading="lazy" decoding="async"
+        onError={()=>setI(v=> (v+1<list.length ? v+1 : v))}
+        style={{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'contain'}}/>
+    </div>
+  );
+}
+
+function CopyBtn({value,label,className='btn sm gh',onDone}){
+  const t=useT();
+  const [ok,setOk]=useState(false);
+  return (
+    <button type="button" className={className}
+      onClick={()=>{ copy(value); setOk(true); if(onDone)onDone(); setTimeout(()=>setOk(false),1500); }}>
+      {ok ? '✓ '+t('common.copied') : (label||t('common.copy'))}
+    </button>
+  );
+}
+
+function Term({title='session.log',children,height}){
+  const [hex,setHex]=useState(()=>randHex(4));
+  useEffect(()=>{ const iv=setInterval(()=>setHex(randHex(4)),1100); return ()=>clearInterval(iv); },[]);
+  return (
+    <div className="term">
+      <div className="term-h">
+        <span className="d" style={{background:'#ff5c5c'}}/><span className="d" style={{background:'#ffb020'}}/><span className="d" style={{background:'#14e0b0'}}/>
+        <span style={{marginLeft:6}}>{title}</span>
+        <span style={{marginLeft:'auto'}} className="live"><span className="dot"/>LIVE</span>
+      </div>
+      <div className="term-b" style={height?{maxHeight:height}:undefined}>
+        {children}
+        <div className="hexline" style={{marginTop:8}}>
+          {hex.map((h,i)=><div key={i}>{'0x'+h.slice(0,8)+'  '+h.slice(0,8)+'  '+h.slice(0,8)}</div>)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function QR({coin}){
+  const c=COINS[coin];
+  const local=PHOTO.qr[coin];
+  const remote='https://api.qrserver.com/v1/create-qr-code/?size=400x400&data='+encodeURIComponent(c.addr);
+  const [i,setI]=useState(0);
+  const list=[local,remote];
+  return (
+    <div className="qrbox">
+      <img src={list[Math.min(i,1)]} alt={'QR '+coin} draggable={false}
+        onError={()=>setI(1)} style={{width:'100%',height:'auto',borderRadius:8}}/>
+      <div className="qrline" aria-hidden="true"/>
+    </div>
+  );
+}
+
+function LiveBadge({label}){
+  return <span className="live"><span className="dot"/>{label||'LIVE'}</span>;
+}
+
+/* ------------------------------------------------------------------ *
+ *  EFFETTI
+ * ------------------------------------------------------------------ */
+function SysBar(){
+  const t=useT();
+  const [d,setD]=useState({cpu:22,mem:48,ping:38,blk:1042});
+  const [clock,setClock]=useState(()=>nowStamp().split(' ')[1]);
+  useEffect(()=>{
+    const iv=setInterval(()=>{
+      setD(p=>({
+        cpu: Math.max(4,Math.min(96, p.cpu + Math.round((Math.random()-.5)*18))),
+        mem: Math.max(12,Math.min(94, p.mem + Math.round((Math.random()-.5)*9))),
+        ping: Math.max(12,Math.min(180, p.ping + Math.round((Math.random()-.5)*14))),
+        blk: p.blk + Math.round(Math.random()*7)
+      }));
+      setClock(nowStamp().split(' ')[1]);
+    },1300);
+    return ()=>clearInterval(iv);
+  },[]);
+  return (
+    <div className="sysbar">
+      <div className="sysbar-in">
+        <span className="live"><span className="dot"/>{t('sys.node')}: GE-01</span>
+        <span>{t('sys.cpu')} <b>{d.cpu}%</b></span>
+        <span>{t('sys.mem')} <b>{d.mem}%</b></span>
+        <span>{t('sys.ping')} <b>{d.ping}ms</b></span>
+        <span>{t('sys.blk')} <b>{d.blk}</b></span>
+        <span className="warn">{t('sys.tor')}</span>
+        <span>{t('sys.enc')}</span>
+        <span style={{marginLeft:'auto'}}>{clock}</span>
+      </div>
+    </div>
+  );
+}
+
+function MatrixCanvas({active}){
+  const ref=useRef(null);
+  useEffect(()=>{
+    const cv=ref.current; if(!cv) return;
+    const ctx=cv.getContext('2d'); if(!ctx) return;
+    let raf=null, cols=0, ypos=[];
+    const chars='アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789GUSTAVOEURO';
+    function size(){
+      cv.width=window.innerWidth; cv.height=window.innerHeight;
+      cols=Math.floor(cv.width/16); ypos=new Array(cols).fill(0).map(()=>Math.random()*cv.height);
+    }
+    size();
+    let last=0;
+    function draw(ts){
+      if(ts-last>62){
+        last=ts;
+        ctx.fillStyle='rgba(5,6,13,.16)'; ctx.fillRect(0,0,cv.width,cv.height);
+        ctx.font='15px monospace';
+        for(let i=0;i<cols;i++){
+          const ch=chars[Math.floor(Math.random()*chars.length)];
+          ctx.fillStyle = Math.random()>.94 ? '#ffb020' : (Math.random()>.7 ? '#3d7bff' : '#14e0b0');
+          ctx.fillText(ch, i*16, ypos[i]);
+          ypos[i] = ypos[i] > cv.height + 20 ? 0 : ypos[i] + 16;
+        }
+      }
+      raf=requestAnimationFrame(draw);
+    }
+    raf=requestAnimationFrame(draw);
+    window.addEventListener('resize',size);
+    return ()=>{ cancelAnimationFrame(raf); window.removeEventListener('resize',size); };
+  },[active]);
+  return null;
+}
+
+/* ------------------------------------------------------------------ *
+ *  ROUTER
+ * ------------------------------------------------------------------ */
+function norm(h){
+  let s=String(h||'').replace(/^#/,'');
+  if(!s || s==='/') return '/';
+  if(s[0]!=='/') s='/'+s;
+  return s.split('?')[0];
+}
+function useRoute(){
+  const [r,setR]=useState(()=>norm(location.hash));
+  useEffect(()=>{
+    const h=()=>{ setR(norm(location.hash)); try{ window.scrollTo({top:0,behavior:'auto'}); }catch(e){ window.scrollTo(0,0); } };
+    window.addEventListener('hashchange',h);
+    return ()=>window.removeEventListener('hashchange',h);
+  },[]);
+  return r;
+}
+const go = p => { try{ location.hash='#'+p; }catch(e){} };
+
+/* ------------------------------------------------------------------ *
+ *  BOOT
+ * ------------------------------------------------------------------ */
+function Boot({onDone}){
+  const t=useT();
+  const keys=['boot.l1','boot.l2','boot.l3','boot.l4','boot.l5','boot.l6','boot.l7','boot.l8'];
+  const [n,setN]=useState(0);
+  const [ready,setReady]=useState(false);
+  useEffect(()=>{
+    if(n>=keys.length){ setReady(true); return; }
+    const to=setTimeout(()=>setN(v=>v+1), 240+Math.random()*260);
+    return ()=>clearTimeout(to);
+  },[n]);
+  useEffect(()=>{
+    const h=e=>{ if(e.key==='Enter') onDone(); };
+    window.addEventListener('keydown',h);
+    return ()=>window.removeEventListener('keydown',h);
+  },[onDone]);
+  return (
+    <Fragment>
+      <MatrixCanvas active/>
+      <div className="full">
+        <div style={{width:'min(720px,94vw)'}}>
+          <div className="row" style={{marginBottom:14}}>
+            <span className="pill tl"><span className="dot"/>SECURE BOOT</span>
+            <span className="pill bl mono">v5.0.0</span>
+          </div>
+          <div className="log">
+            {keys.slice(0,n).map(k=><div key={k}>{t(k)}</div>)}
+            {!ready && <div className="g">█</div>}
+          </div>
+          {ready && (
+            <Fragment>
+              <div style={{margin:'16px 0 10px'}}>
+                <Scramble as="div" className="h1 grad" text={t('boot.ready')}/>
+              </div>
+              <div className="row">
+                <button className="btn pri" onClick={onDone}>{t('boot.enter')} →</button>
+                <button className="btn gh" onClick={onDone}>{t('boot.skip')}</button>
+                <span className="tiny mut mono">{t('boot.hint')}</span>
+              </div>
+            </Fragment>
+          )}
+        </div>
+      </div>
+    </Fragment>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  GATE
+ * ------------------------------------------------------------------ */
+const KEY=[71,85,83,84,65,86,79,69,85,82,79];
+function decodeKey(){ try{ return String.fromCharCode.apply(null,KEY); }catch(e){ return 'GUSTAVOEURO'; } }
+
+function Gate({onOk}){
+  const t=useT();
+  const [v,setV]=useState('');
+  const [err,setErr]=useState(false);
+  const [shake,setShake]=useState(false);
+  const ref=useRef(null);
+  useEffect(()=>{ const to=setTimeout(()=>{ if(ref.current) ref.current.focus(); },300); return ()=>clearTimeout(to); },[]);
+  const submit=()=>{
+    const ok = v.trim().toUpperCase() === decodeKey();
+    if(ok){ setErr(false); onOk(); }
+    else{ setErr(true); setShake(true); setTimeout(()=>setShake(false),450); }
+  };
+  const val=v.trim();
+  return (
+    <Fragment>
+      <MatrixCanvas active/>
+      <div className="full">
+        <Bracket className={'gatebox panel '+(shake?'shake':'')}>
+          <div style={{fontSize:34,marginBottom:6}} className="mono">🔒</div>
+          <div className="pill au" style={{marginBottom:12}}><span className="dot"/>{t('gate.title')}</div>
+          <Scramble as="h1" className="h2 grad" text="GUSTAVOEURO"/>
+          <p className="sub" style={{margin:'8px auto 16px',textAlign:'center'}}>{t('gate.sub')}</p>
+
+          <div className="keypad" aria-hidden="true">
+            {Array.from({length:11}).map((_,i)=><i key={i} className={i<val.length?'on':''}/>)}
+          </div>
+
+          <input ref={ref} className={'inp '+(err?'bad':'')} type="password" value={v}
+            placeholder={t('gate.ph')} autoComplete="off" spellCheck="false"
+            onChange={e=>{ setV(e.target.value); setErr(false); }}
+            onKeyDown={e=>{ if(e.key==='Enter') submit(); }}
+            style={{textAlign:'center',letterSpacing:'.3em',textTransform:'uppercase'}}/>
+
+          {err && <div className="err" style={{textAlign:'center'}}>{t('gate.err')}</div>}
+
+          <div style={{marginTop:14}}>
+            <button className="btn pri wide" onClick={submit}>{t('gate.btn')} →</button>
+          </div>
+          <div className="tiny mut mono" style={{marginTop:12}}>{t('gate.hint')}</div>
+        </Bracket>
+      </div>
+    </Fragment>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  HEADER / MENU / DRAWER
+ * ------------------------------------------------------------------ */
+const ROUTES=[['/','nav.home'],['/cash','nav.cash'],['/paypal','nav.paypal'],['/quality','nav.quality'],
+              ['/trust','nav.trust'],['/faq','nav.faq'],['/track','nav.track'],['/feedback','nav.feedback']];
+
+function Header({route,cartCount,onCart,onMenu,menuOpen}){
+  const t=useT();
+  const {lang,setLang}=useLangV();
+  const [langOpen,setLangOpen]=useState(false);
+  return (
+    <header className="hdr">
+      <div className="hdr-in">
+        <div className="logo" onClick={()=>go('/')} role="button" tabIndex={0}
+             onKeyDown={e=>{if(e.key==='Enter')go('/');}}>
+          <b>[G]</b><span className="grad">GUSTAVOEURO</span>
+          <span className="pill tl" style={{marginLeft:4}}><span className="dot"/>LIVE</span>
+        </div>
+
+        <nav className="nav">
+          {ROUTES.map(([p,k])=>(
+            <a key={p} href={'#'+p} className={route===p?'on':''}>{t(k)}</a>
+          ))}
+        </nav>
+
+        <div className="row" style={{gap:6}}>
+          <button className="btn sm gh" onClick={()=>setLangOpen(o=>!o)} aria-label="language">
+            {LANGS.find(l=>l[0]===lang)[1]} {lang.toUpperCase()}
+          </button>
+          <button className="btn sm gh" onClick={onCart} aria-label={t('nav.cart')}>
+            🛒 {cartCount>0?cartCount:''}
+          </button>
+          <button className="btn sm gh" onClick={onMenu} aria-label={t('nav.menu')} style={{display:'none'}} id="menubtn">☰</button>
+          <button className="btn sm gh menutoggle" onClick={onMenu}>☰</button>
+        </div>
+      </div>
+
+      {langOpen && (
+        <div className="wrap" style={{paddingBottom:10}}>
+          <div className="row">
+            {LANGS.map(([code,flag,label])=>(
+              <button key={code} className={'tab '+(lang===code?'on':'')}
+                onClick={()=>{ setLang(code); setLangOpen(false); }}>{flag} {label}</button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <SysBar/>
+      <style>{`.menutoggle{display:none}@media(max-width:900px){.menutoggle{display:inline-flex!important}}`}</style>
+    </header>
+  );
+}
+
+function Menu({open,onClose,route}){
+  const t=useT();
+  const all=ROUTES.concat([['/checkout','nav.checkout']]);
+  return (
+    <div className={'menu '+(open?'on':'')} aria-hidden={!open}>
+      <div className="between" style={{marginBottom:12}}>
+        <span className="pill au"><span className="dot"/>MENU</span>
+        <button className="btn sm gh" onClick={onClose}>{t('common.close')} ✕</button>
+      </div>
+      {all.map(([p,k])=>(
+        <a key={p} href={'#'+p} className={route===p?'on':''} onClick={onClose}>{t(k)}</a>
+      ))}
+      <a href={IDENT.tg} target="_blank" rel="noopener noreferrer" onClick={onClose}>TELEGRAM ↗</a>
+    </div>
+  );
+}
+
+function Drawer({open,onClose,cart,setQty,remove,total,onCheckout}){
+  const t=useT();
+  return (
+    <Fragment>
+      <div className={'scrim '+(open?'on':'')} onClick={onClose}/>
+      <aside className={'drawer '+(open?'on':'')} aria-hidden={!open}>
+        <div className="between" style={{padding:14,borderBottom:'1px solid var(--line)'}}>
+          <span className="pill au"><span className="dot"/>{t('nav.cart')} · {cart.length}</span>
+          <button className="btn sm gh" onClick={onClose}>{t('common.close')} ✕</button>
+        </div>
+
+        <div style={{flex:1,overflow:'auto',padding:14}}>
+          {cart.length===0 && <div className="mut mono tiny">{t('common.empty')}</div>}
+          {cart.map(it=>(
+            <div key={it.uid} className="panel" style={{marginBottom:10}}>
+              <div className="between">
+                <div>
+                  <div className="h3 mono">{it.title}</div>
+                  <div className="tiny mut mono">{it.sub}</div>
+                </div>
+                <div className="mono" style={{color:'var(--au)'}}>{money(it.price)}</div>
+              </div>
+              <div className="row" style={{marginTop:10}}>
+                <button className="btn sm gh" onClick={()=>setQty(it.uid,-1)}>−</button>
+                <span className="mono">{it.qty}</span>
+                <button className="btn sm gh" onClick={()=>setQty(it.uid,1)}>+</button>
+                <button className="btn sm gh" style={{marginLeft:'auto'}} onClick={()=>remove(it.uid)}>✕</button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{padding:14,borderTop:'1px solid var(--line)'}}>
+          <div className="kv"><span>{t('common.total')}</span><span style={{color:'var(--au)'}}>{money(total)}</span></div>
+          <button className="btn pri wide" style={{marginTop:10}} disabled={cart.length===0}
+            onClick={()=>{ onClose(); onCheckout(); }}>{t('nav.checkout')} →</button>
+        </div>
+      </aside>
+    </Fragment>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  HOME
+ * ------------------------------------------------------------------ */
+function DenCard({tag,label,desc,price}){
+  const t=useT();
+  const add=useContext(CartCtx).add;
+  return (
+    <div className="card">
+      <div className="between" style={{marginBottom:10}}>
+        <span className="pill au mono">{label}</span>
+        <span className="pill tl"><span className="dot"/>{t('cash.avail')}</span>
+      </div>
+      <Img src={PHOTO[tag].main} fallbacks={PHOTO[tag].fallbacks||PHOTO.fallbacks} alt={label} ratio="16/10"/>
+      <div className="h3 mono" style={{marginTop:12}}>{label} · GRADE AAA+</div>
+      <p className="mut" style={{fontSize:13.5,margin:'4px 0 10px'}}>{desc}</p>
+      <div className="row">
+        <span className="pill bl">{t('cash.grade')}</span>
+        <span className="pill mg">{t('cash.uv')}</span>
+      </div>
+      <div className="tiny mut mono" style={{marginTop:10}}>{t('common.priceInCart')}</div>
+      <button className="btn wide" style={{marginTop:10}} onClick={()=>{ go('/cash'); }}>{t('common.open')} →</button>
+    </div>
+  );
+}
+
+function Home(){
+  const t=useT();
+  const stats=[[t('home.st1'),t('home.st1v'),'--au'],[t('home.st2'),t('home.st2v'),'--bl'],
+               [t('home.st3'),t('home.st3v'),'--tl'],[t('home.st4'),t('home.st4v'),'--mg']];
+  const why=[['home.w1t','home.w1b'],['home.w2t','home.w2b'],['home.w3t','home.w3b'],
+             ['home.w4t','home.w4b'],['home.w5t','home.w5b'],['home.w6t','home.w6b']];
+  return (
+    <Fragment>
+      <Section className="sec" style={{paddingTop:34}}>
+        <div className="row" style={{marginBottom:14}}>
+          <span className="pill tl"><span className="dot"/>{t('home.badge')}</span>
+          <span className="pill bl mono">{t('brand.est')}</span>
+        </div>
+        <h1 className="h1">
+          <span className="gl" data-t={t('home.t1')}><span className="grad">{t('home.t1')}</span></span><br/>
+          <span className="grad">{t('home.t2')}</span>
+        </h1>
+        <p className="sub" style={{fontSize:16,marginTop:14}}>{t('home.sub')}</p>
+        <div className="row">
+          <button className="btn pri" onClick={()=>go('/cash')}>{t('home.cta1')} →</button>
+          <button className="btn bl" onClick={()=>go('/paypal')}>{t('home.cta2')} →</button>
+          <button className="btn tl" onClick={()=>go('/quality')}>{t('home.cta3')} →</button>
+        </div>
+      </Section>
+
+      <Section title={t('home.stTitle')}>
+        <div className="grid g4">
+          {stats.map(([l,v,c])=>(
+            <Bracket key={l} className="panel">
+              <div className="tiny mut mono">{l}</div>
+              <div className="mono" style={{fontSize:26,fontWeight:700,color:'var('+c+')'}}>{v}</div>
+            </Bracket>
+          ))}
+        </div>
+      </Section>
+
+      <Section title={t('home.denTitle')} sub={t('home.denSub')}>
+        <div className="grid g2">
+          <DenCard tag="eur20" label="20 EUR" desc="Blocchi da 25, 75 e 200 pezzi. Il taglio più richiesto per il lavoro quotidiano."/>
+          <DenCard tag="eur50" label="50 EUR" desc="Blocchi da 15, 50 e 150 pezzi. Massimo potere di smercio per volume ridotto."/>
+        </div>
+
+        <Bracket className="panel" style={{marginTop:16,borderColor:'rgba(255,61,154,.45)'}}>
+          <div className="between" style={{alignItems:'flex-start'}}>
+            <div style={{flex:1,minWidth:220}}>
+              <div className="row" style={{marginBottom:8}}>
+                <span className="pill mg">{t('cash.reqTitle')}</span>
+                <span className="pill rs">LOW STOCK</span>
+              </div>
+              <div className="h3 mono">10 EUR · {t('cash.grade')}</div>
+              <p className="mut" style={{fontSize:13.5,margin:'6px 0 12px'}}>{t('cash.reqText')}</p>
+              <a className="btn mg" href={IDENT.tg} target="_blank" rel="noopener noreferrer">{t('cash.reqBtn')} ↗</a>
+            </div>
+            <div style={{width:'min(260px,100%)'}}>
+              <Img src={PHOTO.eur10.main} fallbacks={PHOTO.eur10.fallbacks} alt="10 EUR" ratio="4/3"/>
+            </div>
+          </div>
+        </Bracket>
+      </Section>
+
+      <Section title={t('home.whyTitle')} sub={t('home.whySub')}>
+        <div className="grid g3">
+          {why.map(([a,b])=>(
+            <div key={a} className="card">
+              <div className="h3 mono" style={{color:'var(--au)'}}>{t(a)}</div>
+              <p className="mut" style={{fontSize:13.5,margin:0}}>{t(b)}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title={t('home.idxTitle')} sub={t('home.idxSub')}>
+        <div className="grid g3">
+          {ROUTES.map(([p,k])=>(
+            <a key={p} href={'#'+p} className="panel" style={{display:'block'}}>
+              <div className="between">
+                <span className="mono tiny" style={{color:'var(--bl)'}}>{p}</span>
+                <span className="mono">→</span>
+              </div>
+              <div className="h3" style={{marginTop:6}}>{t(k)}</div>
+            </a>
+          ))}
+        </div>
+      </Section>
+
+      <Section>
+        <Term title={t('home.termTitle')}>
+          <div><span className="k">$</span> node --status</div>
+          <div className="g">→ tor: 3 hops ok · tls: 1.3 ok · pgp: verified</div>
+          <div className="g">→ merkle: {hashHex(COINS.SOL.addr+COINS.BTC.addr+COINS.LTC.addr,32)}</div>
+          <div className="g">→ scanner: nikto=0 sqlmap=0 nmap=0</div>
+          <div><span className="b">$</span> ready_</div>
+        </Term>
+      </Section>
+
+      <div className="marq" aria-hidden="true">
+        <div>{t('home.marq')}{t('home.marq')}</div>
+      </div>
+    </Fragment>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  CATALOGO
+ * ------------------------------------------------------------------ */
+function ProductCard({p}){
+  const t=useT();
+  const {add,cart}=useContext(CartCtx);
+  const inCart = cart.some(x=>x.pid===p.id);
+  return (
+    <div className="card">
+      <div className="between" style={{marginBottom:10}}>
+        <span className="pill au mono">{p.label}</span>
+        <span className={'pill '+p.badgeC}>{p.badge}</span>
+      </div>
+      <Img src={PHOTO[p.tag].main} fallbacks={PHOTO[p.tag].fallbacks||PHOTO.fallbacks} alt={p.label+' '+p.code} ratio="16/10"/>
+      <div className="h3 mono" style={{marginTop:12}}>{p.code}</div>
+      <div className="row" style={{margin:'6px 0 10px'}}>
+        <span className="pill bl">{p.pcs} {t('common.pcs')}</span>
+        <span className="pill tl">{t('cash.grade')}</span>
+        <span className="pill mg">{t('cash.uv')}</span>
+      </div>
+      <div className="tiny mut mono">{t('common.priceInCart')}</div>
+      <button className={'btn wide '+(inCart?'tl':'')} style={{marginTop:10}}
+        onClick={()=>add({pid:p.id,kind:'note',title:p.label+' · '+p.code,sub:p.pcs+' '+t('common.pcs'),price:p.price})}>
+        {inCart ? '✓ '+t('common.added') : '+ '+t('common.add')}
+      </button>
+    </div>
+  );
+}
+
+function Cash(){
+  const t=useT();
+  return (
+    <Fragment>
+      <Section title={t('cash.title')} sub={t('cash.sub')}>
+        <div className="row" style={{marginBottom:14}}>
+          <span className="pill tl"><span className="dot"/>GRADE AAA+</span>
+          <span className="pill bl">UV 100%</span>
+          <span className="pill mg">SCANNER PASS</span>
+          <span className="pill au">FIBRA COTONE</span>
+          <span className="pill rs">{t('cash.ship')}: {t('cash.shipV')}</span>
+        </div>
+        <div className="panel mono tiny" style={{marginBottom:16}}>▸ {t('cash.note')}</div>
+        <div className="grid g3">
+          {PRODUCTS.map(p=><ProductCard key={p.id} p={p}/>)}
+        </div>
+      </Section>
+
+      <Section>
+        <Bracket className="panel" style={{borderColor:'rgba(255,61,154,.45)'}}>
+          <div className="row" style={{alignItems:'flex-start'}}>
+            <div style={{flex:1,minWidth:220}}>
+              <span className="pill mg">{t('cash.reqTitle')}</span>
+              <div className="h3 mono" style={{marginTop:10}}>10 EUR · GRADE AAA+</div>
+              <p className="mut" style={{fontSize:13.5}}>{t('cash.reqText')}</p>
+              <a className="btn mg" href={IDENT.tg} target="_blank" rel="noopener noreferrer">{t('cash.reqBtn')} ↗</a>
+            </div>
+            <div style={{width:'min(260px,100%)'}}>
+              <Img src={PHOTO.eur10.main} fallbacks={PHOTO.eur10.fallbacks} alt="10 EUR" ratio="4/3"/>
+            </div>
+          </div>
+        </Bracket>
+      </Section>
+    </Fragment>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  PAYPAL
+ * ------------------------------------------------------------------ */
+function Paypal(){
+  const t=useT();
+  const {add,cart}=useContext(CartCtx);
+  return (
+    <Fragment>
+      <Section title={t('paypal.title')} sub={t('paypal.sub')}>
+        <div className="panel mono tiny" style={{marginBottom:16,borderColor:'rgba(255,176,32,.4)'}}>
+          ⚠ {t('paypal.warn')}
+        </div>
+        <div className="grid g3">
+          {PAYPAL.map(p=>{
+            const mult=(p.get/p.pay).toFixed(2);
+            const inCart=cart.some(x=>x.pid===p.id);
+            return (
+              <div key={p.id} className="card">
+                <div className="between" style={{marginBottom:10}}>
+                  <span className="pill au mono">{p.code}</span>
+                  <span className="pill tl">x{mult}</span>
+                </div>
+                <div className="kv"><span>{t('paypal.pay')}</span><span className="mono">{money(p.pay)}</span></div>
+                <div className="kv"><span>{t('paypal.get')}</span><span className="mono" style={{color:'var(--tl)'}}>{money(p.get)}</span></div>
+                <div className="kv"><span>{t('paypal.mult')}</span><span className="mono">×{mult}</span></div>
+                <button className={'btn wide '+(inCart?'tl':'')} style={{marginTop:12}}
+                  onClick={()=>add({pid:p.id,kind:'pp',title:'PAYPAL · '+p.code,sub:money(p.pay)+' → '+money(p.get),price:p.pay})}>
+                  {inCart ? '✓ '+t('common.added') : '+ '+t('common.add')}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </Section>
+
+      <Section title={t('paypal.how')}>
+        <div className="grid g4">
+          {['paypal.s1','paypal.s2','paypal.s3','paypal.s4'].map((k,i)=>(
+            <Bracket key={k} className="panel">
+              <div className="tiny mono" style={{color:'var(--au)'}}>{t('common.step')} {i+1}</div>
+              <div style={{fontSize:14,marginTop:6}}>{t(k)}</div>
+            </Bracket>
+          ))}
+        </div>
+        <div style={{marginTop:16}}>
+          <Term title="paypal.route">
+            <div><span className="k">$</span> route --p2p --exchange third</div>
+            <div className="g">→ mittente: anonimo · destinatario: tuo account</div>
+            <div className="g">→ catena spezzata: true</div>
+            <div className="g">→ saldo in ingresso: pulito</div>
+            <div><span className="b">$</span> ok_</div>
+          </Term>
+        </div>
+      </Section>
+    </Fragment>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  QUALITY
+ * ------------------------------------------------------------------ */
+function Quality(){
+  const t=useT();
+  const [f,setF]=useState('eur20');
+  const [lb,setLb]=useState({open:false,i:0});
+  const items=PHOTO[f].gallery;
+  return (
+    <Fragment>
+      <Section title={t('quality.title')} sub={t('quality.sub')}>
+        <div className="row" style={{marginBottom:8}}>
+          <span className="pill tl">GRADE AAA+</span>
+          <span className="pill bl">UV 100%</span>
+          <span className="pill mg">SCANNER PASS</span>
+          <span className="pill au">FIBRA COTONE</span>
+        </div>
+        <div className="tabs">
+          <button className={'tab '+(f==='eur20'?'on':'')} onClick={()=>setF('eur20')}>{t('quality.f20')}</button>
+          <button className={'tab '+(f==='eur50'?'on':'')} onClick={()=>setF('eur50')}>{t('quality.f50')}</button>
+        </div>
+        <div className="tiny mut mono" style={{marginBottom:14}}>▸ {t('quality.hint')}</div>
+
+        {items.length===0 ? <div className="mut mono">{t('quality.empty')}</div> : (
+          <div className="grid g3">
+            {items.map((src,i)=>(
+              <button key={src+i} className="card" style={{padding:8,cursor:'pointer',textAlign:'left'}}
+                onClick={()=>setLb({open:true,i})}>
+                <Img src={src} fallbacks={PHOTO.fallbacks} alt={f+' '+i} ratio="4/3"/>
+                <div className="between" style={{marginTop:8}}>
+                  <span className="mono tiny mut">{f==='eur20'?'20 EUR':'50 EUR'} · #{pad(i+1)}</span>
+                  <span className="mono tiny" style={{color:'var(--au)'}}>{t('quality.open')} ⤢</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+      </Section>
+
+      <div className={'light '+(lb.open?'on':'')} onClick={()=>setLb(s=>({...s,open:false}))}>
+        {lb.open && (
+          <div style={{textAlign:'center'}} onClick={e=>e.stopPropagation()}>
+            <img src={items[lb.i]} alt="media" draggable={false}
+              onError={e=>{ e.currentTarget.src=PHOTO.fallbacks[0]; }}/>
+            <div className="row" style={{justifyContent:'center',marginTop:12}}>
+              <button className="btn sm gh" onClick={()=>setLb(s=>({...s,i:(s.i-1+items.length)%items.length}))}>←</button>
+              <span className="mono tiny">{pad(lb.i+1)} / {pad(items.length)}</span>
+              <button className="btn sm gh" onClick={()=>setLb(s=>({...s,i:(s.i+1)%items.length}))}>→</button>
+              <button className="btn sm gh" onClick={()=>setLb(s=>({...s,open:false}))}>✕</button>
+            </div>
+          </div>
+        )}
+      </div>
+    </Fragment>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  TRUST
+ * ------------------------------------------------------------------ */
+function Trust(){
+  const t=useT();
+  const [root,setRoot]=useState('');
+  const merkle=useMemo(()=>{
+    let lvl=Object.keys(COINS).map(k=>hashHex(COINS[k].addr,16));
+    while(lvl.length>1){
+      const nx=[];
+      for(let i=0;i<lvl.length;i+=2) nx.push(hashHex(lvl[i]+(lvl[i+1]||lvl[i]),16));
+      lvl=nx;
+    }
+    return lvl[0];
+  },[]);
+  const blocks=[['trust.how','trust.howB'],['trust.guar','trust.guarB'],['trust.rules','trust.rulesB'],
+                ['trust.pgp','trust.pgpB'],['trust.onion','trust.onionB'],['trust.carriers','trust.carriersB']];
+  const timeline=[['2022','Avvio attività · primo blocco da 20 EUR'],['2023','Introduzione verifica UV e firma PGP sulle ricevute'],
+                  ['2024','Apertura ai trasferimenti PayPal P2P'],['2025','Merle root indirizzi pubblicata · mirror onion'],
+                  ['2026','Verifica qualità pubblica con media reali']];
+  return (
+    <Fragment>
+      <Section title={t('trust.title')} sub={t('trust.sub')}>
+        <div className="grid g2">
+          {blocks.map(([a,b])=>(
+            <div key={a} className="card">
+              <div className="h3 mono" style={{color:'var(--au)'}}>{t(a)}</div>
+              <p className="mut" style={{fontSize:13.5,margin:0}}>{t(b)}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title={t('trust.merkle')}>
+        <Bracket className="panel">
+          <div className="tiny mut mono" style={{marginBottom:8}}>SHA-LIKE · FNV-1a MERKLE</div>
+          <div className="hash" style={{fontSize:14}}>{root}</div>
+          <div className="row" style={{marginTop:12}}>
+            <CopyBtn value={root} label="COPIA ROOT"/>
+            <button className="btn sm gh" onClick={()=>setRoot(root===merkle?'':hashHex(root+Date.now(),16))}>{t('trust.verify')}</button>
+          </div>
+          <div className="tiny mut mono" style={{marginTop:10}}>
+            {Object.keys(COINS).map(k=>(
+              <div key={k}>{k} → {hashHex(COINS[k].addr,16)}</div>
+            ))}
+          </div>
+        </Bracket>
+      </Section>
+
+      <Section title={t('trust.pgp')}>
+        <div className="grid g2">
+          <Bracket className="panel">
+            <div className="tiny mut mono">FINGERPRINT</div>
+            <div className="hash" style={{fontSize:13,marginTop:6}}>{IDENT.pgp}</div>
+            <div className="row" style={{marginTop:12}}>
+              <CopyBtn value={IDENT.pgp.replace(/\s+/g,' ')} label="COPIA FINGERPRINT"/>
+            </div>
+          </Bracket>
+          <Term title="pgp --verify">
+            <div><span className="k">$</span> gpg --verify receipt.sig</div>
+            <div className="g">→ chiave: 7B3F 9A21 C4E8 5D06 1F77 8AC2 30B9 4E11</div>
+            <div className="g">→ esito: BUONA FIRMA</div>
+            <div className="g">→ hash: {hashHex(IDENT.pgp+merkle,24)}</div>
+            <div><span className="b">$</span> ok_</div>
+          </Term>
+        </div>
+      </Section>
+
+      <Section title={t('trust.onion')}>
+        <Bracket className="panel">
+          <div className="row">
+            <span className="pill tl">.ONION</span>
+            <span className="mono">{IDENT.onion}</span>
+            <CopyBtn value={'http://'+IDENT.onion} label="COPIA"/>
+          </div>
+          <p className="mut" style={{fontSize:13.5,marginTop:10}}>{t('trust.onionB')}</p>
+        </Bracket>
+      </Section>
+
+      <Section title={t('trust.carriers')}>
+        <div className="row">
+          {IDENT.carriers.map(c=><span key={c} className="pill bl">{c}</span>)}
+        </div>
+        <p className="mut" style={{fontSize:13.5,marginTop:10}}>{t('trust.carriersB')}</p>
+      </Section>
+
+      <Section title={t('trust.time')}>
+        <div className="grid" style={{gap:8}}>
+          {timeline.map(([y,d])=>(
+            <div key={y} className="panel row" style={{gap:14}}>
+              <span className="mono" style={{color:'var(--au)',minWidth:52}}>{y}</span>
+              <span style={{fontSize:14}}>{d}</span>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section title={t('trust.badges')}>
+        <div className="row">
+          <span className="pill au">GRADE AAA+</span>
+          <span className="pill bl">PGP SIGNED</span>
+          <span className="pill tl">TRACCIATO</span>
+          <span className="pill mg">PROVA PUBBLICA</span>
+        </div>
+      </Section>
+    </Fragment>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  FAQ
+ * ------------------------------------------------------------------ */
+function Faq(){
+  const t=useT();
+  const [o,setO]=useState(-1);
+  const qs=[1,2,3,4,5,6,7,8];
+  return (
+    <Section title={t('faq.title')} sub={t('faq.sub')}>
+      {qs.map(i=>(
+        <div key={i} className={'acc '+(o===i?'on':'')}>
+          <button className="acc-h" onClick={()=>setO(o===i?-1:i)}>
+            <span>{t('faq.q'+i)}</span><span>{o===i?'−':'+'}</span>
+          </button>
+          {o===i && <div className="acc-b">{t('faq.a'+i)}</div>}
+        </div>
+      ))}
+    </Section>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  TRACK
+ * ------------------------------------------------------------------ */
+function Track(){
+  const t=useT();
+  const [code,setCode]=useState('');
+  const [res,setRes]=useState(null);
+  const [orders,setOrders]=useState(()=>{ const o=S.get('ge-orders',[]); return Array.isArray(o)?o:[]; });
+  const search=()=>{
+    const c=code.trim().toUpperCase();
+    const f=orders.find(o=>o.code===c);
+    setRes(f||null);
+  };
+  const clear=()=>{ S.set('ge-orders',[]); setOrders([]); setRes(null); };
+  return (
+    <Section title={t('track.title')} sub={t('track.sub')}>
+      <div className="panel" style={{maxWidth:620}}>
+        <div className="row">
+          <input className="inp" style={{flex:1,minWidth:200}} value={code} placeholder={t('track.ph')}
+            onChange={e=>setCode(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')search();}}/>
+          <button className="btn pri" onClick={search}>{t('track.btn')}</button>
+          <button className="btn gh" onClick={clear}>{t('track.clear')}</button>
+        </div>
+      </div>
+
+      {code && res===null && orders.length>0 && (
+        <div className="err" style={{marginTop:12}}>{t('track.none')}</div>
+      )}
+
+      {res && (
+        <Bracket className="panel" style={{marginTop:16,maxWidth:760}}>
+          <div className="row" style={{marginBottom:12}}>
+            <span className="pill tl"><span className="dot"/>{t('track.found')}</span>
+            <span className="pill au mono">{res.code}</span>
+          </div>
+          <div className="kv"><span>{t('track.date')}</span><span className="mono">{res.date}</span></div>
+          <div className="kv"><span>{t('track.status')}</span><span className="mono" style={{color:'var(--tl)'}}>CONFERMATO</span></div>
+          <div className="kv"><span>{t('co.total')}</span><span className="mono">{money(res.total)}</span></div>
+          <div className="tiny mut mono" style={{marginTop:12,marginBottom:6}}>{t('track.items')}</div>
+          {res.items.map((it,i)=>(
+            <div key={i} className="kv"><span>{it.title} × {it.qty}</span><span className="mono">{money(it.price*it.qty)}</span></div>
+          ))}
+          <div className="row" style={{marginTop:12}}>
+            <span className="hash tiny">{res.checksum}</span>
+          </div>
+        </Bracket>
+      )}
+
+      {orders.length>0 && !res && (
+        <div style={{marginTop:18}}>
+          <div className="tiny mut mono" style={{marginBottom:8}}>STORICO LOCALE</div>
+          {orders.map(o=>(
+            <button key={o.code} className="panel row" style={{width:'100%',cursor:'pointer',textAlign:'left',marginBottom:8}}
+              onClick={()=>{ setCode(o.code); setRes(o); }}>
+              <span className="mono" style={{color:'var(--au)'}}>{o.code}</span>
+              <span className="tiny mut mono" style={{marginLeft:'auto'}}>{o.date}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </Section>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  FEEDBACK
+ * ------------------------------------------------------------------ */
+function Feedback(){
+  const t=useT();
+  const [f,setF]=useState({name:'',contact:'',order:'',msg:'',rating:'5'});
+  const [ok,setOk]=useState(false);
+  const send=()=>{
+    const all=S.get('ge-feedback',[]); const arr=Array.isArray(all)?all:[];
+    arr.push(Object.assign({},f,{date:nowStamp()}));
+    S.set('ge-feedback',arr); setOk(true);
+  };
+  const set=(k,v)=>setF(s=>({...s,[k]:v}));
+  return (
+    <Section title={t('fb.title')} sub={t('fb.sub')}>
+      <div className="panel" style={{maxWidth:660}}>
+        <div className="grid" style={{gap:12}}>
+          <div><label className="lbl">{t('fb.name')}</label>
+            <input className="inp" value={f.name} onChange={e=>set('name',e.target.value)}/></div>
+          <div><label className="lbl">{t('fb.contact')}</label>
+            <input className="inp" value={f.contact} onChange={e=>set('contact',e.target.value)}/></div>
+          <div className="row">
+            <div style={{flex:1,minWidth:200}}><label className="lbl">{t('fb.order')}</label>
+              <input className="inp" value={f.order} onChange={e=>set('order',e.target.value)} placeholder="GST-…"/></div>
+            <div><label className="lbl">{t('fb.rating')}</label>
+              <select className="inp" value={f.rating} onChange={e=>set('rating',e.target.value)}>
+                {['5','4','3','2','1'].map(v=><option key={v} value={v}>{v} ★</option>)}
+              </select></div>
+          </div>
+          <div><label className="lbl">{t('fb.msg')}</label>
+            <textarea className="inp" rows="4" value={f.msg} onChange={e=>set('msg',e.target.value)}/></div>
+          <button className="btn pri" onClick={send}>{t('fb.send')} →</button>
+          {ok && <div className="panel" style={{borderColor:'rgba(20,224,176,.5)'}}>
+            <span className="pill tl">✓ {t('fb.ok')}</span>
+            <p className="mut" style={{fontSize:13.5,marginTop:8,marginBottom:0}}>{t('fb.thanks')}</p>
+          </div>}
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  PAGINE LEGALI
+ * ------------------------------------------------------------------ */
+function Legal({ns}){
+  const t=useT();
+  const n = ns==='priv'?4 : ns==='terms'?4 : 3;
+  return (
+    <Section title={t(ns+'.title')}>
+      <div className="panel" style={{maxWidth:820}}>
+        {Array.from({length:n}).map((_,i)=>(
+          <p key={i} className="mut" style={{fontSize:14.5,lineHeight:1.75}}>{t(ns+'.p'+(i+1))}</p>
+        ))}
+        <div className="row" style={{marginTop:12}}>
+          <span className="pill bl mono">LOCAL-FIRST</span>
+          <span className="pill tl mono">NO ANALYTICS</span>
+          <span className="pill au mono">PGP SIGNED</span>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  METODI DI PAGAMENTO
+ * ------------------------------------------------------------------ */
+function CryptoPay({amount}){
+  const t=useT();
+  const [coin,setCoin]=useState('SOL');
+  const [conf,setConf]=useState(0);
+  const [left,setLeft]=useState(30*60);
+  const c=COINS[coin];
+  const txid=useMemo(()=>hashHex(amount+coin+Date.now(),40),[amount,coin]);
+  useEffect(()=>{
+    setConf(0);
+    const a=setTimeout(()=>setConf(1),6500);
+    const b=setTimeout(()=>setConf(2),15000);
+    return ()=>{ clearTimeout(a); clearTimeout(b); };
+  },[coin]);
+  useEffect(()=>{
+    const iv=setInterval(()=>setLeft(v=> v>0?v-1:0),1000);
+    return ()=>clearInterval(iv);
+  },[]);
+  const mm=pad(Math.floor(left/60)), ss=pad(left%60);
+  const pct=(left/(30*60))*100;
+  return (
+    <div className="grid" style={{gap:16}}>
+      <div className="row">
+        <span className="pill tl"><span className="dot"/>{t('pay.reco')}</span>
+        <span className="pill au">{t('pay.fees0')}</span>
+        <span className="pill bl">{t('pay.avg')}: {c.avg}</span>
+      </div>
+
+      <div className="tabs">
+        {Object.keys(COINS).map(k=>(
+          <button key={k} className={'tab '+(coin===k?'on':'')} onClick={()=>setCoin(k)}>
+            <span style={{color:'var('+COINS[k].var+')'}}>●</span> {COINS[k].sym} · {COINS[k].name}
+          </button>
+        ))}
+      </div>
+
+      <div className="panel" style={{borderColor:'rgba(255,176,32,.5)',background:'rgba(255,176,32,.06)'}}>
+        <div className="mono tiny" style={{color:'var(--au)'}}>⚠ {t('pay.notice')}</div>
+        <div style={{fontSize:14,marginTop:4}}>{t('pay.warnNet',{s:c.sym,n:c.name.toUpperCase()+' ('+c.sym+')'})}</div>
+      </div>
+
+      <div className="grid g2" style={{alignItems:'start'}}>
+        <div>
+          <div className="tiny mut mono" style={{textAlign:'center',marginBottom:8}}>{t('pay.scan')}</div>
+          <QR coin={coin}/>
+        </div>
+        <div className="grid" style={{gap:12}}>
+          <div>
+            <label className="lbl">{t('pay.network')}</label>
+            <div className="row"><span className="pill tl">{c.name} · {c.sym}</span><span className="pill bl">{c.conf} {t('pay.conf')}</span></div>
+          </div>
+          <div>
+            <label className="lbl">{t('pay.address')}</label>
+            <div className="panel mono" style={{fontSize:11.5,wordBreak:'break-all'}}>{c.addr}</div>
+            <div className="row" style={{marginTop:8}}>
+              <CopyBtn value={c.addr} label={t('pay.copyAddr')}/>
+              <span className="pill tl">✓ {t('pay.verified')}</span>
+              <span className="pill bl">PGP</span>
+            </div>
+          </div>
+          <div>
+            <label className="lbl">{t('pay.amount')}</label>
+            <div className="row">
+              <span className="pill au mono" style={{fontSize:13}}>{amount} {c.sym}</span>
+              <CopyBtn value={String(amount)}/>
+            </div>
+          </div>
+          {c.memo && (
+            <div>
+              <label className="lbl">{t('pay.memo')}</label>
+              <div className="row">
+                <span className="pill mg mono">GE-{rand4()}</span>
+                <CopyBtn value={'GE-'+rand4()}/>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="panel">
+        <div className="between" style={{marginBottom:8}}>
+          <span className="tiny mut mono">{t('pay.countdown')}</span>
+          <span className="mono" style={{color: left<300?'var(--rs)':'var(--tl)'}}>{mm}:{ss}</span>
+        </div>
+        <div className={'prog '+(left<300?'low':'')}><i style={{width:pct+'%'}}/></div>
+      </div>
+
+      <div className="panel">
+        <div className="between" style={{marginBottom:8}}>
+          <span className="tiny mut mono">{t('pay.conf')}</span>
+          <span className="mono" style={{color: conf>=2?'var(--tl)':'var(--au)'}}>{conf}/{c.conf}</span>
+        </div>
+        <div className="row">
+          {Array.from({length:c.conf}).map((_,i)=>(
+            <span key={i} className={'pill '+(i<conf?'tl':'')}>{i<conf?'✓':'○'} BLOCK {i+1}</span>
+          ))}
+        </div>
+        <div className="row" style={{marginTop:12}}>
+          <a className="btn sm bl" href={c.exp+c.addr} target="_blank" rel="noopener noreferrer">{t('pay.explorer')} ↗</a>
+          <span className="tiny mut mono">{t('pay.avg')}: {c.avg}</span>
+        </div>
+      </div>
+
+      <Term title="tx --preview">
+        <div><span className="k">$</span> {t('pay.preview').toLowerCase()}</div>
+        <div className="g">→ from: (anon)</div>
+        <div className="g">→ to:   {c.addr.slice(0,18)}…</div>
+        <div className="g">→ net:  {c.sym}</div>
+        <div className="g">→ amt:  {amount} {c.sym}</div>
+        <div className="g">→ txid: <span className="hash">{txid}</span></div>
+        <div><span className="b">$</span> broadcast_</div>
+      </Term>
+    </div>
+  );
+}
+
+function SepaPay({amount}){
+  const t=useT();
+  const [conf,setConf]=useState(0);
+  const [left,setLeft]=useState(45*60);
+  useEffect(()=>{
+    const a=setTimeout(()=>setConf(1),5000); const b=setTimeout(()=>setConf(2),12000);
+    return ()=>{clearTimeout(a);clearTimeout(b);};
+  },[]);
+  useEffect(()=>{ const iv=setInterval(()=>setLeft(v=>v>0?v-1:0),1000); return ()=>clearInterval(iv); },[]);
+  const tot=Math.round(amount*1.1);
+  const caus='GE-'+rand4();
+  return (
+    <div className="grid" style={{gap:16}}>
+      <div className="row">
+        <span className="pill tl"><span className="dot"/>SEPA INSTANT</span>
+        <span className="pill au">{t('pay.fee10')}</span>
+        <span className="pill bl">~ 10 sec</span>
+      </div>
+
+      <div className="panel" style={{borderColor:'rgba(255,176,32,.5)',background:'rgba(255,176,32,.06)'}}>
+        <div className="mono tiny" style={{color:'var(--au)'}}>⚠ {t('pay.notice')}</div>
+        <div style={{fontSize:14,marginTop:4}}>Il bonifico istantaneo SEPA prevede <b>+10%</b> di gestione, già incluso nel totale qui sotto.</div>
+      </div>
+
+      <div className="grid g2" style={{alignItems:'start'}}>
+        <div className="grid" style={{gap:12}}>
+          <div>
+            <label className="lbl">{t('pay.iban')}</label>
+            <div className="panel mono" style={{fontSize:12.5,wordBreak:'break-all'}}>{IDENT.iban}</div>
+            <div className="tiny mut mono" style={{marginTop:6}}>{t('pay.ibanNote')}</div>
+            <div className="row" style={{marginTop:8}}>
+              <CopyBtn value={IDENT.iban} label={t('common.copy')+' IBAN'}/>
+              <span className="pill tl">✓ {t('pay.verified')}</span>
+            </div>
+          </div>
+          <div>
+            <label className="lbl">{t('pay.causale')}</label>
+            <div className="row">
+              <span className="pill mg mono">{caus}</span>
+              <CopyBtn value={caus}/>
+            </div>
+            <div className="tiny mut mono" style={{marginTop:6}}>Inserisci la causale esatta: senza causale l\'ordine resta in attesa.</div>
+          </div>
+        </div>
+
+        <div className="panel">
+          <div className="tiny mut mono" style={{marginBottom:8}}>{t('pay.breakdown')}</div>
+          <table className="tbl">
+            <tbody>
+              <tr><td>{t('pay.base')}</td><td>{money(amount)}</td></tr>
+              <tr><td>{t('pay.fee10')}</td><td>+ {money(Math.round(amount*0.1))}</td></tr>
+              <tr><td><b>{t('co.total')}</b></td><td style={{color:'var(--au)'}}><b>{money(tot)}</b></td></tr>
+            </tbody>
+          </table>
+          <div className="tiny mut mono" style={{marginTop:10}}>▸ Importo da inviare: <b>{money(tot)}</b></div>
+        </div>
+      </div>
+
+      <div className="grid g4">
+        {[['pay.step1','Apri l\'home banking'],['pay.step2','Seleziona bonifico istantaneo SEPA'],
+          ['pay.step3','Incolla IBAN + causale'],['pay.step4','Invia ricevuta su Telegram']].map(([k,d],i)=>(
+          <Bracket key={k} className="panel">
+            <div className="tiny mono" style={{color:'var(--au)'}}>{t(k)}</div>
+            <div style={{fontSize:13.5,marginTop:6}}>{d}</div>
+          </Bracket>
+        ))}
+      </div>
+
+      <div className="panel">
+        <div className="between" style={{marginBottom:8}}>
+          <span className="tiny mut mono">{t('pay.countdown')}</span>
+          <span className="mono" style={{color: left<300?'var(--rs)':'var(--tl)'}}>{pad(Math.floor(left/60))}:{pad(left%60)}</span>
+        </div>
+        <div className={'prog '+(left<300?'low':'')}><i style={{width:((left/(45*60))*100)+'%'}}/></div>
+      </div>
+
+      <div className="row">
+        <span className={'pill '+(conf>0?'tl':'')}>{conf>0?'✓':'○'} BONIFICO RICEVUTO</span>
+        <span className={'pill '+(conf>1?'tl':'')}>{conf>1?'✓':'○'} ORDINE IN LAVORAZIONE</span>
+        <span className="pill au">GARANZIA RIMBORSO</span>
+      </div>
+
+      <Term title="sepa --trace">
+        <div><span className="k">$</span> sepa --instant --trace</div>
+        <div className="g">→ iban: {IDENT.iban}</div>
+        <div className="g">→ causale: {caus}</div>
+        <div className="g">→ importo: {money(tot)}</div>
+        <div className="g">→ hash: {hashHex(IDENT.iban+caus+tot,28)}</div>
+        <div><span className="b">$</span> waiting_confirmation_</div>
+      </Term>
+    </div>
+  );
+}
+
+function AmazonPay({amount}){
+  const t=useT();
+  const [region,setRegion]=useState('IT');
+  const [code,setCode]=useState('');
+  const digits=code.replace(/\D/g,'').slice(0,15);
+  const fmt=digits.replace(/(\d{5})(?=\d)/g,'$1-');
+  const ok=digits.length===15;
+  const sum=digits.split('').reduce((a,b)=>a+Number(b),0);
+  const ckOk = ok && (sum%7===0 || sum%11===0);
+  const tot=Math.round(amount*1.2);
+  const regions=['IT','DE','FR','ES'];
+  return (
+    <div className="grid" style={{gap:16}}>
+      <div className="row">
+        <span className="pill mg"><span className="dot"/>AMAZON VOUCHER</span>
+        <span className="pill au">{t('pay.fee20')}</span>
+        <span className="pill bl">4 {t('pay.region').toLowerCase()}</span>
+      </div>
+
+      <div className="panel" style={{borderColor:'rgba(255,61,154,.5)',background:'rgba(255,61,154,.06)'}}>
+        <div className="mono tiny" style={{color:'var(--mg)'}}>⚠ {t('pay.notice')}</div>
+        <div style={{fontSize:14,marginTop:4}}>Conversione buoni con <b>+20%</b>: il valore del buono viene maggiorato del 20% sul totale ordine.</div>
+      </div>
+
+      <div className="grid g2" style={{alignItems:'start'}}>
+        <div className="grid" style={{gap:12}}>
+          <div>
+            <label className="lbl">{t('pay.region')}</label>
+            <div className="tabs" style={{marginBottom:0}}>
+              {regions.map(r=>(
+                <button key={r} className={'tab mg '+(region===r?'on':'')} onClick={()=>setRegion(r)}>{r}</button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <label className="lbl">{t('pay.voucher')}</label>
+            <input className="inp mono" value={fmt} placeholder="XXXXX-XXXXX-XXXXX" inputMode="numeric"
+              onChange={e=>setCode(e.target.value)}/>
+            <div className="row" style={{marginTop:8}}>
+              <span className={'pill '+(ok?(ckOk?'tl':'rs'):'')}>
+                {ok ? (ckOk ? '✓ '+t('pay.ckOk') : '⚠ '+t('pay.ckBad')) : digits.length+'/15'}
+              </span>
+              {fmt && <CopyBtn value={digits}/>}
+            </div>
+            <div className="tiny mut mono" style={{marginTop:6}}>Regione selezionata: <b>{region}</b> · il buono deve essere della stessa regione.</div>
+          </div>
+        </div>
+
+        <div className="panel">
+          <div className="tiny mut mono" style={{marginBottom:8}}>{t('pay.breakdown')}</div>
+          <table className="tbl">
+            <tbody>
+              <tr><td>{t('pay.base')}</td><td>{money(amount)}</td></tr>
+              <tr><td>{t('pay.fee20')}</td><td>+ {money(Math.round(amount*0.2))}</td></tr>
+              <tr><td><b>{t('co.total')}</b></td><td style={{color:'var(--au)'}}><b>{money(tot)}</b></td></tr>
+            </tbody>
+          </table>
+          <div className="tiny mut mono" style={{marginTop:10}}>▸ Valore buono richiesto: <b>{money(tot)}</b> ({region})</div>
+        </div>
+      </div>
+
+      <div className="grid g4">
+        {[['pay.step1','Acquista il buono Amazon'],['pay.step2','Scegli l\'importo indicato'],
+          ['pay.step3','Incolla qui il codice 15 cifre'],['pay.step4','Invia conferma su Telegram']].map(([k,d],i)=>(
+          <Bracket key={k} className="panel">
+            <div className="tiny mono" style={{color:'var(--mg)'}}>{t(k)}</div>
+            <div style={{fontSize:13.5,marginTop:6}}>{d}</div>
+          </Bracket>
+        ))}
+      </div>
+
+      <div className="row">
+        <span className="pill au">GARANZIA RIMBORSO</span>
+        <span className="pill bl">CHECKSUM LIVE</span>
+        <span className="pill tl">NESSUNA COMMISSIONE EXTRA</span>
+      </div>
+
+      <Term title="voucher --convert">
+        <div><span className="k">$</span> voucher --convert --region {region}</div>
+        <div className="g">→ code: {fmt||'—'}</div>
+        <div className="g">→ checksum: {ok ? (ckOk?'OK':'DA VERIFICARE') : 'IN ATTESA'}</div>
+        <div className="g">→ valore: {money(amount)} → {money(tot)}</div>
+        <div className="g">→ hash: {hashHex(fmt+region+amount,28)}</div>
+        <div><span className="b">$</span> awaiting_voucher_</div>
+      </Term>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  CHECKOUT
+ * ------------------------------------------------------------------ */
+function OrderConsole({items,total}){
+  const t=useT();
+  const fp=useMemo(()=>hashHex(navigator.userAgent+(screen.width+'x'+screen.height)+navigator.language,16),[]);
+  const integ=useMemo(()=>hashHex(fp+total+items.length,32),[fp,total,items.length]);
+  return (
+    <Term title="order.console">
+      <div><span className="k">$</span> order --integrity</div>
+      <div className="g">→ device_fp: <span className="hash">{fp}</span></div>
+      <div className="g">→ items: {items.length}</div>
+      <div className="g">→ integrity: <span className="hash">{integ}</span></div>
+      <div className="g">→ checksum: {hashHex(integ+total,24)}</div>
+      <div><span className="b">$</span> ok_</div>
+    </Term>
+  );
+}
+
+function Checkout(){
+  const t=useT();
+  const {cart,total,clear}=useContext(CartCtx);
+  const [step,setStep]=useState(0);
+  const [method,setMethod]=useState('crypto');
+  const [f,setF]=useState({name:'',addr:'',city:'',zip:'',country:'',phone:'',notes:'',email:'',email2:''});
+  const [err,setErr]=useState({});
+  const [processing,setProcessing]=useState(false);
+  const [order,setOrder]=useState(null);
+
+  const onlyPP = cart.length>0 && cart.every(i=>i.kind==='pp');
+  const hasPP = cart.some(i=>i.kind==='pp');
+
+  const draft=useMemo(()=>hashHex(cart.map(i=>i.uid).join('')+total,24),[cart,total]);
+  const session=useMemo(()=>hashHex(String(Date.now())+Math.random(),24),[]);
+
+  const set=(k,v)=>{ setF(s=>({...s,[k]:v})); setErr(e=>({...e,[k]:''})); };
+
+  const validate=()=>{
+    const e={};
+    if(!onlyPP){
+      if(!f.name.trim()) e.name=t('co.errReq');
+      if(!f.addr.trim()) e.addr=t('co.errReq');
+      if(!f.city.trim()) e.city=t('co.errReq');
+      if(!f.zip.trim()) e.zip=t('co.errReq');
+    }
+    if(hasPP || onlyPP){
+      const okEmail=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.trim());
+      if(!okEmail) e.email=t('co.errEmail');
+      if(f.email.trim().toLowerCase()!==f.email2.trim().toLowerCase()) e.email2=t('co.errMatch');
+    }
+    setErr(e);
+    return Object.keys(e).length===0;
+  };
+
+  const makeCode=()=> 'GST-'+cart.map(i=>Math.round(i.price)).join('-')+'-'+rand4();
+
+  const confirm=()=>{
+    const code=makeCode();
+    const o={
+      code, date:nowStamp(), total,
+      items:cart.map(i=>({title:i.title,price:i.price,qty:i.qty})),
+      method,
+      checksum:hashHex(code+total+cart.length,32),
+      draft, session, email:hasPP?f.email:''
+    };
+    const all=S.get('ge-orders',[]); const arr=Array.isArray(all)?all:[];
+    arr.unshift(o); S.set('ge-orders',arr.slice(0,50));
+    setOrder(o);
+  };
+
+  const receiptText=o=>[
+    '=== GUSTAVOEURO · RICEVUTA ===',
+    'CODICE ORDINE : '+o.code,
+    'DATA          : '+o.date,
+    'METODO        : '+o.method.toUpperCase(),
+    '--------------------------------',
+    ...o.items.map(i=>i.title+' × '+i.qty+'  →  '+money(i.price*i.qty)),
+    '--------------------------------',
+    'TOTALE        : '+money(o.total),
+    'CHECKSUM      : '+o.checksum,
+    'DRAFT ID      : '+o.draft,
+    'SESSION ID    : '+o.session,
+    'PGP           : '+IDENT.pgp,
+    'TELEGRAM      : '+IDENT.tg,
+    '==============================='
+  ].join('\n');
+
+  if(cart.length===0 && !order){
+    return (
+      <Section title={t('co.title')} sub={t('co.sub')}>
+        <div className="panel" style={{maxWidth:520}}>
+          <div className="mono mut">{t('co.empty')}</div>
+          <button className="btn pri" style={{marginTop:12}} onClick={()=>go('/cash')}>{t('co.go')} →</button>
+        </div>
+      </Section>
+    );
+  }
+
+  const steps=[t('co.s1'),t('co.s2'),t('co.s3'),t('co.s4')];
+
+  return (
+    <Section title={t('co.title')} sub={t('co.sub')}>
+      <div className="steps">
+        {steps.map((s,i)=>(
+          <div key={s} className={'step '+(step===i?'on':(step>i?'done':''))}>{i+1}. {s}</div>
+        ))}
+      </div>
+
+      <div className="grid g2" style={{alignItems:'start'}}>
+        <div className="grid" style={{gap:16}}>
+
+          {/* ---------- STEP 0 DATI ---------- */}
+          {step===0 && (
+            <Fragment>
+              {onlyPP ? (
+                <Bracket className="panel" style={{borderColor:'rgba(20,224,176,.45)'}}>
+                  <span className="pill tl"><span className="dot"/>{t('co.noShip')}</span>
+                  <p className="mut" style={{fontSize:13.5,marginTop:10}}>{t('co.payInfo')}</p>
+                  <div style={{marginTop:10}}>
+                    <label className="lbl">{t('co.email')}</label>
+                    <input className={'inp '+(err.email?'bad':'')} value={f.email} onChange={e=>set('email',e.target.value)} placeholder="nome@email.com"/>
+                    {err.email && <div className="err">{err.email}</div>}
+                    <label className="lbl" style={{marginTop:10}}>{t('co.email2')}</label>
+                    <input className={'inp '+(err.email2?'bad':'')} value={f.email2} onChange={e=>set('email2',e.target.value)} placeholder="nome@email.com"/>
+                    {err.email2 && <div className="err">{err.email2}</div>}
+                  </div>
+                </Bracket>
+              ) : (
+                <Fragment>
+                  <div className="panel">
+                    <div className="tiny mut mono" style={{marginBottom:10}}>▸ {t('co.shipT')}</div>
+                    <div className="grid" style={{gap:10}}>
+                      <div><label className="lbl">{t('co.name')}</label>
+                        <input className={'inp '+(err.name?'bad':'')} value={f.name} onChange={e=>set('name',e.target.value)}/>
+                        {err.name && <div className="err">{err.name}</div>}</div>
+                      <div><label className="lbl">{t('co.addr')}</label>
+                        <input className={'inp '+(err.addr?'bad':'')} value={f.addr} onChange={e=>set('addr',e.target.value)}/>
+                        {err.addr && <div className="err">{err.addr}</div>}</div>
+                      <div className="row">
+                        <div style={{flex:1,minWidth:140}}><label className="lbl">{t('co.city')}</label>
+                          <input className={'inp '+(err.city?'bad':'')} value={f.city} onChange={e=>set('city',e.target.value)}/>
+                          {err.city && <div className="err">{err.city}</div>}</div>
+                        <div style={{width:110}}><label className="lbl">{t('co.zip')}</label>
+                          <input className={'inp '+(err.zip?'bad':'')} value={f.zip} onChange={e=>set('zip',e.target.value)}/>
+                          {err.zip && <div className="err">{err.zip}</div>}</div>
+                      </div>
+                      <div className="row">
+                        <div style={{flex:1,minWidth:140}}><label className="lbl">{t('co.country')}</label>
+                          <input className="inp" value={f.country} onChange={e=>set('country',e.target.value)} placeholder="IT"/></div>
+                        <div style={{flex:1,minWidth:140}}><label className="lbl">{t('co.phone')}</label>
+                          <input className="inp" value={f.phone} onChange={e=>set('phone',e.target.value)} placeholder="+39"/></div>
+                      </div>
+                      <div><label className="lbl">{t('co.notes')} ({t('common.optional')})</label>
+                        <textarea className="inp" rows="2" value={f.notes} onChange={e=>set('notes',e.target.value)}/></div>
+                    </div>
+                  </div>
+
+                  {hasPP && (
+                    <Bracket className="panel" style={{borderColor:'rgba(255,176,32,.45)'}}>
+                      <span className="pill au">{t('co.mixedT')}</span>
+                      <p className="mut" style={{fontSize:13.5,marginTop:8}}>{t('co.payInfo')}</p>
+                      <label className="lbl" style={{marginTop:8}}>{t('co.email')}</label>
+                      <input className={'inp '+(err.email?'bad':'')} value={f.email} onChange={e=>set('email',e.target.value)}/>
+                      {err.email && <div className="err">{err.email}</div>}
+                      <label className="lbl" style={{marginTop:10}}>{t('co.email2')}</label>
+                      <input className={'inp '+(err.email2?'bad':'')} value={f.email2} onChange={e=>set('email2',e.target.value)}/>
+                      {err.email2 && <div className="err">{err.email2}</div>}
+                    </Bracket>
+                  )}
+                </Fragment>
+              )}
+            </Fragment>
+          )}
+
+          {/* ---------- STEP 1 VERIFICA ---------- */}
+          {step===1 && (
+            <Fragment>
+              <Bracket className="panel">
+                <div className="row" style={{marginBottom:10}}>
+                  <span className="pill tl"><span className="dot"/>{t('co.verifyT')}</span>
+                  <span className="pill bl mono">SHA-LIKE</span>
+                </div>
+                <div className="tiny mut mono" style={{marginBottom:6}}>{t('co.ledger')}</div>
+                <div className="term" style={{padding:10}}>
+                  {cart.map((i,n)=>(
+                    <div key={i.uid} className="hexline" style={{marginBottom:4}}>
+                      <span style={{color:'var(--au)'}}>#{pad(n+1)}</span> {i.title} ×{i.qty} · {money(i.price*i.qty)} · <span className="hash">{hashHex(i.uid+i.price,24)}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="kv" style={{marginTop:12}}><span>{t('co.total')}</span><span className="mono" style={{color:'var(--au)'}}>{money(total)}</span></div>
+                <div className="kv"><span>{t('co.draft')}</span><span className="hash">{draft}</span></div>
+                <div className="kv"><span>{t('co.session')}</span><span className="hash">{session}</span></div>
+                <div className="kv"><span>{t('co.ts')}</span><span className="mono">{nowStamp()}</span></div>
+                <div className="kv"><span>{t('co.checksum')}</span><span className="hash">{hashHex(draft+session+total,32)}</span></div>
+              </Bracket>
+
+              <Bracket className="panel">
+                <div className="tiny mut mono" style={{marginBottom:8}}>{t('co.sig')}</div>
+                <div className="term" style={{padding:10}}>
+                  <div className="g">-----BEGIN PGP SIGNATURE-----</div>
+                  <div className="hexline">{hashHex(draft+'sig1',64)}</div>
+                  <div className="hexline">{hashHex(draft+'sig2',64)}</div>
+                  <div className="g">-----END PGP SIGNATURE-----</div>
+                </div>
+                <div className="tiny mut mono" style={{marginTop:8}}>{IDENT.pgp}</div>
+              </Bracket>
+
+              <OrderConsole items={cart} total={total}/>
+            </Fragment>
+          )}
+
+          {/* ---------- STEP 2 PAGAMENTO ---------- */}
+          {step===2 && (
+            <Fragment>
+              <div className="tabs">
+                <button className={'tab tl '+(method==='crypto'?'on':'')} onClick={()=>setMethod('crypto')}>{t('pay.crypto')} · {t('pay.fees0')}</button>
+                <button className={'tab '+(method==='sepa'?'on':'')} onClick={()=>setMethod('sepa')}>{t('pay.sepa')} · +10%</button>
+                <button className={'tab mg '+(method==='amazon'?'on':'')} onClick={()=>setMethod('amazon')}>{t('pay.amazon')} · +20%</button>
+              </div>
+              {method==='crypto' && <CryptoPay amount={total}/>}
+              {method==='sepa' && <SepaPay amount={total}/>}
+              {method==='amazon' && <AmazonPay amount={total}/>}
+            </Fragment>
+          )}
+
+          {/* ---------- STEP 3 CONFERMA ---------- */}
+          {step===3 && order && (
+            <Bracket className="panel" style={{borderColor:'rgba(20,224,176,.5)'}}>
+              <div className="row" style={{marginBottom:12}}>
+                <span className="pill tl"><span className="dot"/>✓ {t('co.thanks')}</span>
+                <span className="pill au mono">{order.code}</span>
+              </div>
+              <div className="kv"><span>{t('co.ts')}</span><span className="mono">{order.date}</span></div>
+              <div className="kv"><span>{t('co.method')}</span><span className="mono">{order.method.toUpperCase()}</span></div>
+              <div className="kv"><span>{t('co.total')}</span><span className="mono" style={{color:'var(--au)'}}>{money(order.total)}</span></div>
+              <div className="kv"><span>{t('co.checksum')}</span><span className="hash">{order.checksum}</span></div>
+              <p className="mut" style={{fontSize:13.5,marginTop:12}}>{t('co.saved')}</p>
+              <div className="row" style={{marginTop:10}}>
+                <button className="btn pri" onClick={()=>dl('ricevuta-'+order.code+'.txt',receiptText(order))}>{t('co.receipt')}</button>
+                <a className="btn bl" href={IDENT.tg} target="_blank" rel="noopener noreferrer">{t('common.open_tg')} ↗</a>
+                <button className="btn gh" onClick={()=>go('/track')}>{t('nav.track')} →</button>
+              </div>
+              <div style={{marginTop:16}}>
+                <Term title="order.final">
+                  <div><span className="k">$</span> order --commit</div>
+                  <div className="g">→ code: {order.code}</div>
+                  <div className="g">→ status: CONFERMATO</div>
+                  <div className="g">→ checksum: {order.checksum}</div>
+                  <div><span className="b">$</span> done_</div>
+                </Term>
+              </div>
+            </Bracket>
+          )}
+        </div>
+
+        {/* ---------- RIEPILOGO ---------- */}
+        <div className="panel" style={{position:'sticky',top:120}}>
+          <div className="tiny mut mono" style={{marginBottom:10}}>▸ {t('nav.cart')} · {cart.length} {t('common.items')}</div>
+          {cart.map(i=>(
+            <div key={i.uid} className="kv"><span>{i.title} ×{i.qty}</span><span className="mono">{money(i.price*i.qty)}</span></div>
+          ))}
+          <div className="kv" style={{marginTop:8}}><span><b>{t('co.total')}</b></span><span className="mono" style={{color:'var(--au)'}}><b>{money(total)}</b></span></div>
+
+          <div className="grid" style={{gap:8,marginTop:14}}>
+            {step>0 && <button className="btn gh" onClick={()=>setStep(s=>s-1)}>← {t('common.back')}</button>}
+            {step===0 && <button className="btn pri" onClick={()=>{ if(validate()) setStep(1); }}>{t('co.proceed')} →</button>}
+            {step===1 && <button className="btn pri" onClick={()=>setStep(2)}>{t('co.method')} →</button>}
+            {step===2 && <button className="btn pri" onClick={()=>{ setProcessing(true); setTimeout(()=>{ confirm(); setProcessing(false); setStep(3); clear(); },1800); }}>{t('co.confirmT')} →</button>}
+            {step===3 && <button className="btn tl" onClick={()=>{ clear(); setStep(0); setOrder(null); go('/'); }}>HOME →</button>}
+          </div>
+
+          <div className="row" style={{marginTop:14}}>
+            <span className="pill tl">PGP</span>
+            <span className="pill bl">CHECKSUM</span>
+            <span className="pill au">TRACCIATO</span>
+          </div>
+        </div>
+      </div>
+
+      <div className={'modal '+(processing?'on':'')}>
+        <div className="modal-b" style={{maxWidth:380,textAlign:'center'}}>
+          <div className="spin"/>
+          <div className="h3 mono" style={{marginTop:14}}>{t('co.processing')}</div>
+          <div className="tiny mut mono" style={{marginTop:6}}>{hashHex(String(Date.now()),16)}</div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  FOOTER
+ * ------------------------------------------------------------------ */
+function Footer(){
+  const t=useT();
+  return (
+    <footer className="ftr">
+      <div className="wrap" style={{padding:'28px 16px'}}>
+        <div className="grid g4">
+          <div>
+            <div className="logo" style={{marginBottom:8}}><b>[G]</b><span className="grad">GUSTAVOEURO</span></div>
+            <p className="mut" style={{fontSize:13,margin:0}}>{t('footer.about')}</p>
+            <div className="tiny mut mono" style={{marginTop:8}}>{t('brand.motto')}</div>
+          </div>
+          <div>
+            <div className="tiny mut mono" style={{marginBottom:8}}>{t('footer.links')}</div>
+            {ROUTES.map(([p,k])=><div key={p}><a href={'#'+p} className="mut" style={{fontSize:13.5}}>{t(k)}</a></div>)}
+          </div>
+          <div>
+            <div className="tiny mut mono" style={{marginBottom:8}}>{t('footer.legal')}</div>
+            <div><a href="#/privacy" className="mut" style={{fontSize:13.5}}>{t('priv.title')}</a></div>
+            <div><a href="#/terms" className="mut" style={{fontSize:13.5}}>{t('terms.title')}</a></div>
+            <div><a href="#/cookies" className="mut" style={{fontSize:13.5}}>{t('cook.title')}</a></div>
+            <div className="tiny mut mono" style={{marginTop:8}}>{t('footer.carriers')}:</div>
+            <div className="row" style={{marginTop:6}}>
+              {IDENT.carriers.map(c=><span key={c} className="pill" style={{fontSize:9}}>{c}</span>)}
+            </div>
+          </div>
+          <div>
+            <div className="tiny mut mono" style={{marginBottom:8}}>{t('footer.contact')}</div>
+            <div><a href={IDENT.tg} target="_blank" rel="noopener noreferrer" className="mut" style={{fontSize:13.5}}>Telegram ↗</a></div>
+            <div><a href={IDENT.ch} target="_blank" rel="noopener noreferrer" className="mut" style={{fontSize:13.5}}>Canale ↗</a></div>
+            <div className="tiny mut mono" style={{marginTop:8}}>PGP</div>
+            <div className="hash tiny">{IDENT.pgp}</div>
+            <div className="tiny mut mono" style={{marginTop:8}}>ONION</div>
+            <div className="mono tiny" style={{color:'var(--tl)'}}>{IDENT.onion}</div>
+          </div>
+        </div>
+
+        <div className="panel" style={{marginTop:22}}>
+          <div className="between">
+            <span className="tiny mut mono">{t('footer.tele')}</span>
+            <LiveBadge label="STREAM"/>
+          </div>
+          <div className="row mono tiny mut" style={{marginTop:8,gap:18}}>
+            <span>{t('footer.node')}: GE-01</span>
+            <span>{t('footer.uptime')}: 99.98%</span>
+            <span>{t('footer.lat')}: 41ms</span>
+            <span>{t('footer.ver')}: v5.0.0</span>
+            <span>{t('sys.tor')}</span>
+          </div>
+          <div className="hexline" style={{marginTop:8}}>
+            {hashHex('ge-footer'+Date.now(),64)}
+          </div>
+        </div>
+
+        <div className="between" style={{marginTop:18}}>
+          <span className="tiny mut mono">© {new Date().getFullYear()} GUSTAVOEURO · {t('footer.rights')}</span>
+          <span className="tiny mut mono">{t('footer.made')}</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  CART CONTEXT
+ * ------------------------------------------------------------------ */
+const CartCtx = createContext({cart:[],add:()=>{},setQty:()=>{},remove:()=>{},clear:()=>{},total:0});
+
+function CartProvider({children}){
+  const [cart,setCart]=useState(()=>{ const c=S.get('ge-cart',[]); return Array.isArray(c)?c:[]; });
+  useEffect(()=>{ S.set('ge-cart',cart); },[cart]);
+  const add=useCallback(it=>{
+    setCart(c=>{
+      const arr=Array.isArray(c)?c:[];
+      const ex=arr.find(x=>x.pid===it.pid);
+      if(ex) return arr.map(x=>x.pid===it.pid?{...x,qty:x.qty+1}:x);
+      return arr.concat([Object.assign({},it,{uid:hashHex(it.pid+Date.now()+Math.random(),10),qty:1})]);
+    });
+  },[]);
+  const setQty=useCallback((uid,d)=>{
+    setCart(c=>(Array.isArray(c)?c:[]).map(x=>x.uid===uid?{...x,qty:Math.max(1,x.qty+d)}:x));
+  },[]);
+  const remove=useCallback(uid=>setCart(c=>(Array.isArray(c)?c:[]).filter(x=>x.uid!==uid)),[]);
+  const clear=useCallback(()=>setCart([]),[]);
+  const total=useMemo(()=>(Array.isArray(cart)?cart:[]).reduce((a,i)=>a+i.price*i.qty,0),[cart]);
+  const v=useMemo(()=>({cart:Array.isArray(cart)?cart:[],add,setQty,remove,clear,total}),[cart,add,setQty,remove,clear,total]);
+  return <CartCtx.Provider value={v}>{children}</CartCtx.Provider>;
+}
+
+/* ------------------------------------------------------------------ *
+ *  ERROR BOUNDARY
+ * ------------------------------------------------------------------ */
+class ErrorBoundary extends React.Component{
+  constructor(p){ super(p); this.state={err:null}; }
+  static getDerivedStateFromError(e){ return {err:e}; }
+  componentDidCatch(){ try{ window.__GE_ERR && window.__GE_ERR('React error boundary'); }catch(e){} }
+  render(){
+    if(this.state.err){
+      return (
+        <div className="full">
+          <div className="be-box" style={{borderColor:'var(--rs)'}}>
+            <div className="be-t">▚ RUNTIME ERROR</div>
+            <div className="be-m">{String(this.state.err && this.state.err.message || 'Errore')}</div>
+            <div className="be-b">
+              <button onClick={()=>this.setState({err:null})}>RIPROVA</button>
+              <button onClick={()=>{ try{ localStorage.removeItem('ge-cart'); }catch(e){} location.reload(); }}>RESET + RICARICA</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ *  SHELL
+ * ------------------------------------------------------------------ */
+function Page({route}){
+  switch(route){
+    case '/cash': return <Cash/>;
+    case '/paypal': return <Paypal/>;
+    case '/quality': return <Quality/>;
+    case '/trust': return <Trust/>;
+    case '/faq': return <Faq/>;
+    case '/track': return <Track/>;
+    case '/feedback': return <Feedback/>;
+    case '/privacy': return <Legal ns="priv"/>;
+    case '/terms': return <Legal ns="terms"/>;
+    case '/cookies': return <Legal ns="cook"/>;
+    case '/checkout': return <Checkout/>;
+    case '/gate': return <Home/>;
+    default: return <Home/>;
+  }
+}
+
+function Shell({route}){
+  const t=useT();
+  const {cart,total,setQty,remove}=useContext(CartCtx);
+  const [menu,setMenu]=useState(false);
+  const [drawer,setDrawer]=useState(false);
+  const [flash,setFlash]=useState(false);
+
+  useEffect(()=>{ setFlash(true); const to=setTimeout(()=>setFlash(false),430); return ()=>clearTimeout(to); },[route]);
+  useEffect(()=>{ setMenu(false); },[route]);
+
+  return (
+    <Fragment>
+      <Header route={route} cartCount={cart.length} onCart={()=>setDrawer(true)} onMenu={()=>setMenu(true)} menuOpen={menu}/>
+      <Menu open={menu} onClose={()=>setMenu(false)} route={route}/>
+      <Drawer open={drawer} onClose={()=>setDrawer(false)} cart={cart} setQty={setQty} remove={remove}
+        total={total} onCheckout={()=>go('/checkout')}/>
+      <div className={'rflash '+(flash?'on':'')} aria-hidden="true"/>
+
+      <div className="spacer"/>
+      <main className="wrap">
+        <Page route={route}/>
+      </main>
+
+      <div className="fab">
+        <a href={IDENT.tg} target="_blank" rel="noopener noreferrer" title="Telegram">TG</a>
+        <button className="btn gh" style={{width:48,height:48,borderRadius:'50%',padding:0}} onClick={()=>setDrawer(true)} title={t('nav.cart')}>🛒</button>
+      </div>
+
+      <Footer/>
+    </Fragment>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ *  APP
+ * ------------------------------------------------------------------ */
+function App(){
+  const route=useRoute();
+  const [booted,setBooted]=useState(()=>S.sget('ge-boot','')==='1');
+  const [authed,setAuthed]=useState(()=>S.sget('ge-in','')==='1');
+
+  useEffect(()=>{
+    window.__GE_MOUNTED=true;
+    const el=document.getElementById('booterr'); if(el) el.classList.remove('on');
+  },[]);
+
+  if(!booted) return <Boot onDone={()=>{ S.sset('ge-boot','1'); setBooted(true); if(norm(location.hash)==='/'||!location.hash) go('/gate'); }}/>;
+  if(!authed) return <Gate onOk={()=>{ S.sset('ge-in','1'); setAuthed(true); go('/'); }}/>;
+
+  return <Shell route={route}/>;
+}
+
+/* ------------------------------------------------------------------ *
+ *  MOUNT
+ * ------------------------------------------------------------------ */
+try{
+  const root=document.getElementById('root');
+  ReactDOM.createRoot(root).render(
+    <ErrorBoundary>
+      <LangProvider>
+        <CartProvider>
+          <App/>
+        </CartProvider>
+      </LangProvider>
+    </ErrorBoundary>
+  );
+}catch(e){
+  window.__GE_ERR && window.__GE_ERR(e && e.message);
+}
+
+</script>
+</body>
+</html>
